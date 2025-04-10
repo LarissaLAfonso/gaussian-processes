@@ -8,11 +8,19 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
+		"@rollup/plugin-dsv": "^3.0.5",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.5.0",
 		"svelte": "^4.2.19",
 		"vite": "^4.3.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"d3": "^7.9.0",
+		"feather-icons": "^4.29.2",
+		"intersection-observer": "^0.12.2",
+		"scrollama": "^3.2.0",
+		"svelte-loading-spinners": "^0.3.6"
+	}
 }
