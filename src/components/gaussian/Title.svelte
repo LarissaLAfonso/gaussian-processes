@@ -76,6 +76,7 @@
         margin-bottom: -0.5rem;
         position: relative;
         z-index: 2;
+        text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
     }
 
     h4 {
