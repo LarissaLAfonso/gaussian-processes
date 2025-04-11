@@ -6,10 +6,10 @@
     <div class="graph-background" aria-hidden="true">
         <svg viewBox="0 0 800 200" preserveAspectRatio="none">
             <path d="M0,100 
-                     C100,50 150,320 200,100 
-                     C250,50 300,-80 400,100 
-                     C500,50 550,230 600,100 
-                     C650,50 700,10 800,100" 
+                     C100,50 150,320 230,80 
+                     C230,50 300,-80 400,80 
+                     C400,80 500,200 580,90 
+                     C580,10 700,10 800,100" 
                   stroke="#F08D30" 
                   stroke-width="4" 
                   fill="none" 
@@ -18,7 +18,7 @@
             <circle cx="100" cy="120" r="5" class="dot" />
             <circle cx="150" cy="180" r="5" class="dot" />
             <circle cx="250" cy="60" r="5" class="dot" />
-            <circle cx="300" cy="15" r="5" class="dot" />
+            <circle cx="300" cy="10" r="5" class="dot" />
             <circle cx="400" cy="120" r="5" class="dot" />
             <circle cx="500" cy="50" r="5" class="dot" />
             <circle cx="570" cy="160" r="5" class="dot" />
