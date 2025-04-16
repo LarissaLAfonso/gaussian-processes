@@ -107,7 +107,7 @@
   /*Dados da fonte dos blocos explicativos*/
   .step-container {
     font-family: 'Fredoka', sans-serif;
-    font-size: 1.25rem;
+    font-size: 1.26rem;
     text-indent: 2em;
     text-align: justify;
     line-height: 1.6;
