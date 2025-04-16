@@ -34,7 +34,8 @@
       height: 1em;
       overflow: visible;
       transform-origin: 50% 50%;
-  
       display: inline;
+      pointer-events: auto;
+      cursor: pointer;
     }
 </style>
