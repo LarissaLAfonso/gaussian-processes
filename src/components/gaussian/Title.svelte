@@ -2,30 +2,45 @@
     import Link from "$components/gaussian/Link.svelte";  
     import scrollY from "$stores/scrollY.js";
     $: opacity = Math.max(0, 1 - $scrollY / 200); // fade out after 200px  
+    import { onMount } from "svelte";
+	import * as d3 from "d3";
+
+	let pathD = "";
+
+	onMount(() => {
+		const points = [
+			[0, 100],
+			[100, 50],
+			[150, 120],
+			[230, 80],
+			[300, 20],
+			[400, 80],
+			[500, 100],
+			[580, 90],
+			[700, 10],
+			[800, 100]
+		];
+
+		const lineGenerator = d3.line()
+			.curve(d3.curveBasis) // smooth!
+			.x(d => d[0])
+			.y(d => d[1]);
+
+		pathD = lineGenerator(points);
+	});
 </script>
 
 <div class="wrapper fullscreen" style="opacity: {opacity}">
     <div class="graph-background" aria-hidden="true">
         <svg viewBox="0 0 800 200" preserveAspectRatio="none">
-            <path d="M0,100 
-                     C100,50 150,320 230,80 
-                     C230,50 300,-80 400,80 
-                     C400,80 500,200 580,90 
-                     C580,10 700,10 800,100" 
-                  stroke="#F08D30" 
-                  stroke-width="4" 
-                  fill="none" 
-                  stroke-linecap="round" />
-
-            <circle cx="100" cy="120" r="5" class="dot" />
-            <circle cx="150" cy="180" r="5" class="dot" />
-            <circle cx="250" cy="60" r="5" class="dot" />
-            <circle cx="300" cy="10" r="5" class="dot" />
-            <circle cx="400" cy="120" r="5" class="dot" />
-            <circle cx="500" cy="50" r="5" class="dot" />
-            <circle cx="570" cy="160" r="5" class="dot" />
-            <circle cx="650" cy="45" r="5" class="dot" />
-            <circle cx="720" cy="60" r="5" class="dot" />
+            <path d="{pathD}" stroke="#F08D30" stroke-width="4" fill="none" stroke-linecap="round" />
+            <!-- Draw dots -->
+            {#each [
+                [50, 120], [100, 180], [200, 60], [300, 10], [380, 120],
+                [500, 40], [570, 70], [650, 45], [720, 100]
+            ] as [cx, cy]}
+                <circle cx={cx} cy={cy} r="5" class="dot" />
+            {/each}
         </svg>
     </div>
 
