@@ -66,14 +66,15 @@
 		</svg>
 	</div>
 
-	<h1>Gaussian Processes</h1>
-	<h4>An intuitive exploration</h4>
+	<h1 class="montserrat-heading">Gaussian Processes</h1>
+	<h2 class="montserrat-subtitle">An intuitive exploration</h2>
 	<p><span class="author-label">By</span> 
 		<Link href="https://github.com/LarissaLAfonso">Larissa Lemos Afonso</Link>, 
 		<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
 		<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
 	</p>
 </div>
+
 
 <style>
 	.wrapper {
@@ -126,23 +127,28 @@
 		fill: #5B4FFF;
 	}
 
-	.wrapper h1 {
-	font-size: 3rem;
-	color: #fba6a6;
-	margin-bottom: 0rem;
-	position: relative;
-	z-index: 2;
-	text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
-}
+	.montserrat-heading {
+		font-family: "Montserrat", sans-serif;
+		font-weight: 600;
+		font-style: normal;
+		font-size: 3rem;
+		color: #fba6a6;
+		margin-bottom: 0.5rem;
+		position: relative;
+		z-index: 2;
+		text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
+	}
 
-	h4 {
-		font-size: 1.2rem;
+	.montserrat-subtitle {
+		font-family: "Montserrat", sans-serif;
+		font-weight: 400;
+		font-style: normal;
+		font-size: 1.4rem;
 		color: #a0c4ff;
-		margin-bottom: 1rem; 
+		margin-bottom: 1rem;
 		position: relative;
 		z-index: 2;
 	}
-
 
 	p {
 		color: rgb(200, 200, 200);
@@ -160,3 +166,7 @@
 		color: #ffc8dd;
 	}
 </style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
