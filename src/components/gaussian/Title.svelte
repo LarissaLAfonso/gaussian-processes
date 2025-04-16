@@ -1,8 +1,10 @@
 <script>
-    import Link from "$components/gaussian/Link.svelte";
+    import Link from "$components/gaussian/Link.svelte";  
+    import scrollY from "$stores/scrollY.js";
+    $: opacity = Math.max(0, 1 - $scrollY / 200); // fade out after 200px  
 </script>
 
-<div class="wrapper">
+<div class="wrapper fullscreen" style="opacity: {opacity}">
     <div class="graph-background" aria-hidden="true">
         <svg viewBox="0 0 800 200" preserveAspectRatio="none">
             <path d="M0,100 
@@ -38,16 +40,37 @@
 
 <style>
     .wrapper {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
         position: relative;
         z-index: 1;
         font-family: 'Poppins', 'Comic Neue', 'Quicksand', sans-serif;
         text-align: center;
         padding: 1.2rem;
-        /* background-color: #fcf2f4;
-        box-shadow: 0 0 15px rgba(33, 33, 33, 0.2); */
         border-radius: 1.4rem;
         overflow: hidden;
     }
+
+
+    .wrapper.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white; /* Or your background */
+    }
+
+
 
     .graph-background {
         position: absolute;
@@ -70,7 +93,7 @@
         fill: #5B4FFF;
     }
 
-    h1 {
+    .wrapper h1 {
         font-size: 3rem;
         color: #fba6a6;
         margin-bottom: -0.5rem;
