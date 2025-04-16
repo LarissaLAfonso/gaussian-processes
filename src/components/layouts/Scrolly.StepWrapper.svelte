@@ -16,4 +16,8 @@ div {
     justify-content: center;
     align-items: flex-start;
 }
+
+.step-wrapper {
+    margin: 6rem 0; /* adjust as needed */
+}
 </style>

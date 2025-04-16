@@ -4,41 +4,11 @@
             "type": "step",
             "value": [
                 {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h2",
-                        "index": "1.",
-                        "title": "Introduction"
-                    }
-                },
-                {
                     "type": "p",
                     "value": [
                         {
                             "type": "text",
-                            "value": "Imagine you’re a felineologist, trying to identify <b>different groups</b> of species of cats. You go out into the field to collect measurements of <i>chonkiness</i> and <i>lightness of fur color</i>—key features which you believe are important in their differentiation."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h2",
-                        "index": "2.",
-                        "title": "The Algorithm"
-                    }
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "How can we determine if any two observations belong to the same cluster? Intuitively, we want to assign observations that are similar to the same cluster, and at the same time placing dissimilar observations in different clusters."
+                            "value": "Suppose you have \\(n\\) points on the plane."
                         }
                     ]
                 }
@@ -52,37 +22,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "To determine which cluster a data point belongs to, we just have to check which prototype it is the closest to."
-                        },
-                        {
-                            "type": "PointerSvg",
-                            "value": ""
-                        },
-                        {
-                            "type": "text",
-                            "value": "Try hovering over a data point to show its closest prototype!"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h3",
-                        "index": "2.1",
-                        "title": "Learning Objective"
-                    }
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "Like most machine learning models, in k-means the learning process is guided by a <b>loss function</b>, which is essentially a score that indicates how bad of a fit the current prototypes are. The algorithm will strive to find a set of prototypes that minimizes this loss function."
+                            "value": "If \\(n\\) is small enough, you can imagine it as a sample of a random variable \\(X \\sim F(\\theta)\\) living in \\(\\mathbb{R}^d\\), with \\(d\\) at least as big as \\(n\\)."
                         }
                     ]
                 }
@@ -96,7 +36,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "How can we measure the quality of clustering in a single number? Intuitively, we want to make sure that every individual cluster is as <i>tightly packed</i> as possible; or that each cluster prototype is as close as possible to the data points it is assigned with."
+                            "value": "But as \\(n \\to \\infty\\), things start to get messy. The density \\(F\\) becomes a distribution defined in a very high dimensional space, which involves arithmetic operations of <em>humongous</em> matrices. Depending on how high you shoot, not even the best computers in the world can handle that."
                         }
                     ]
                 },
@@ -105,20 +45,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "More formally, we can define the loss function as the sum of all Euclidean distances from each data point to its assigned prototype. This measures how internally coherent the clusters are, and is also known as the <b>inertia</b>."
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "PointerSvg",
-                            "value": ""
-                        },
-                        {
-                            "type": "text",
-                            "value": "Try adjusting (dragging) and “learning” the prototypes for yourself; how do the cluster assignments, and the value of the inertia change? At which positions do the prototypes appear optimal or non-optimal?"
+                            "value": "So... is there a way we can fix this?"
                         }
                     ]
                 }
@@ -128,19 +55,84 @@
             "type": "step",
             "value": [
                 {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h3",
-                        "index": "2.2",
-                        "title": "Learning Algorithm"
-                    }
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "In the initial setting, we had a bunch of points on the plane, and we assigned to them a distribution which essentially describes the probability of observing certain \\(y\\)'s for fixed regions of the \\(x\\) axis. In other words, for each fixed region of the \\(x\\) axis we assigned a probability, a number."
+                        }
+                    ]
                 },
                 {
                     "type": "p",
                     "value": [
                         {
                             "type": "text",
-                            "value": "Here comes the fun part: how does k-means perform this automatically? The algorithm is as follows:"
+                            "value": "So what if, instead of assigning numbers to specific regions of the \\(x\\) axis, we assign numbers to the whole \\(x\\) line?"
+                        }
+                    ]
+                },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "Yeah, we're creating a function!"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "step",
+            "value": [
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "A gaussian process is precisely the extension of a gaussian distribution to \\(\\mathbb{R}^{\\infty}\\) following that logic."
+                        }
+                    ]
+                },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "Why gaussians, specifically? Well, for many reasons, but one of them is that they are <b>marginalizable</b>, which means that if we marginalize a gaussian distribution over a subset of its variables, we get another gaussian distribution. That ties the knot between the stochastic process we defined by this infinite-dimensional function and finite dimensional gaussian distributions."
+                        }
+                    ]
+                },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "And that sets our definition: a gaussian process is a stochastic process such that for any finite collection \\(X_1, \\dots, X_n\\) of values follows a gaussian distribution with mean \\(\\mu(x)\\) and covariance matrix \\(K(X_1, \\dots, X_n)\\)."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "step",
+            "value": [
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "We can show that \\(\\mu\\) isn't very important compared to \\(K\\), so we'll just set it to zero. "
+                        }
+                    ]
+                },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "\\(K\\) is called a <b>kernel function</b>, and different kernels lead to very different gaussian processes for the same set of samples."
                         }
                     ]
                 }
@@ -168,206 +160,9 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "As mentioned, it can perform an initial clustering assignment by matching each data point to the prototype it is the closest to. This ensures that the value of the inertia is the lowest, given the <i>current prototypes</i>."
+                            "value": "And what's more: as gaussians are closed under conditioning, that means we can mantain our framework in the light of new data, by just updating the mean and covariance matrix of our gaussian process."
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "To improve upon this initial estimate of the prototypes, it updates them to be the <b>mean or center</b> of the data points newly assigned to them, making them more prototypical (as you might’ve guessed, this is where the name k-<i>means</i> comes from, and why the prototypes are also referred to as <i>centroids</i>).  This too minimizes the inertia, given the <i>current cluster assignments</i>."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h3",
-                        "index": "3.1",
-                        "title": "Type of Dataset"
-                    }
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "K-means finds roughly circular clusters and assumes that they have the same variance. You can imagine a circle emanating at the same rate from each prototype."
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "But surely datasets and clusters come in all kinds of shapes and sizes. On which datasets does k-means not produce the expected clustering?"
-                        }
-                    ]
-                },
-                {
-                    "type": "PlaygroundControls"
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "Due to the assumptions of k-means, it appears that k-means does react poorly to elongated clusters and irregular shapes, which could warrant a preprocessing step for the dataset (stay tuned for this in a bit)."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h3",
-                        "index": "3.2",
-                        "title": "Non-deterministic Results"
-                    }
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "You may have noticed that a different initial guess of the prototypes sometimes leads to a different clustering result. While it is a fact that the inertia or loss function constantly decreases during the course of the algorithm, it may not eventually find <i>the</i> optimum solution, but rather the best it can do during the current run given the initial conditions, producing a <b>local minimum</b>."
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "Verify this for yourself by rerunning the algorithm multiple times on different datasets and observing the results!"
-                        }
-                    ]
-                },
-                {
-                    "type": "PlaygroundControls"
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "To generate a reliable result, <a href=https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html target=\"_blank\" rel=\"noopener noreferrer\">scikit-learn’s</a> implementation by default uses an initialization scheme called <a href=https://en.wikipedia.org/wiki/K-means%2B%2B target=\"_blank\" rel=\"noopener noreferrer\">k-means++</a> which initializes prototypes that are far away from one another, and returns the result with the lowest inertia over 10 different runs."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h3",
-                        "index": "3.4",
-                        "title": "Data Preprocessing"
-                    }
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "Data preprocessing is a crucial step in any machine learning pipeline. Namely, in the context of k-means, how should you preprocess your dataset’s features such that Euclidean distance accurately captures the similarity between two points? Should you standardize all your features such that distance means the same thing in all directions?"
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "As an example, we observed in <i>3.1</i> that clustering elongated shapes does not produce the result that we expect. How can we fix that?"
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "PointerSvg",
-                            "value": ""
-                        },
-                        {
-                            "type": "text",
-                            "value": "Try translating and scaling the distribution of either feature by dragging the curves and its edge handles. Is there a significant difference in the clusters formed?"
-                        }
-                    ]
-                },
-                {
-                    "type": "PlaygroundControls"
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "In addition to standardization or normalization, there are other <a href=https://developers.google.com/machine-learning/clustering/prepare-data target=\"_blank\" rel=\"noopener noreferrer\">preprocessing methods</a> worth exploring such as log transforms or the creation of quantiles."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "SectionTitle",
-                    "props": {
-                        "tag": "h3",
-                        "index": "3.5",
-                        "title": "Influence of Outliers"
-                    }
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "K-means is sensitive to outliers—data points that differ significantly from other observations. A stray data point could drag a prototype out of its proper position, and form its own cluster instead of being ignored."
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "PointerSvg",
-                            "value": ""
-                        },
-                        {
-                            "type": "text",
-                            "value": "Add data points that are far away from the current distribution of data, and observe what happens. The following interactions are possible:"
-                        }
-                    ]
-                },
-                {
-                    "type": "InteractionList"
-                },
-                {
-                    "type": "PlaygroundControls"
                 }
             ]
         }
