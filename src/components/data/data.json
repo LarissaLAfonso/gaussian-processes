@@ -146,20 +146,6 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "It first makes a random guess for where the prototypes are. One way is to randomly choose 3 points from the dataset."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "step",
-            "value": [
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
                             "value": "And what's more: as gaussians are closed under conditioning, that means we can mantain our framework in the light of new data, by just updating the mean and covariance matrix of our gaussian process."
                         }
                     ]
