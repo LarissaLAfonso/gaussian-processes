@@ -3,6 +3,7 @@
   export let step;
   import katex from "katex";
   import "katex/dist/katex.min.css";
+  import { onMount } from "svelte";
 
   function renderMath(html) {
     return html
@@ -45,5 +46,12 @@
 
   .text-content {
     margin-top: 1rem;
+  }
+
+  .step-content {
+    background-color: #d6f5d6; /* light green */
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 2rem 0;
   }
 </style>
