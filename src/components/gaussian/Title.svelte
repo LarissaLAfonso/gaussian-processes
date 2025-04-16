@@ -127,21 +127,22 @@
 	}
 
 	.wrapper h1 {
-		font-size: 3rem;
-		color: #fba6a6;
-		margin-bottom: -0.5rem;
-		position: relative;
-		z-index: 2;
-		text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
-	}
+	font-size: 3rem;
+	color: #fba6a6;
+	margin-bottom: 0rem;
+	position: relative;
+	z-index: 2;
+	text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
+}
 
 	h4 {
 		font-size: 1.2rem;
 		color: #a0c4ff;
-		margin-bottom: 1.8rem;
+		margin-bottom: 1rem; 
 		position: relative;
 		z-index: 2;
 	}
+
 
 	p {
 		color: rgb(200, 200, 200);
