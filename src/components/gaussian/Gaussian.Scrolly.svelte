@@ -46,11 +46,10 @@
     </ScrollyStepWrapper>
 
     {#each data.steps as step, i}
-      <ScrollyStepWrapper height="auto">
+      <ScrollyStepWrapper>
         <ScrollyStep active={$scrollyIndex === i + 1}>
           <div class="step-container">
-            <div class="step-indicator { $scrollyIndex === i + 1 ? 'active' : '' }" />
-            <ScrollyStepContent data={step.value} />
+            <ScrollyStepContent step={step} />
           </div>
         </ScrollyStep>
       </ScrollyStepWrapper>
