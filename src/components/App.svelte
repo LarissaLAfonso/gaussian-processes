@@ -16,27 +16,27 @@
     });
 </script>
 
-<!--If at the top of the page and being on desktop-->
-{#if $scrollY === 0 && $mediaQueries["50rem"]}
-  <Opening />
-{/if}
-
-<!--If on desktop show scroll driven story-->
-{#if $mediaQueries["50rem"]}
-  <section id="scrolly">
-    <GaussianScrolly />
-  </section>
-<!--If on mobile, show static page-->
-{:else}
-  <div class="header-wrapper">
-    <Title />
-  </div>
-  <Notification />
-{/if}
-
-<Footer />
-
 <!--If the app is not mounted, show loading spinner-->
 {#if !mounted}
   <Loading />
+{:else}
+  <!--If at the top of the page and being on desktop-->
+  {#if $scrollY === 0 && $mediaQueries["50rem"]}
+    <Opening />
+  {/if}
+
+  <!--If on desktop show scroll driven story-->
+  {#if $mediaQueries["50rem"]}
+    <section id="scrolly">
+      <GaussianScrolly />
+    </section>
+  <!--If on mobile, show static page-->
+  {:else}
+    <div class="header-wrapper">
+      <Title />
+    </div>
+    <Notification />
+  {/if}
+
+  <Footer />
 {/if}
