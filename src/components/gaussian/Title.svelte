@@ -7,7 +7,7 @@
 	$: opacity = Math.max(0, 1 - $scrollY / 200);
 
 	const points = [
-        [0,100],
+        [0, 100],
 		[50, 120],
 		[100, 180],
 		[200, 60],
@@ -20,7 +20,12 @@
         [800, 80]
 	];
 
+	const uncertainty = [
+		20, 25, 15, 30, 25, 20, 18, 22, 19, 21, 20 // Desvio Padrão
+	];
+
 	let pathD = "";
+	let areaD = "";
 
 	onMount(() => {
 		const lineGenerator = d3.line()
@@ -29,13 +34,29 @@
 			.y(d => d[1]);
 
 		pathD = lineGenerator(points);
+
+		const upper = points.map(([x, y], i) => [x, y - uncertainty[i]]);
+		const lower = points.map(([x, y], i) => [x, y + uncertainty[i]]).reverse();
+
+		const areaGenerator = d3.line()
+			.curve(d3.curveMonotoneX)
+			.x(d => d[0])
+			.y(d => d[1]);
+
+		areaD = areaGenerator([...upper, ...lower]);
 	});
 </script>
 
 <div class="wrapper fullscreen" style="opacity: {opacity}">
 	<div class="graph-background" aria-hidden="true">
 		<svg viewBox="0 0 800 200" preserveAspectRatio="none">
+			<!-- Intervalo de Confiança -->
+			<path d="{areaD}" fill="#F08D30" fill-opacity="0.19" stroke="none" />
+
+			<!-- Linha Principal -->
 			<path d="{pathD}" stroke="#F08D30" stroke-width="4" fill="none" stroke-linecap="round" />
+
+			<!-- Pontos -->
 			{#each [
                 [50, 120], [100, 180], [200, 60], [300, 10], [380, 120],
                 [500, 40], [570, 70], [650, 45], [720, 100]
@@ -52,7 +73,7 @@
 		<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
 		<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
 	</p>
-</div> 
+</div>
 
 <style>
 	.wrapper {
@@ -106,21 +127,22 @@
 	}
 
 	.wrapper h1 {
-		font-size: 3rem;
-		color: #fba6a6;
-		margin-bottom: -0.5rem;
-		position: relative;
-		z-index: 2;
-		text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
-	}
+	font-size: 3rem;
+	color: #fba6a6;
+	margin-bottom: 0rem;
+	position: relative;
+	z-index: 2;
+	text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
+}
 
 	h4 {
 		font-size: 1.2rem;
 		color: #a0c4ff;
-		margin-bottom: 1.8rem;
+		margin-bottom: 1rem; 
 		position: relative;
 		z-index: 2;
 	}
+
 
 	p {
 		color: rgb(200, 200, 200);
