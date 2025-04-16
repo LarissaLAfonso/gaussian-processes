@@ -39,7 +39,7 @@
   style="width: {($scrollyIndex ?? 0) / (data.steps.length + 1) * 100}%"
 ></div>
 
-<div class="wrapper" style:pointer-events={$scrollyIndex === 0 ? "none" : "auto"}>
+<div class="wrapper" style:pointer-events={$scrollyIndex === 0 ? "auto" : "auto"}>
   <div class="foreground-wrapper">
     <ScrollyStepWrapper height="100vh">
       <Title />
