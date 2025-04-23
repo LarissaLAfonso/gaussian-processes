@@ -37,7 +37,7 @@
     const margin = { top: 20, right: 30, bottom: 40, left: 50 };
 
     const xScale = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.x))
+      .domain([0, d3.max(data, d => d.x) + 1])
       .range([margin.left, width - margin.right]);
 
     const yScale = d3.scaleLinear()
