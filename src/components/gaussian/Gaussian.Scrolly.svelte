@@ -9,6 +9,7 @@
   import G1 from "$components/plots/g1.svelte";
   import G2 from "$components/plots/g2.svelte";
   import G3 from "$components/plots/g3.svelte";
+  import G4 from "$components/plots/g4.svelte";
 
   // Temos dois tipos de scrolly index caso queiramos fazer um scrolly com steps ou com steps e conteúdo
   // O primeiro é o scrollyIndex, que é o índice do step atual
@@ -31,11 +32,21 @@
         offset: 0.5
         // parent
       })
-      .onStepEnter((response) => { // Updates current index
+      .onStepEnter((response) => {
         $scrollyIndex = response.index;
       });
+
+    if (window.MathJax) {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
   });
 </script>
+
+<svelte:head>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</svelte:head>
 
 <!-- Scroll progress bar -->
 <div
@@ -64,7 +75,7 @@
 
   <div class="background-wrapper">
     <!-- <Gaussian /> -->
-     <G3/>
+     <G4/>
   </div>
 </div>
 
