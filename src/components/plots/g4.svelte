@@ -12,20 +12,39 @@
   // Range dos dados
   const Xtest = d3.range(-5, 5.01, 0.01);
 
-  // Hyperparâmetros do kernel
-  const lengthScale = 1.5;
-  const noiseVariance = 1e-6;
+  // Hyperparâmetros dos kernels
+  const lengthScale = 1.5;      // Desvio Padrão na RBF
+  const noiseVariance = 1e-6;   // Ruído para a matriz de Covariância
+  const period = 1.0;           // Período para o kernel periódico
+  const degree = 3;             // Grau para o kernel polinomial
+  const constant = 0.1;         // Constante para o kernel polinomial
 
+  // Função do kernel RBF 
   function kernel_RBF(x, y) {
     return Math.exp(-0.5 * ((x - y) ** 2) / (lengthScale ** 2));
   }
 
-  function buildCovarianceMatrix(X1, X2) {
+  // Função do kernel periódico
+  function kernel_Periodic(x, y) {
+    return Math.exp(-2 * Math.sin(Math.PI * Math.abs(x - y) / period) ** 2 / (lengthScale ** 2));
+  }
+
+  // Função do kernel Matern 1/2
+  function kernel_Matern12(x, y) {
+    return Math.exp(-Math.abs(x - y) / lengthScale);
+  }
+
+  // Função do kernel polinomial
+  function kernel_Polynomial(x, y) {
+    return Math.pow((x * y + constant), degree);
+  }
+
+  function buildCovarianceMatrix(X1, X2, kernelFunc) {
     const matrix = [];
     for (let i = 0; i < X1.length; i++) {
       matrix[i] = [];
       for (let j = 0; j < X2.length; j++) {
-        matrix[i][j] = kernel_RBF(X1[i], X2[j]);
+        matrix[i][j] = kernelFunc(X1[i], X2[j]);
       }
     }
     return matrix;
@@ -80,8 +99,9 @@
     svg.append('g')
       .attr('transform', `translate(${xScale(0)},0)`)  
       .call(d3.axisLeft(yScale));
-
-    const K = buildCovarianceMatrix(Xtest, Xtest);
+      
+    const kernelFunc = kernel_Polynomial; 
+    const K = buildCovarianceMatrix(Xtest, Xtest, kernelFunc);
     for (let i = 0; i < K.length; i++) {
       K[i][i] += noiseVariance;
     }
