@@ -6,6 +6,10 @@
   import ScrollyStepContent from "$components/layouts/Scrolly.StepContent.svelte"; 
   import ScrollyStep from "$components/layouts/Scrolly.Step.svelte";
 
+  import G1 from "$components/plots/g1.svelte";
+  import G2 from "$components/plots/g2.svelte";
+  import G3 from "$components/plots/g3.svelte";
+
   // Temos dois tipos de scrolly index caso queiramos fazer um scrolly com steps ou com steps e conteúdo
   // O primeiro é o scrollyIndex, que é o índice do step atual
   // O segundo é o scrollyContentIndex, que é o índice do conteúdo atual
@@ -59,7 +63,8 @@
   </div>
 
   <div class="background-wrapper">
-    <Gaussian />
+    <!-- <Gaussian /> -->
+     <G3/>
   </div>
 </div>
 
@@ -153,14 +158,6 @@
     .foreground-wrapper, .background-wrapper {
       width: 100%;
       flex: unset;
-    }
-
-    .background-wrapper {
-      position: relative;
-      top: unset;
-      transform: none;
-      height: auto;
-      margin-top: 2rem;
     }
 
     .step-container {
