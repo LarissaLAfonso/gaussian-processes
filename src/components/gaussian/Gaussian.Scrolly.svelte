@@ -32,11 +32,21 @@
         offset: 0.5
         // parent
       })
-      .onStepEnter((response) => { // Updates current index
+      .onStepEnter((response) => {
         $scrollyIndex = response.index;
       });
+
+    if (window.MathJax) {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
   });
 </script>
+
+<svelte:head>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</svelte:head>
 
 <!-- Scroll progress bar -->
 <div
