@@ -11,6 +11,12 @@
   import G3 from "$components/plots/g3.svelte";
   import G4 from "$components/plots/g4.svelte";
 
+  import G5 from "$components/plots/matern.svelte";
+  import G6 from "$components/plots/periodic.svelte";
+  import G7 from "$components/plots/polinomial.svelte";
+  import G8 from "$components/plots/squared_exp.svelte";
+
+
   // Temos dois tipos de scrolly index caso queiramos fazer um scrolly com steps ou com steps e conteúdo
   // O primeiro é o scrollyIndex, que é o índice do step atual
   // O segundo é o scrollyContentIndex, que é o índice do conteúdo atual
@@ -75,7 +81,7 @@
 
   <div class="background-wrapper">
     <!-- <Gaussian /> -->
-     <G4/>
+     <G5/>
   </div>
 </div>
 
