@@ -63,7 +63,7 @@
             ] as [cx, cy]}
                 <circle cx={cx} cy={cy} r="5" class="dot" />
             {/each}
-		</svg>
+			</svg>
 	</div>
 
 	<h1 class="montserrat-heading">Gaussian Processes</h1>
@@ -73,6 +73,8 @@
 		<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
 		<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
 	</p>
+
+	<img src="laughing.png" alt="corner decoration" class="corner-image" />
 </div>
 
 
@@ -165,6 +167,19 @@
 	a:hover {
 		color: #ffc8dd;
 	}
+
+	.corner-image {
+		position: absolute;
+		right: 8rem;
+		bottom: 6rem;
+		width: 300px; /* adjust as needed */
+		height: auto;
+		opacity: 0.8;
+		pointer-events: none;
+		z-index: 1;
+		transform: rotate(15deg);
+	}
+
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">

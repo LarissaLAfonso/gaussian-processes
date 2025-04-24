@@ -72,6 +72,7 @@
         <ScrollyStep active={$scrollyIndex === i + 1}>
           <div class="step-container">
             <ScrollyStepContent step={step} />
+            <img src={step.figure} alt="illustration" class="corner-figure" />
           </div>
         </ScrollyStep>
       </ScrollyStepWrapper>
@@ -181,5 +182,15 @@
     .step-container {
       padding: 1rem;
     }
+  }
+
+  .corner-figure {
+    position: absolute;
+    bottom: -4rem;
+    right: -2rem;
+    width: 150px;
+    height: auto;
+    opacity: 0.85;
+    pointer-events: none;
   }
 </style>

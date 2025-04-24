@@ -12,7 +12,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "figure": "happy.png"
         },
         {
             "type": "step",
@@ -26,7 +27,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "figure": "happy.png"
         },
         {
             "type": "step",
@@ -49,7 +51,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "figure": "thinking.png"
         },
         {
             "type": "step",
@@ -81,7 +84,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "figure": "super_happy.png"
         },
         {
             "type": "step",
@@ -109,11 +113,12 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "And that sets our definition: a gaussian process is a stochastic process such that for any finite collection \\(X_1, \\dots, X_n\\) of values follows a gaussian distribution with mean \\(\\mu(x)\\) and covariance matrix \\(K(X_1, \\dots, X_n)\\)."
+                            "value": "And that sets our definition: a gaussian process is a stochastic process such that any finite collection \\(X_1, \\dots, X_n\\) of values follows a gaussian distribution with mean \\(\\mu(x)\\) and covariance matrix \\(K(X_1, \\dots, X_n)\\)."
                         }
                     ]
                 }
-            ]
+            ],
+            "figure": "happy.png"
         },
         {
             "type": "step",
@@ -136,7 +141,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "figure": "happy.png"
         },
         {
             "type": "step",
@@ -150,7 +156,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "figure": "laughing.png"
         }
     ]
 }

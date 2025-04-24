@@ -39,7 +39,7 @@
 <style>
   .step-section {
     background-color: #e0f8e0;
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 10px;
     margin-bottom: 1rem;
   }
@@ -52,6 +52,6 @@
     background-color: #d6f5d6; /* light green */
     padding: 1rem;
     border-radius: 8px;
-    margin: 2rem 0;
+    margin: 1rem 0;
   }
 </style>
