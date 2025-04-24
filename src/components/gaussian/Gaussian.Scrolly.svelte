@@ -6,7 +6,7 @@
   import ScrollyStepContent from "$components/layouts/Scrolly.StepContent.svelte"; 
   import ScrollyStep from "$components/layouts/Scrolly.Step.svelte";
 
-  import G1 from "$components/plots/g1.svelte";
+  import G1 from "$components/plots/grafico1.svelte";
   import G2 from "$components/plots/g2.svelte";
   import G3 from "$components/plots/g3.svelte";
   import G4 from "$components/plots/g4.svelte";
@@ -81,7 +81,7 @@
 
   <div class="background-wrapper">
     <!-- <Gaussian /> -->
-     <G5/>
+     <G1/>
   </div>
 </div>
 

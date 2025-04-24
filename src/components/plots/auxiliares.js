@@ -26,6 +26,17 @@ export function generateData(kernelFunction, start = -5, end = 5, step = 0.05) {
   return data;
 }
 
+export function sampleNormal(mean, cov) {
+  /*
+  Gera uma amostra de uma distribuição normal multivariada com média e matriz de covariância especificadas.
+  */
+  const n = mean.length;
+  const L = cholesky(cov);
+  const z = Array.from({ length: n }, () => d3.randomNormal(0, 1)());
+  const sample = math.multiply(L, z);
+  return sample.map((val, i) => val + mean[i]);
+}
+
 // Plot do Kernel
 export function draw_kernel_func(svgContainer, data) {
   const width = 800;

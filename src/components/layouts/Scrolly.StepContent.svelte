@@ -41,7 +41,7 @@
     background-color: #e0f8e0;
     padding: 2rem;
     border-radius: 10px;
-    margin-bottom: 6rem;
+    margin-bottom: 1rem;
   }
 
   .text-content {

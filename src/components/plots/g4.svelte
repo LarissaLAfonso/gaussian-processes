@@ -70,6 +70,9 @@
   }
   
   function sampleNormal(mean, cov) {
+    /*
+    Gera uma amostra de uma distribuição normal multivariada com média e matriz de covariância especificadas.
+    */
     const n = mean.length;
     const L = cholesky(cov);
     const z = Array.from({ length: n }, () => d3.randomNormal(0, 1)());
@@ -78,18 +81,20 @@
   }
 
   async function draw() {
+    // Limpa o SVG antes de desenhar
     svg.selectAll('*').remove();
 
-    const xScale = d3.scaleLinear()
+    
+    const xScale = d3.scaleLinear()   // Escala para o eixo X
       .domain([-5, 5])
       .range([margin.left, width - margin.right]);
 
-    const yScale = d3.scaleLinear()
+    const yScale = d3.scaleLinear()  // Escala para o eixo Y
       .domain([-3, 3])
       .range([height - margin.bottom, margin.top]);
 
-    const line = d3.line()
-      .x((d, i) => xScale(Xtest[i]))
+    const line = d3.line()           // Desenha a linha
+      .x((d, i) => xScale(Xtest[i])) // d é o valor atual e i é o índice
       .y(d => yScale(d));
 
     // Eixos
