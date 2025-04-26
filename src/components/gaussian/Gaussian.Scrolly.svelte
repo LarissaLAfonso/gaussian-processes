@@ -83,7 +83,7 @@
 
   <div class="background-wrapper">
     <!-- <Gaussian /> -->
-     <G4/>
+     <G1/>
   </div>
 </div>
 
@@ -144,6 +144,7 @@
     transition: background 0.3s ease;
   }
 
+  /*
   .step-indicator {
     position: absolute;
     left: -10px;
@@ -157,7 +158,7 @@
 
   .step-indicator.active {
     background: #9bffd7;
-  }
+  }*/
 
   .progress-bar {
     position: fixed;

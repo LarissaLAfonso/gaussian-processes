@@ -23,7 +23,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "If \\(n\\) is small enough, you can imagine it as a sample of a random variable \\(X \\sim F(\\theta)\\) living in \\(\\mathbb{R}^d\\), with \\(d\\) at least as big as \\(n\\)."
+                            "value": "If \\(n\\) is small enough, you can imagine it as a <b>sample of a random variable</b> \\(X \\sim F(\\theta)\\) living in \\(\\mathbb{R}^d\\), with \\(d\\) at least as big as \\(n\\)."
                         }
                     ]
                 }
@@ -62,7 +62,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "In the initial setting, we had a bunch of points on the plane, and we assigned to them a distribution which essentially describes the probability of observing certain \\(y\\)'s for fixed regions of the \\(x\\) axis. In other words, for each fixed region of the \\(x\\) axis we assigned a probability, a number."
+                            "value": "In the initial setting, we had a bunch of points on the plane, and we assigned to them a distribution which essentially describes the probability of observing certain \\(y\\)'s for fixed regions of the \\(x\\) axis. In other words, <b>for each fixed region</b> of the \\(x\\) axis <b>we assigned a probability</b>, a number."
                         }
                     ]
                 },
@@ -80,7 +80,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "Yeah, we're creating a function!"
+                            "value": "Yeah, we're creating <b>a function!</b>"
                         }
                     ]
                 }
@@ -152,7 +152,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "And what's more: as gaussians are closed under conditioning, that means we can mantain our framework in the light of new data, by just updating the mean and covariance matrix of our gaussian process."
+                            "value": "And what's more: as <b>gaussians are closed under conditioning</b>, that means we can mantain our framework in the light of new data, by just updating the mean and covariance matrix of our gaussian process."
                         }
                     ]
                 }
