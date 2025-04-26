@@ -6,7 +6,7 @@
   import ScrollyStepContent from "$components/layouts/Scrolly.StepContent.svelte"; 
   import ScrollyStep from "$components/layouts/Scrolly.Step.svelte";
 
-  import G1 from "$components/plots/g1.svelte";
+  import G1 from "$components/plots/grafico1.svelte";
   import G2 from "$components/plots/g2.svelte";
   import G3 from "$components/plots/g3.svelte";
   import G4 from "$components/plots/g4.svelte";
@@ -49,6 +49,7 @@
 </script>
 
 <svelte:head>
+  <title>❥ Gaussian Processes </title>
   <script type="text/javascript" async
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
   </script>
@@ -71,6 +72,7 @@
         <ScrollyStep active={$scrollyIndex === i + 1}>
           <div class="step-container">
             <ScrollyStepContent step={step} />
+            <img src={step.figure} alt="illustration" class="corner-figure" />
           </div>
         </ScrollyStep>
       </ScrollyStepWrapper>
@@ -81,7 +83,7 @@
 
   <div class="background-wrapper">
     <!-- <Gaussian /> -->
-     <G5/>
+     <G1/>
   </div>
 </div>
 
@@ -142,6 +144,7 @@
     transition: background 0.3s ease;
   }
 
+  /*
   .step-indicator {
     position: absolute;
     left: -10px;
@@ -155,7 +158,7 @@
 
   .step-indicator.active {
     background: #9bffd7;
-  }
+  }*/
 
   .progress-bar {
     position: fixed;
@@ -180,5 +183,15 @@
     .step-container {
       padding: 1rem;
     }
+  }
+
+  .corner-figure {
+    position: absolute;
+    bottom: -4rem;
+    right: -2rem;
+    width: 150px;
+    height: auto;
+    opacity: 0.85;
+    pointer-events: none;
   }
 </style>

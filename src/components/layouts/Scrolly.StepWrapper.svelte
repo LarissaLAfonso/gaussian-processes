@@ -1,5 +1,5 @@
 <script>
-    export let height = "80vh";
+    export let height = "100vh";
 </script>
 
 <!-- This component is used to wrap the content of each step in the Scrolly component.
@@ -18,6 +18,6 @@ div {
 }
 
 .step-wrapper {
-    margin: 6rem 0; /* adjust as needed */
+    margin: 1rem 0; /* adjust as needed */
 }
 </style>

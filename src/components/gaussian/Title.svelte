@@ -11,7 +11,7 @@
 		[50, 120],
 		[100, 180],
 		[200, 60],
-		[300, 10],
+		[300, 15],
 		[380, 120],
 		[500, 40],
 		[570, 70],
@@ -21,7 +21,7 @@
 	];
 
 	const uncertainty = [
-		20, 25, 15, 30, 25, 20, 18, 22, 19, 21, 20 // Desvio Padrão
+		20, 25, 15, 30, 15, 20, 18, 22, 19, 21, 20 // Desvio Padrão
 	];
 
 	let pathD = "";
@@ -58,12 +58,12 @@
 
 			<!-- Pontos -->
 			{#each [
-                [50, 120], [100, 180], [200, 60], [300, 10], [380, 120],
+                [50, 120], [100, 180], [200, 60], [300, 15], [380, 120],
                 [500, 40], [570, 70], [650, 45], [720, 100]
             ] as [cx, cy]}
                 <circle cx={cx} cy={cy} r="5" class="dot" />
             {/each}
-		</svg>
+			</svg>
 	</div>
 
 	<h1 class="montserrat-heading">Gaussian Processes</h1>
@@ -73,6 +73,8 @@
 		<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
 		<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
 	</p>
+
+	<img src="laughing.png" alt="corner decoration" class="corner-image" />
 </div>
 
 
@@ -165,6 +167,19 @@
 	a:hover {
 		color: #ffc8dd;
 	}
+
+	.corner-image {
+		position: absolute;
+		right: 8rem;
+		bottom: 6rem;
+		width: 300px; /* adjust as needed */
+		height: auto;
+		opacity: 0.8;
+		pointer-events: none;
+		z-index: 1;
+		transform: rotate(15deg);
+	}
+
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">

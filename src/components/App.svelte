@@ -1,5 +1,4 @@
 <script>
-    import Opening from "$components/gaussian/Opening.svelte";
     import GaussianScrolly from "$components/gaussian/Gaussian.Scrolly.svelte";
     import Footer from "$components/gaussian/Footer.svelte";
     import scrollY from "$stores/scrollY.js";
@@ -35,11 +34,6 @@
 {#if !mounted}
   <Loading />
 {:else}
-  <!--If at the top of the page and being on desktop-->
-  {#if $scrollY === 0 && $mediaQueries["50rem"]}
-    <Opening />
-  {/if}
-
   <!--If on desktop show scroll driven story-->
   {#if $mediaQueries["50rem"]}
     <section id="scrolly">
@@ -54,4 +48,5 @@
   {/if}
 
   <Footer />
+  
 {/if}
