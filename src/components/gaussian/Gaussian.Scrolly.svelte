@@ -83,7 +83,7 @@
 
   <div class="background-wrapper">
     <!-- <Gaussian /> -->
-     <G1/>
+     <G4/>
   </div>
 </div>
 

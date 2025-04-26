@@ -1,16 +1,18 @@
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
-  import * as math from 'mathjs';  
+  import * as math from 'mathjs';
 
   let width = 800;
   let height = 400;
   let margin = { top: 20, right: 20, bottom: 40, left: 40 };
-
   let svg;
+  let paths = [];
+  let line;
+  let interval;
+  let maxLines = 20;
 
-  // Range dos dados
-  const Xtest = d3.range(-5, 5.01, 0.01);
+  const Xtest = d3.range(-5, 5.01, 0.01);  // Range dos dados
 
   // Hyperparâmetros dos kernels
   const lengthScale = 1.5;      // Desvio Padrão na RBF
@@ -19,22 +21,6 @@
   const degree = 3;             // Grau para o kernel polinomial
   const constant = 0.1;         // Constante para o kernel polinomial
 
-  // Função do kernel RBF 
-  function kernel_RBF(x, y) {
-    return Math.exp(-0.5 * ((x - y) ** 2) / (lengthScale ** 2));
-  }
-
-  // Função do kernel periódico
-  function kernel_Periodic(x, y) {
-    return Math.exp(-2 * Math.sin(Math.PI * Math.abs(x - y) / period) ** 2 / (lengthScale ** 2));
-  }
-
-  // Função do kernel Matern 1/2
-  function kernel_Matern12(x, y) {
-    return Math.exp(-Math.abs(x - y) / lengthScale);
-  }
-
-  // Função do kernel polinomial
   function kernel_Polynomial(x, y) {
     return Math.pow((x * y + constant), degree);
   }
@@ -68,11 +54,8 @@
     }
     return L;
   }
-  
+
   function sampleNormal(mean, cov) {
-    /*
-    Gera uma amostra de uma distribuição normal multivariada com média e matriz de covariância especificadas.
-    */
     const n = mean.length;
     const L = cholesky(cov);
     const z = Array.from({ length: n }, () => d3.randomNormal(0, 1)());
@@ -80,49 +63,27 @@
     return sample.map((val, i) => val + mean[i]);
   }
 
-  async function draw() {
-    // Limpa o SVG antes de desenhar
-    svg.selectAll('*').remove();
+  function addLine(K) {
+    const samples = sampleNormal(Array(Xtest.length).fill(0), K);
 
-    
-    const xScale = d3.scaleLinear()   // Escala para o eixo X
-      .domain([-5, 5])
-      .range([margin.left, width - margin.right]);
-
-    const yScale = d3.scaleLinear()  // Escala para o eixo Y
-      .domain([-3, 3])
-      .range([height - margin.bottom, margin.top]);
-
-    const line = d3.line()           // Desenha a linha
-      .x((d, i) => xScale(Xtest[i])) // d é o valor atual e i é o índice
-      .y(d => yScale(d));
-
-    // Eixos
-    svg.append('g')
-      .attr('transform', `translate(0,${yScale(0)})`)  
-      .call(d3.axisBottom(xScale));
-    svg.append('g')
-      .attr('transform', `translate(${xScale(0)},0)`)  
-      .call(d3.axisLeft(yScale));
-      
-    const kernelFunc = kernel_Polynomial; 
-    const K = buildCovarianceMatrix(Xtest, Xtest, kernelFunc);
-    for (let i = 0; i < K.length; i++) {
-      K[i][i] += noiseVariance;
+    if (paths.length > 0) {
+      paths[paths.length - 1]
+        .attr('stroke', '#808080')    // Cor cinza para linha antiga
+        .attr('opacity', 0.5);
     }
 
-    // Desenho das linhas
-    const grayColor = "#808080";  
-    const numLines = 10;
-    for (let i = 0; i < numLines; i++) {
-      const samples = sampleNormal(Array(Xtest.length).fill(0), K);
-      svg.append('path')
-        .datum(samples)
-        .attr('fill', 'none')
-        .attr('stroke', grayColor)  
-        .attr('stroke-width', 2)
-        .attr('d', line)
-        .attr('opacity', 0.6);
+    const path = svg.select('#paths-group').append('path')
+      .datum(samples)
+      .attr('fill', 'none')
+      .attr('stroke', 'blue')         // Cor azul para linha nova
+      .attr('stroke-width', 2)
+      .attr('d', line)
+      .attr('opacity', 1);
+
+    paths.push(path);
+
+    if (paths.length >= maxLines) {
+      clearInterval(interval);
     }
   }
 
@@ -131,7 +92,45 @@
       .attr('width', width)
       .attr('height', height);
 
-    draw();
+    // Grupos separados para paths e eixos
+    const pathsGroup = svg.append('g').attr('id', 'paths-group');
+    const axesGroup = svg.append('g').attr('id', 'axes-group');
+
+    const xScale = d3.scaleLinear().domain([-5, 5]).range([margin.left, width - margin.right]);
+    const yScale = d3.scaleLinear().domain([-3, 3]).range([height - margin.bottom, margin.top]);
+
+    line = d3.line()
+      .x((d, i) => xScale(Xtest[i]))
+      .y(d => yScale(d));
+
+    // Eixos sem ticks
+    const xAxis = d3.axisBottom(xScale)
+      .tickSize(0)
+      .tickFormat('');
+
+    axesGroup.append('g')
+      .attr('transform', `translate(0,${yScale(0)})`)
+      .call(xAxis)
+      .select('.domain')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 1);
+
+    const yAxis = d3.axisLeft(yScale)
+      .tickSize(0)
+      .tickFormat('');
+
+    axesGroup.append('g')
+      .attr('transform', `translate(${xScale(0)},0)`)
+      .call(yAxis)
+      .select('.domain')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 1);
+
+    const kernelFunc = kernel_Polynomial;
+    const K = buildCovarianceMatrix(Xtest, Xtest, kernelFunc);
+    for (let i = 0; i < K.length; i++) K[i][i] += noiseVariance;
+
+    interval = setInterval(() => addLine(K), 2000);
   });
 </script>
 
