@@ -23,11 +23,8 @@ export var Kernel = {
         x = tf.tensor(x);
         y = tf.tensor(y);
         var diff = tf.sub(x, y);
-        console.log(diff.arraySync());
         var dotDiff = tf.matMul(diff, diff, false, true);
-        console.log(dotDiff.arraySync());
         var scaledDiff = tf.div(dotDiff, tf.square(2*lengthScale));
-        console.log(scaledDiff.arraySync());
         return tf.pow(tf.add(1, scaledDiff), -alpha);
     },
     periodic: function (x, y, period, lengthScale) {
