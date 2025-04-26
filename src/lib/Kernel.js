@@ -16,7 +16,7 @@ export var Kernel = {
         y = tf.tensor(y);
         var diff = tf.sub(x, y);
         var dotDiff = tf.matMul(diff, diff, false, true);
-        var scaledDiff = tf.div(dotDiff, tf.square(2*lengthScale));
+        var scaledDiff = tf.div(dotDiff, lengthScale*lengthScale*2);
         return tf.exp(scaledDiff);
     },
     rationalQuadratic: function (x, y, alpha, lengthScale) {
@@ -24,7 +24,7 @@ export var Kernel = {
         y = tf.tensor(y);
         var diff = tf.sub(x, y);
         var dotDiff = tf.matMul(diff, diff, false, true);
-        var scaledDiff = tf.div(dotDiff, tf.square(2*lengthScale));
+        var scaledDiff = tf.div(dotDiff, lengthScale*lengthScale*alpha*2);
         return tf.pow(tf.add(1, scaledDiff), -alpha);
     },
     periodic: function (x, y, period, lengthScale) {
