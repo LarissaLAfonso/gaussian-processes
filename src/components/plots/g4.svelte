@@ -97,7 +97,7 @@
     const axesGroup = svg.append('g').attr('id', 'axes-group');
 
     const xScale = d3.scaleLinear().domain([-5, 5]).range([margin.left, width - margin.right]);
-    const yScale = d3.scaleLinear().domain([-3, 3]).range([height - margin.bottom, margin.top]);
+    const yScale = d3.scaleLinear().domain([-3, 3]).range([height, 0]);
 
     line = d3.line()
       .x((d, i) => xScale(Xtest[i]))
