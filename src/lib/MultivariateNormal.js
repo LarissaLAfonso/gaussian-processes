@@ -11,6 +11,6 @@ export class MultivariateNormal {
     sample(numSamples) {
         const numDimensions = this.mean.shape[0];
         let singleNormal = tf.randomNormal([numSamples, numDimensions]);
-        return tf.matMul(singleNormal, this.covariance) + this.mean;
+        return tf.add(tf.matMul(singleNormal, this.covariance), this.mean);
     }
 }
