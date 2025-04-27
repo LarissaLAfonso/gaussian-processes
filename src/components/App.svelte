@@ -7,6 +7,7 @@
     import Loading from "$components/gaussian/LoadingSpinner.svelte";
     import mediaQueries from "$stores/mediaQueries.js";
     import { onMount } from "svelte";
+    import * as tf from "@tensorflow/tfjs";
   
     let mounted = false;
   
