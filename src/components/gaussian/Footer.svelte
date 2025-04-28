@@ -47,14 +47,14 @@
       <div class="thanks-wrapper">
         <h1>Thank you! (○ﾟεﾟ○)</h1>
       </div>
-      <div class="acknowledgements">
-        <p style="margin-bottom: 0.9rem;"><strong>Acknowledgements</strong></p>
-        <p>We must thank Yizhe Ang <Link href="https://github.com/yizhe-ang/k-means-explorable/blob/main">for his amazing exploration</Link>
-         of the K-Means algorithm, whose implementing framework inspired ours.</p> 
-        <p>We also thank Görtler, Kehlbeck and Deussen for <Link href="https://distill.pub/2019/visual-exploration-gaussian-processes">their publication</Link> on the subject,
-         which was a great source of knowledge and inspiration for us.</p>
-      </div>
       {#if active}
+        <div class="acknowledgements">
+          <p style="margin-bottom: 0.9rem;"><strong>Acknowledgements</strong></p>
+          <p>We must thank Yizhe Ang <Link href="https://github.com/yizhe-ang/k-means-explorable/blob/main">for his amazing exploration</Link>
+          of the K-Means algorithm, whose implementing framework inspired ours.</p> 
+          <p>We also thank Görtler, Kehlbeck and Deussen for <Link href="https://distill.pub/2019/visual-exploration-gaussian-processes">their publication</Link> on the subject,
+          which was a great source of knowledge and inspiration for us.</p>
+        </div>
         <p><strong>Contact us:</strong></p>
         {#each authors as author}
         <div class="author-block">
