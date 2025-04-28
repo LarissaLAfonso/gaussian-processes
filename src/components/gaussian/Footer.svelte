@@ -27,17 +27,17 @@
       {
         name: "Larissa",
         github: "https://github.com/LarissaLAfonso",
-        linkedin: "https://en.wikipedia.org/wiki/My_Neighbor_Totoro"   // !! TROCAR LINKEDINS !!
+        linkedin: "https://www.linkedin.com/in/larissa-lemos-afonso-087b78196/"   
       },
       {
         name: "Luciano",
         github: "https://github.com/LuuSamp",
-        linkedin: "https://en.wikipedia.org/wiki/My_Neighbor_Totoro"
+        linkedin: "https://www.linkedin.com/in/luciano-pereira-sampaio-689200242/"
       },
       {
         name: "Kaiky",
         github: "https://github.com/KaikyBraga",
-        linkedin: "https://en.wikipedia.org/wiki/My_Neighbor_Totoro"
+        linkedin: "https://www.linkedin.com/in/kaiky-braga-8a84962aa/"
       }
     ];
   </script>
