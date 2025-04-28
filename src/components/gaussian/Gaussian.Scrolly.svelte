@@ -16,6 +16,9 @@
   import G7 from "$components/plots/polinomial.svelte";
   import G8 from "$components/plots/squared_exp.svelte";
 
+  import PriorPlot from "$components/plots/prior.svelte";
+  import ScatterPrior from "$components/plots/scatter_prior.svelte";
+
 
   // Temos dois tipos de scrolly index caso queiramos fazer um scrolly com steps ou com steps e conteúdo
   // O primeiro é o scrollyIndex, que é o índice do step atual
@@ -24,6 +27,7 @@
   import { onMount, setContext } from "svelte";
   import { writable } from "svelte/store";
   import scrollama from "scrollama";
+    import Prior from "$components/plots/prior.svelte";
 
   // Scroller parameters
   const scrollyIndex = writable(undefined);
@@ -61,7 +65,7 @@
   style="width: {($scrollyIndex ?? 0) / (data.steps.length + 1) * 100}%"
 ></div>
 
-<div class="wrapper" style:pointer-events={$scrollyIndex === 0 ? "auto" : "auto"}>
+<div class="wrapper" style="pointer-events:{$scrollyIndex === 0 ? 'auto' : 'auto'}">
   <div class="foreground-wrapper">
     <ScrollyStepWrapper height="100vh">
       <Title />
@@ -82,8 +86,7 @@
   </div>
 
   <div class="background-wrapper">
-    <!-- <Gaussian /> -->
-     <G1/>
+    <ScatterPrior />  
   </div>
 </div>
 
