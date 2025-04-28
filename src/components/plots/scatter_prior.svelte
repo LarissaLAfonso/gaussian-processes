@@ -39,14 +39,13 @@
         const yExtent = d3.extent(data, d => d.y);
         yScale.domain(yExtent);
         
-        // Textos do eixo Y
         svg.select('#ymin-text')
-            .text(`y = ${yExtent[0].toFixed(2)}`)
-            .attr('y', yScale(yExtent[0]) - 10);
-            
+            .text(`y min = ${yExtent[0].toFixed(2)}`)
+            .attr('y', yScale(yExtent[0]) + 24); 
+
         svg.select('#ymax-text')
-            .text(`y = ${yExtent[1].toFixed(2)}`)
-            .attr('y', yScale(yExtent[1]) + 10);
+            .text(`y max = ${yExtent[1].toFixed(2)}`)
+            .attr('y', yScale(yExtent[1]) ); 
         
         // Plot dos pontos
         const points = svg.select('#points-group')
@@ -58,8 +57,8 @@
             .merge(points)
             .attr('cx', d => xScale(d.x))
             .attr('cy', d => yScale(d.y))
-            .attr('r', 1.5)
-            .attr('fill', 'blue')
+            .attr('r', 4)
+            .attr('fill', '#47A2A4')
             .attr('opacity', 0.6);
 
         points.exit().remove();
@@ -82,6 +81,17 @@
             .attr('width', width)
             .attr('height', height);
         
+        // Borda do gráfico
+        svg.append('rect')
+            .attr('x', margin.left)    
+            .attr('y', 0)     
+            .attr('width', width - margin.left - margin.right)
+            .attr('height', height)
+            .attr('fill', 'none')
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2)
+            .attr('shape-rendering', 'crispEdges'); 
+            
         // Escalas
         xScale = d3.scaleLinear()
             .domain([-5, 5])
@@ -96,27 +106,31 @@
         // Eixos
         const axesGroup = svg.append('g').attr('id', 'axes-group');
         
-        // Eixo X
+        // Eixo X = 0
         axesGroup.append('line')
             .attr('id', 'y-zero-line')
             .attr('x1', margin.left)
             .attr('x2', width - margin.right)
-            .attr('y1', (height-margin.top-margin.bottom)/2)
-            .attr('y2', (height-margin.top-margin.bottom)/2)
+            .attr('y1', (height-margin.top)/2)
+            .attr('y2', (height-margin.top)/2)
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
-            .attr('stroke-dasharray', '4 2'); 
+            .attr('stroke-dasharray', '4 2');
 
-        // Textos do eixo Y
         axesGroup.append('text').attr('id', 'ymin-text')
-            .attr('x', margin.left + 60)
-            .attr('text-anchor', 'end')
-            .attr('font-size', '12px');
-            
+            .attr('x', margin.left + 5)
+            .attr('text-anchor', 'start')
+            .attr('font-size', '12px')
+            .attr('fill', 'black')
+            .text('y min'); 
+
         axesGroup.append('text').attr('id', 'ymax-text')
-            .attr('x', width - 60)
-            .attr('text-anchor', 'end')
-            .attr('font-size', '12px');
+            .attr('x', margin.left + 5)
+            .attr('text-anchor', 'start')
+            .text('y max')
+            .attr('font-size', '12px')
+            .attr('fill', 'black')
+            .text('y max'); 
 
         plotSamples(); // Plot inicial
     });
@@ -226,13 +240,6 @@
 </div>
 
 <style>
-
-    #gp-svg {
-        border: 1px solid #676767;
-        border-radius: 2px;
-        background-color: white;
-        }
-
     .container {
         display: flex;
         flex-direction: column;

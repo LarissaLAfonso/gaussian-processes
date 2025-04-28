@@ -134,20 +134,20 @@
         // Adição do valor de ymin
         axesGroup.append('text')
             .attr('id', 'y-min-label')
-            .attr('x', margin.left + 60)
-            .attr('y', yScale(minY) - 10)
-            .attr('text-anchor', 'end')
-            .text(`y = ${minY.toFixed(2)}`)
+            .attr('x', margin.left + 5)
+            .attr('y', yScale(minY) + 30)
+            .attr('text-anchor', 'start')
+            .text(`y min = ${minY.toFixed(2)}`)
             .attr('font-size', '12px')
             .attr('fill', 'black');
 
        // Adição do valor de ymax
         axesGroup.append('text')
             .attr('id', 'y-max-label')
-            .attr('x', margin.left + 60)
-            .attr('y', yScale(maxY) + 10)
-            .attr('text-anchor', 'end')
-            .text(`y = ${maxY.toFixed(2)}`)
+            .attr('x', margin.left + 5)
+            .attr('y', yScale(maxY) - 5)
+            .attr('text-anchor', 'start')
+            .text(`y max = ${maxY.toFixed(2)}`)
             .attr('font-size', '12px')
             .attr('fill', 'black');
 
