@@ -60,7 +60,7 @@ export function sampleNormal(mean, cov) {
 export function generateGPSamples(kernelFunction, start = -5, end = 5, step = 0.1) {
     const xArray = [];
     for (let x = start; x <= end; x += step) {
-        xArray.push(Number(x.toFixed(2))); // Evita erros de precisão
+        xArray.push(Number(x.toFixed(2))); 
     }
 
     // Matriz de covariância
