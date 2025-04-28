@@ -8,7 +8,7 @@
     import mediaQueries from "$stores/mediaQueries.js";
     import { onMount } from "svelte";
   
-    let mounted = false;
+    let mounted = false; // Declare scrollyIndex as a writable store
   
     onMount(() => { // Prevents the page from showing until the app is mounted
       mounted = true;
@@ -31,7 +31,5 @@
     </div>
     <Notification />
   {/if}
-
-  <Footer />
   
 {/if}

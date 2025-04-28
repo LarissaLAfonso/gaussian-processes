@@ -1,6 +1,25 @@
 <script>
     import Icon from "$components/helpers/Icon.svelte";
     import IconLink from "$components/gaussian/IconLink.svelte";
+    import scrollY from "$stores/scrollY.js";
+    import Link from "$components/gaussian/Link.svelte";
+    import { onMount } from "svelte";
+    export let active = true;
+
+    let opacity = 0;
+    let maxScroll = 0;
+
+    onMount(() => {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      maxScroll = scrollHeight - clientHeight;
+    })
+
+    $: if (maxScroll > 0) {
+        opacity = $scrollY >= maxScroll * 0.98 ? 1 : 0;
+    }
+  
+
   
     const iconSize = "1.5rem";
   
@@ -23,33 +42,55 @@
     ];
   </script>
   
-  <div class="wrapper">
+  <div class="wrapper fullscreen" style="opacity: {opacity}">
     <div class="content-wrapper">
-      <p><b>Connect with us:</b></p>
-  
-      {#each authors as author}
+      <div class="thanks-wrapper">
+        <h1>Thank you! (○ﾟεﾟ○)</h1>
+      </div>
+      <div class="acknowledgements">
+        <p style="margin-bottom: 0.9rem;"><strong>Acknowledgements</strong></p>
+        <p>We must thank Yizhe Ang <Link href="https://github.com/yizhe-ang/k-means-explorable/blob/main">for his amazing exploration</Link>
+         of the K-Means algorithm, whose implementing framework inspired ours.</p> 
+        <p>We also thank Görtler, Kehlbeck and Deussen for <Link href="https://distill.pub/2019/visual-exploration-gaussian-processes">their publication</Link> on the subject,
+         which was a great source of knowledge and inspiration for us.</p>
+      </div>
+      {#if active}
+        <p><strong>Contact us:</strong></p>
+        {#each authors as author}
         <div class="author-block">
           <p>{author.name}</p>
           <div class="icons-wrapper">
             <IconLink href={author.linkedin}>
               <Icon slot="icon" name="linkedin" width={iconSize} height={iconSize} />
-              <svelte:fragment slot="label">LinkedIn</svelte:fragment>
+              <span slot="label">LinkedIn</span>
             </IconLink>
+            
             <IconLink href={author.github}>
               <Icon slot="icon" name="github" width={iconSize} height={iconSize} />
-              <svelte:fragment slot="label">GitHub</svelte:fragment>
-            </IconLink>
+              <span slot="label">GitHub</span>
+            </IconLink>                
           </div>
         </div>
       {/each}
+      {/if}
     </div>
   </div>
   
   <style>
     .wrapper {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      font-family: 'Poppins', 'Comic Neue', 'Quicksand', sans-serif;
+      text-align: center;
       padding-bottom: 96px;
-      padding-top: 48px;
-      background-color: hsl(262, 48%, 96%);
+      padding-top: 15px;
+      border-radius: 1.4rem;
+      overflow: hidden;
     }
   
     .content-wrapper {
@@ -58,12 +99,40 @@
       align-items: center;
       gap: 1.5rem;
     }
+
+    .thanks-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .acknowledgements {
+      font-style: italic;
+      font-size: 1rem;
+      padding-bottom: 3rem;
+    }
   
     .author-block {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    .wrapper.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgb(254, 255, 215);
     }
   
     .icons-wrapper {

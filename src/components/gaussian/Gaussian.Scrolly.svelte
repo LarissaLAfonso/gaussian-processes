@@ -5,6 +5,7 @@
   import ScrollyStepWrapper from "$components/layouts/Scrolly.StepWrapper.svelte";
   import ScrollyStepContent from "$components/layouts/Scrolly.StepContent.svelte"; 
   import ScrollyStep from "$components/layouts/Scrolly.Step.svelte";
+  import Footer from "$components/gaussian/Footer.svelte";
 
   import G1 from "$components/plots/grafico1.svelte";
   import G2 from "$components/plots/grafico2.svelte";
@@ -79,6 +80,12 @@
         </ScrollyStep>
       </ScrollyStepWrapper>
     {/each}
+
+    <ScrollyStepWrapper height="100vh">
+      <ScrollyStep active={$scrollyIndex === 8}>
+          <Footer active={$scrollyIndex === 8}/>
+      </ScrollyStep>
+    </ScrollyStepWrapper>
 
     <div class="spacer" />
   </div>
