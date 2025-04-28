@@ -5,9 +5,10 @@
   import ScrollyStepWrapper from "$components/layouts/Scrolly.StepWrapper.svelte";
   import ScrollyStepContent from "$components/layouts/Scrolly.StepContent.svelte"; 
   import ScrollyStep from "$components/layouts/Scrolly.Step.svelte";
+  import Footer from "$components/gaussian/Footer.svelte";
 
   import G1 from "$components/plots/grafico1.svelte";
-  import G2 from "$components/plots/g2.svelte";
+  import G2 from "$components/plots/grafico2.svelte";
   import G3 from "$components/plots/g3.svelte";
   import G4 from "$components/plots/g4.svelte";
 
@@ -68,7 +69,9 @@
 <div class="wrapper" style="pointer-events:{$scrollyIndex === 0 ? 'auto' : 'auto'}">
   <div class="foreground-wrapper">
     <ScrollyStepWrapper height="100vh">
-      <Title />
+      <ScrollyStep active={$scrollyIndex === 0}>
+          <Title active={$scrollyIndex === 0}/>
+      </ScrollyStep>
     </ScrollyStepWrapper>
 
     {#each data.steps as step, i}
@@ -81,6 +84,12 @@
         </ScrollyStep>
       </ScrollyStepWrapper>
     {/each}
+
+    <ScrollyStepWrapper height="100vh">
+      <ScrollyStep active={$scrollyIndex === 8}>
+          <Footer active={$scrollyIndex === 8}/>
+      </ScrollyStep>
+    </ScrollyStepWrapper>
 
     <div class="spacer" />
   </div>

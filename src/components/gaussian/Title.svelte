@@ -3,6 +3,7 @@
 	import scrollY from "$stores/scrollY.js";
 	import { onMount } from "svelte";
 	import * as d3 from "d3";
+	export let active = true;
 
 	$: opacity = Math.max(0, 1 - $scrollY / 200);
 
@@ -69,9 +70,11 @@
 	<h1 class="montserrat-heading">Gaussian Processes</h1>
 	<h2 class="montserrat-subtitle">An intuitive exploration</h2>
 	<p><span class="author-label">By</span> 
-		<Link href="https://github.com/LarissaLAfonso">Larissa Lemos Afonso</Link>, 
-		<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
-		<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
+		{#if active}
+			<Link href="https://github.com/LarissaLAfonso">Larissa Lemos Afonso</Link>, 
+			<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
+			<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
+		{/if}
 	</p>
 
 	<img src="laughing.png" alt="corner decoration" class="corner-image" />
@@ -162,10 +165,6 @@
 		text-decoration: none;
 		color: #ffafcc;
 		font-weight: bold;
-	}
-
-	a:hover {
-		color: #ffc8dd;
 	}
 
 	.corner-image {
