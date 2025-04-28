@@ -56,11 +56,11 @@
 
             // Atualização do dado da linha antiga
             oldPath.datum(samples.y)
-                .transition()                   // Inicia uma transição
-                .duration(1000)                 // Tempo da animação (1 segundo)
-                .attr('d', line)                // Atualiza o atributo 'd' suavemente
-                .attr('stroke', '#808080')      // Muda cor para cinza
-                .attr('opacity', 0.35);         // Diminui opacidade
+                .transition()                   
+                .duration(1000)                 
+                .attr('d', line)                
+                .attr('stroke', '#808080')      
+                .attr('opacity', 0.35);         
         }
 
         paths.push(newPath);
@@ -80,7 +80,7 @@
             return (x, y) => kernel_Periodic(x, y, par_periodic_period, par_periodic_lengthScale);
         } else if (kernelName === 'kernel_Polynomial') {
             return (x, y) => kernel_Polynomial(x, y, par_polynomial_constant, par_polynomial_degree);
-        } else { // kernel_RBF como padrão
+        } else { 
             return (x, y) => kernel_RBF(x, y, par_rbf_lengthScale);
         }
     }
@@ -118,7 +118,7 @@
         const firstSamples = generateGPSamples(getKernelFunction(selectedKernel), -5, 5.1, 0.1);
         const minY = d3.min(firstSamples.y);
         const maxY = d3.max(firstSamples.y);
-        yScale.domain([minY, maxY]);
+        yScale.domain([-6, 6]);
 
         // y = 0
         axesGroup.append('line')
@@ -130,26 +130,6 @@
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
             .attr('stroke-dasharray', '4 2'); 
-
-        // Adição do valor de ymin
-        axesGroup.append('text')
-            .attr('id', 'y-min-label')
-            .attr('x', margin.left + 5)
-            .attr('y', yScale(minY) + 30)
-            .attr('text-anchor', 'start')
-            .text(`y min = ${minY.toFixed(2)}`)
-            .attr('font-size', '12px')
-            .attr('fill', 'black');
-
-       // Adição do valor de ymax
-        axesGroup.append('text')
-            .attr('id', 'y-max-label')
-            .attr('x', margin.left + 5)
-            .attr('y', yScale(maxY) - 5)
-            .attr('text-anchor', 'start')
-            .text(`y max = ${maxY.toFixed(2)}`)
-            .attr('font-size', '12px')
-            .attr('fill', 'black');
 
         // Tempo para adicionar novas linhas (1 segundo)
         interval = setInterval(() => addLine(), 1000);

@@ -36,17 +36,7 @@
 
         // Ecala Y
         const yExtent = d3.extent(data, d => d.y);
-        yScale.domain(yExtent);
-
-        // Y min texto
-        svg.select('#ymin-text')
-            .text(`y min = ${yExtent[0].toFixed(2)}`)
-            .attr('y', yScale(yExtent[0]) + 30); 
-
-        // Y max texto
-        svg.select('#ymax-text')
-            .text(`y max = ${yExtent[1].toFixed(2)}`)
-            .attr('y', yScale(yExtent[1]) - 5);
+        yScale.domain([-6,6]);
 
         // Linha y = 0
         let yZeroLine = svg.select('#y-zero-line');
@@ -121,21 +111,6 @@
 
         svg.append('g').attr('id', 'points-group');
         svg.append('g').attr('id', 'axes-group');
-
-        // Textos de ymin e ymax
-        svg.select('#axes-group')
-            .append('text').attr('id', 'ymin-text')
-            .attr('x', margin.left + 5)
-            .attr('text-anchor', 'start')
-            .attr('font-size', '12px')
-            .attr('fill', 'black');
-
-        svg.select('#axes-group')
-            .append('text').attr('id', 'ymax-text')
-            .attr('x', margin.left + 5)
-            .attr('text-anchor', 'start')
-            .attr('font-size', '12px')
-            .attr('fill', 'black');
 
         plotSamples(); 
     });
