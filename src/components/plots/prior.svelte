@@ -31,36 +31,40 @@
     let interval;
     let maxLines = 15;
 
-    const Xtest = d3.range(-5, 5.01, 0.01);
+    const Xtest = d3.range(-5, 5.1, 0.1);
 
     function addLine() {
         /*
         Adiciona novas linhas de amostras.
         */
 
-        // Geração de amostras
         const kernelFunction = getKernelFunction(selectedKernel);
-        const samples = generateGPSamples(kernelFunction, -5, 5, 0.1);
-
-        // Linha antiga muda de cor
-        if (paths.length > 0) {
-            paths[paths.length - 1]
-                .attr('stroke', '#808080')    // Cor cinza para linha antiga
-                .attr('opacity', 0.5);
-        }
+        const samples = generateGPSamples(kernelFunction, -5, 5.1, 0.1);
 
         // Criação de nova linha
-        const path = svg.select('#paths-group').append('path')
+        const newPath = svg.select('#paths-group').append('path')
             .datum(samples.y)
             .attr('fill', 'none')
-            .attr('stroke', '#47A2A4')          // Cor azul para linha nova
+            .attr('stroke', '#47A2A4')
             .attr('stroke-width', 2)
             .attr('d', line)
             .attr('opacity', 1);
 
-        paths.push(path);
+        if (paths.length > 0) {
+            // Pega a última linha
+            const oldPath = paths[paths.length - 1];
 
-        // Limite de número de linhas
+            // Atualização do dado da linha antiga
+            oldPath.datum(samples.y)
+                .transition()                   // Inicia uma transição
+                .duration(1000)                 // Tempo da animação (1 segundo)
+                .attr('d', line)                // Atualiza o atributo 'd' suavemente
+                .attr('stroke', '#808080')      // Muda cor para cinza
+                .attr('opacity', 0.35);         // Diminui opacidade
+        }
+
+        paths.push(newPath);
+
         if (paths.length >= maxLines) {
             clearInterval(interval);
         }
@@ -80,10 +84,22 @@
             return (x, y) => kernel_RBF(x, y, par_rbf_lengthScale);
         }
     }
-        onMount(() => {
+    
+    onMount(() => {
         svg = d3.select('#gp-svg')
             .attr('width', width)
             .attr('height', height);
+
+        // Borda do gráfico
+        svg.append('rect')
+            .attr('x', margin.left)    
+            .attr('y', 0)     
+            .attr('width', width - margin.left - margin.right)
+            .attr('height', height)
+            .attr('fill', 'none')
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2)
+            .attr('shape-rendering', 'crispEdges'); 
 
         // Grupos separados para paths e eixos
         const pathsGroup = svg.append('g').attr('id', 'paths-group');
@@ -91,20 +107,15 @@
 
         // Escalas para os eixos
         const xScale = d3.scaleLinear().domain([-5, 5]).range([margin.left, width - margin.right]);
-        const yScale = d3.scaleLinear().range([height, 0]);
+        const yScale = d3.scaleLinear().range([height - margin.bottom, margin.top]);
 
         // Função para desenhar a linha
         line = d3.line()
             .x((d, i) => xScale(Xtest[i]))
             .y(d => yScale(d));
 
-        // Eixo X
-        const xAxis = d3.axisBottom(xScale)
-            .tickSize(0)
-            .tickFormat('');
-
         // Atualização dos limites de yScale com base nas amostras geradas
-        const firstSamples = generateGPSamples(getKernelFunction(selectedKernel), -5, 5, 0.1);
+        const firstSamples = generateGPSamples(getKernelFunction(selectedKernel), -5, 5.1, 0.1);
         const minY = d3.min(firstSamples.y);
         const maxY = d3.max(firstSamples.y);
         yScale.domain([minY, maxY]);
@@ -147,7 +158,7 @@
     function updatePlot() {
         // Generate new samples with current parameters
         const kernelFunction = getKernelFunction(selectedKernel);
-        const samples = generateGPSamples(kernelFunction, -5, 5, 0.1);
+        const samples = generateGPSamples(kernelFunction, -5, 5.1, 0.1);
 
         // Calculate new min and max Y
         const minY = d3.min(samples.y);
@@ -290,11 +301,6 @@
 
 <style>
 
-    #gp-svg {
-        border: 1px solid #676767;
-        border-radius: 2px;
-        background-color: white;
-    }
     .container {
         display: flex;
         flex-direction: column;

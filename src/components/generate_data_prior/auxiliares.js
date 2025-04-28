@@ -57,7 +57,7 @@ export function sampleNormal(mean, cov) {
   return sample.map((val, i) => val + mean[i]);
 }
 
-export function generateGPSamples(kernelFunction, start = -5, end = 5, step = 0.01) {
+export function generateGPSamples(kernelFunction, start = -5, end = 5, step = 0.1) {
     const xArray = [];
     for (let x = start; x <= end; x += step) {
         xArray.push(Number(x.toFixed(2))); // Evita erros de precisão
