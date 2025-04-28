@@ -17,7 +17,7 @@
     let par_polynomial_constant = 0;
     let par_polynomial_degree = 3;
 
-    export let selectedKernel = 'kernel_Polynomial';
+    export let selectedKernel = 'kernel_RBF';
 
     // Dimensões do gráfico
     let width = 800;
@@ -30,28 +30,47 @@
 
     function plotSamples() {
         const kernelFunction = getKernelFunction(selectedKernel);
-        console.log(kernelFunction);
         const samples = generateGPSamples(kernelFunction, -5, 5.01, 0.9);
         
         const data = Xtest.map((x, i) => ({ x, y: samples.y[i] }));
-        
-        // Escala Y
+
+        // Ecala Y
         const yExtent = d3.extent(data, d => d.y);
         yScale.domain(yExtent);
-        
+
+        // Y min texto
         svg.select('#ymin-text')
             .text(`y min = ${yExtent[0].toFixed(2)}`)
-            .attr('y', yScale(yExtent[0]) + 24); 
+            .attr('y', yScale(yExtent[0]) + 30); 
 
+        // Y max texto
         svg.select('#ymax-text')
             .text(`y max = ${yExtent[1].toFixed(2)}`)
-            .attr('y', yScale(yExtent[1]) ); 
-        
+            .attr('y', yScale(yExtent[1]) - 5);
+
+        // Linha y = 0
+        let yZeroLine = svg.select('#y-zero-line');
+        if (yZeroLine.empty()) {
+            svg.select('#axes-group')
+                .append('line')
+                .attr('id', 'y-zero-line')
+                .attr('stroke', 'black')
+                .attr('stroke-width', 1)
+                .attr('stroke-dasharray', '4 2');
+            yZeroLine = svg.select('#y-zero-line');
+        }
+
+        yZeroLine
+            .attr('x1', margin.left)
+            .attr('x2', width - margin.right)
+            .attr('y1', yScale(0))
+            .attr('y2', yScale(0));
+
         // Plot dos pontos
         const points = svg.select('#points-group')
             .selectAll('circle')
             .data(data);
-            
+
         points.enter()
             .append('circle')
             .merge(points)
@@ -59,7 +78,7 @@
             .attr('cy', d => yScale(d.y))
             .attr('r', 4)
             .attr('fill', '#47A2A4')
-            .attr('opacity', 0.6);
+            .attr('opacity', 0.8);
 
         points.exit().remove();
     }
@@ -80,7 +99,7 @@
         svg = d3.select('#gp-svg')
             .attr('width', width)
             .attr('height', height);
-        
+
         // Borda do gráfico
         svg.append('rect')
             .attr('x', margin.left)    
@@ -95,44 +114,30 @@
         // Escalas
         xScale = d3.scaleLinear()
             .domain([-5, 5])
-            .range([margin.left, width - margin.right]);
+            .range([margin.left + 10, width - margin.right - 10]);
             
         yScale = d3.scaleLinear()
             .range([height - margin.bottom, margin.top]);
-        
-        // Grupo para pontos
+
         svg.append('g').attr('id', 'points-group');
-        
-        // Eixos
-        const axesGroup = svg.append('g').attr('id', 'axes-group');
-        
-        // Eixo X = 0
-        axesGroup.append('line')
-            .attr('id', 'y-zero-line')
-            .attr('x1', margin.left)
-            .attr('x2', width - margin.right)
-            .attr('y1', (height-margin.top)/2)
-            .attr('y2', (height-margin.top)/2)
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('stroke-dasharray', '4 2');
+        svg.append('g').attr('id', 'axes-group');
 
-        axesGroup.append('text').attr('id', 'ymin-text')
+        // Textos de ymin e ymax
+        svg.select('#axes-group')
+            .append('text').attr('id', 'ymin-text')
             .attr('x', margin.left + 5)
             .attr('text-anchor', 'start')
             .attr('font-size', '12px')
-            .attr('fill', 'black')
-            .text('y min'); 
+            .attr('fill', 'black');
 
-        axesGroup.append('text').attr('id', 'ymax-text')
+        svg.select('#axes-group')
+            .append('text').attr('id', 'ymax-text')
             .attr('x', margin.left + 5)
             .attr('text-anchor', 'start')
-            .text('y max')
             .attr('font-size', '12px')
-            .attr('fill', 'black')
-            .text('y max'); 
+            .attr('fill', 'black');
 
-        plotSamples(); // Plot inicial
+        plotSamples(); 
     });
 
     function updatePlot() {

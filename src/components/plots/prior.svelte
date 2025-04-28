@@ -19,7 +19,7 @@
     let par_polynomial_degree = 3;
 
     // Parâmetro de seleção do kernel
-    export let selectedKernel = 'kernel_Polynomial';
+    export let selectedKernel = 'kernel_RBF';
 
     // Dimensões do gráfico
     let width = 800;
