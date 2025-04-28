@@ -151,42 +151,40 @@
             .attr('font-size', '12px')
             .attr('fill', 'black');
 
-        // Tempo para adicionar novas linhas
+        // Tempo para adicionar novas linhas (1 segundo)
         interval = setInterval(() => addLine(), 1000);
     });
 
     function updatePlot() {
-        // Generate new samples with current parameters
+        // Geração de novas samples
         const kernelFunction = getKernelFunction(selectedKernel);
         const samples = generateGPSamples(kernelFunction, -5, 5.1, 0.1);
 
-        // Calculate new min and max Y
+        // Cálculo de novos minY e maxY
         const minY = d3.min(samples.y);
         const maxY = d3.max(samples.y);
 
         // Update yScale domain
         yScale.domain([minY, maxY]);
 
-        // Update y=0 line position
+        // Atualização de escala y = 0
         svg.select('#y-zero-line')
             .attr('y1', yScale(0))
             .attr('y2', yScale(0));
 
-        // Update minY label
         svg.select('#y-min-label')
             .attr('y', yScale(minY) - 10)
             .text(`y = ${minY.toFixed(2)}`);
 
-        // Update maxY label
         svg.select('#y-max-label')
             .attr('y', yScale(maxY) + 10)
             .text(`y = ${maxY.toFixed(2)}`);
 
-        // Remove old paths
+        // Remoção de linhas antigas
         paths.forEach(path => path.remove());
         paths = [];
 
-        // Add new line
+        // Adição de novas linhas
         const path = svg.select('#paths-group').append('path')
             .datum(samples.y)
             .attr('fill', 'none')
@@ -300,7 +298,6 @@
 </div>
 
 <style>
-
     .container {
         display: flex;
         flex-direction: column;
