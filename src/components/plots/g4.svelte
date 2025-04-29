@@ -129,7 +129,7 @@
     const kernelFunc = kernel_Polynomial;
     const K = buildCovarianceMatrix(Xtest, Xtest, kernelFunc);
     for (let i = 0; i < K.length; i++) K[i][i] += noiseVariance;
-
+      
     interval = setInterval(() => addLine(K), 2000);
   });
 </script>

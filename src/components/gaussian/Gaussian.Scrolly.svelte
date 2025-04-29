@@ -7,6 +7,9 @@
   import ScrollyStep from "$components/layouts/Scrolly.Step.svelte";
   import Footer from "$components/gaussian/Footer.svelte";
 
+  import PriorPlot from "$components/plots/prior.svelte";
+  import ScatterPrior from "$components/plots/scatter_prior.svelte";
+
 
   // Temos dois tipos de scrolly index caso queiramos fazer um scrolly com steps ou com steps e conteúdo
   // O primeiro é o scrollyIndex, que é o índice do step atual
@@ -15,6 +18,7 @@
   import { onMount, setContext } from "svelte";
   import { writable } from "svelte/store";
   import scrollama from "scrollama";
+    import Prior from "$components/plots/prior.svelte";
 
   // Scroller parameters
   const scrollyIndex = writable(undefined);
