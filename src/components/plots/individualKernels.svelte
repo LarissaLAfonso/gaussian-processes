@@ -33,7 +33,7 @@
             .x(d => x(d.x))
             .y(d => y(d.y));
 
-        svg = d3.select("#inidivualKernels-svg")
+        svg = d3.select("#indivualKernels-svg")
             .attr("width", width)
             .attr("height", height)
         
@@ -108,7 +108,7 @@
             <span>Polynomial</span>
         </label>
     </div>
-    <svg id="inidivualKernels-svg"></svg>
+    <svg id="indivualKernels-svg"></svg>
 </div>
 
 
@@ -165,18 +165,6 @@
         border: 1.5px solid #000000;
     }
 
-    #rbf_subtitle span{
-        background-color: #47A2A4;
-    }
-    #matern_subtitle span{
-        background-color: #FF5733;
-    }
-    #periodic_subtitle span{
-        background-color: #C70039;
-    }
-    #polynomial_subtitle span{
-        background-color: #FFC300;
-    }
     .container {
         display: flex;
         width: 700px;
@@ -185,22 +173,4 @@
         position: relative;
     }
     
-
-    .resample-button {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 8px 16px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        z-index: 10;
-    }
-    .resample-button:hover {
-        background-color: #45a049;
-    }
 </style>
