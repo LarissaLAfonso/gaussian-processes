@@ -78,6 +78,8 @@
 
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+
 	.wrapper {
 		height: 100vh;
 		display: flex;
@@ -88,7 +90,7 @@
 		z-index: 1;
 		font-family: 'Poppins', 'Comic Neue', 'Quicksand', sans-serif;
 		text-align: center;
-		padding: 1.2rem;
+		padding: 1rem;
 		border-radius: 1.4rem;
 		overflow: hidden;
 	}
@@ -133,10 +135,10 @@
 	}
 
 	.montserrat-heading {
-		font-family: "Montserrat", sans-serif;
-		font-weight: 600;
+		font-family: 'Fredoka', sans-serif;
+		font-weight: 520;
 		font-style: normal;
-		font-size: 3rem;
+		font-size: 5rem;
 		color: #fba6a6;
 		margin-bottom: 0.5rem;
 		position: relative;
@@ -145,7 +147,7 @@
 	}
 
 	.montserrat-subtitle {
-		font-family: "Montserrat", sans-serif;
+		font-family: 'Fredoka', sans-serif;
 		font-weight: 400;
 		font-style: normal;
 		font-size: 1.4rem;
@@ -156,6 +158,8 @@
 	}
 
 	p {
+		font-family: 'Fredoka', sans-serif;
+		font-size: 1.1rem;
 		color: rgb(200, 200, 200);
 		position: relative;
 		z-index: 2;
