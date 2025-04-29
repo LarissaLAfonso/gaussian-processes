@@ -95,8 +95,8 @@
             .attr('y1', yScale(0))
             .attr('y2', yScale(0))
             .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('opacity', 0.5);
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.3);
 
         svg.append('line')
             .attr('x1', xScale(0))
@@ -104,8 +104,8 @@
             .attr('y1', yScale(-4))
             .attr('y2', yScale(4))
             .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('opacity', 0.5);
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.3);
 
         console.log('Render completed');
     });

@@ -1,5 +1,5 @@
 {
-    "steps": [
+    "steps": [ 
         {
             "type": "step",
             "value": [
@@ -74,25 +74,31 @@
                             "value": "In the initial setting, we had a bunch of points on the plane, and we assigned to them a distribution which essentially describes the probability of observing certain \\(y\\)'s for fixed regions of the \\(x\\) axis. In other words, <b>for each fixed region</b> of the \\(x\\) axis <b>we assigned a probability</b>, a number."
                         }
                     ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "So what if, instead of assigning numbers to specific regions of the \\(x\\) axis, we assign numbers to the whole \\(x\\) line?"
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "Yeah, we're creating <b>a function!</b>"
-                        }
-                    ]
-                }
+                } 
+            ],
+            "figure": "happy.png"
+        },
+        {
+            "type": "p",
+            "value": [
+                    {
+                        "type": "p",
+                        "value": [
+                            {
+                                "type": "text",
+                                "value": "So what if, instead of assigning numbers to specific regions of the \\(x\\) axis, we assign numbers to the whole \\(x\\) line?"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "p",
+                        "value": [
+                            {
+                                "type": "text",
+                                "value": "Yeah, we're creating <b>a function!</b>"
+                            }
+                        ]
+                    }
             ],
             "figure": "super_happy.png"
         },
@@ -146,10 +152,19 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "\\(K\\) is called a <b>kernel function</b>, and different kernels lead to very different gaussian processes for the same set of samples."
+                            "value": "\\(K\\) is called a <b>kernel function</b>, and each of them has its own properties. For example, the <b>RBF</b>, the <b>Matérn</b> and the <b>periodic kernels</b> are stationary, which means they are invariant to translations."
                         }
                     ]
-                }
+                },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "That means that the covariance between two points only depends on the distance between them, not on their absolute position."
+                        }
+                    ]
+                } 
             ],
             "figure": "happy.png"
         },
@@ -161,7 +176,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "And what's more: as <b>gaussians are closed under conditioning</b>, that means we can mantain our framework in the light of new data, by just updating the mean and covariance matrix of our gaussian process."
+                            "value": "Different kernels lead to very different gaussian processes for the same set of samples. Try playing around with it for a bit!"
                         }
                     ]
                 }
