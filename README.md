@@ -58,7 +58,7 @@ For the explanation of Gaussian Processes, we used a _scrollytelling_ approach, 
 
 - Chart 2: We introduce the idea that a set _n_ points in ℝ² can be represented as _one_ point in R^n. The chart displays three points in ℝ² corresponding to coordinates in ℝ³, highlighted with distinct colors. There is also a button that allows resampling of the points.
 
-- Chart 3: To illustrate the idea of a growing number of points as \( n \to \infty \), we present a scatter plot to represent this phenomenon. The exponential increase in complexity makes the direct analysis of the density \( F \) practically intractable, especially in high-dimensional spaces. The chart used is static, serving as a visual metaphor for how quickly interpretability breaks down as the number of dimensions and data points grows.
+- Chart 3: To illustrate the idea of a growing number of points as _n_ → ∞, we present a scatter plot to represent this phenomenon. The exponential increase in complexity makes the direct analysis of the density \( F \) practically intractable, especially in high-dimensional spaces. The chart used is static, serving as a visual metaphor for how quickly interpretability breaks down as the number of dimensions and data points grows.
 
 - Chart 4: We show prior samples of the function 𝑓 (without incorporating observed data). The data is generated at uniform intervals, and the chart allows users to select different kernels and adjust their parameters. Since the samplings are random, any configuration change generates new curves randomly.
 
