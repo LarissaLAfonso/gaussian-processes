@@ -210,6 +210,8 @@
 </script>
 
 <div class="container">
+    <!-- Título do gráfico -->
+    <h2 class="title">Comparação de Kernels</h2>
     <!-- Legendas para o gráfico -->
     <div class="kernel-selection">
         <label class="kernel-toggle" id="rbf_subtitle">
@@ -306,5 +308,31 @@
     }
     #polynomial_subtitle span{
         background-color: #FFC300;
+    }
+    .container {
+        display: flex;
+        width: 700px;
+        height: 600px;
+        margin: 10px auto;
+        position: relative;
+    }
+    
+
+    .resample-button {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        z-index: 10;
+    }
+    .resample-button:hover {
+        background-color: #45a049;
     }
 </style>
