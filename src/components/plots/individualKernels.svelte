@@ -5,7 +5,7 @@
         };
         </script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-        
+
 </svelte:head>
 
 
@@ -67,7 +67,7 @@
         svg.append("path")
             .datum(data)
             .attr("fill", "none")
-            .attr("stroke", "blue") 
+            .attr("stroke", "#52DBA4") 
             .attr("stroke-width", 2)
             .attr("d", line);
 
@@ -97,16 +97,16 @@
     function updateSelectedKernel(index) {
         selectedKernelIndex = index;
         drawNewKernel();
-        d3.select()
+        // Limpa o conteúdo anterior
     }
   
     onMount(() => {
       drawNewKernel();
     });;
     var desc;
-    var formula;
+    // var formula;
     $:desc = kernelDescriptions[selectedKernelIndex].Description;
-    $:formula = kernelDescriptions[selectedKernelIndex].Formula;
+    // $:formula = kernelDescriptions[selectedKernelIndex].Formula;
   </script>
   
 <div class="container">
@@ -132,76 +132,64 @@
         </label>
     </div>
     <svg id="indivualKernels-svg"></svg>
+    <br>
     <div class = "kernel-explanation" id="kernel-explanation">
         <div class="kernel-description">
             <p>{desc}</p>
         </div>
-        <div class="kernel-formula">
+        <!-- <div class="kernel-formula" id="kernel-formula">
             <p>${formula}$</p>
-        </div>
+        </div> -->
     </div>
 </div>
 
 
 <style>
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-family: cursive;
-    }
-    .kernel-selection {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 20px;
-        width: 100%;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
 
-    .kernel-toggle {
-        display: inline-flex;
-        align-items: center;
-        font-size: 18px;
-        cursor: pointer;
-        margin: 0 10px;
-        transition: color 0.3s ease;
-    }
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Fredoka', sans-serif;
+    
+}
 
-    .kernel-toggle input {
-        display: none;
-    }
+.kernel-selection {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    width: 100%;
+}
 
-    .kernel-toggle span {
-        padding: 5px;
-        border: 2px solid transparent;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, border 0.3s ease;
-    }
+.kernel-toggle {
+    display: inline-flex;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
 
-    .kernel-toggle input:not(:checked) + span{
-        opacity: 0.5;
-    }
+.kernel-toggle input {
+    display: none;
+}
 
-    .kernel-toggle input:checked + span {
-        background-color: #52DBA4;
-        color: white;
-        border: 1.5px solid #000000;
-    }
+.kernel-toggle span {
+    padding: 5px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
 
-    .kernel-toggle input:not(:checked) + span:hover {
-        background-color: #f0f0f0;
-    }
-    .kernel-toggle input:checked + span:hover {
-        background-color: #000000;
-        color: white;
-        border: 1.5px solid #000000;
-    }
+.kernel-toggle input:checked + span {
+    background-color: #52DBA4;
+    color: white;
+    border: 1.5px solid #000000;
+}
 
-    .container {
-        display: flex;
-        width: 700px;
-        height: 600px;
-        margin: 10px auto;
-        position: relative;
-    }
+.kernel-toggle input:not(:checked) + span:hover {
+    background-color: #f0f0f0;
+}
     
 </style>
