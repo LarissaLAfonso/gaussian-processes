@@ -80,3 +80,7 @@ Although we did not record individual working hours, we estimate that each membe
 - Kaiky: Page title, general styling, Chart 4, and Chart 5.
 
 > Note: Despite the division above, the work was carried out collaboratively, with all members contributing to multiple parts of the project.
+
+---
+
+Access the page [here](https://fgv-vis-2025.github.io/tarefa-4-gaussian-processes/).
