@@ -157,6 +157,8 @@
 
 <div class="container">
     <!-- Botões para seleção do Kernel -->
+    <h2>Prior Data</h2>
+
     <div class="kernel-selection">
         <label class="kernel-toggle">
             <input type="radio" id="rbf" name="kernel" value="kernel_RBF" bind:group={selectedKernel} on:input={updatePlotKernel} />
@@ -220,14 +222,17 @@
 </div>
 
 <style>
-
-.container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-family: cursive;
-        
+    h2 {
+        font-size: 27px;
     }
+
+    .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: monospace;
+            
+        }
 
     .kernel-selection {
         display: flex;

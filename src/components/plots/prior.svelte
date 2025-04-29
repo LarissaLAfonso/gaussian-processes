@@ -216,6 +216,8 @@
 </script>
 
 <div class="container">
+    <h2>Prior Distribution</h2>
+
     <!-- Botões para seleção do Kernel -->
     <div class="kernel-selection">
         <label class="kernel-toggle">
@@ -280,12 +282,19 @@
 </div>
 
 <style>
+    h2 {
+        font-size: 27px;
+    }
     .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: cursive;
+        font-family: monospace;
         
+    }
+
+    .h2 {
+        font-size: 14px;
     }
 
     .kernel-selection {
