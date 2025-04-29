@@ -8,7 +8,7 @@
         kernel_Polynomial, 
         kernel_RBF 
     } from '$components/generate_data_prior/auxiliares';
-    import { string } from "mathjs";
+    import { create, string } from "mathjs";
 
     // Parâmetros iniciais
     let par_rbf_lengthScale = 1.0;
@@ -19,6 +19,7 @@
     let par_polynomial_degree = 3;
 
     // Dimensões do gráfico
+    const backgroundColor = '#f9fafb';
     let width = 800;
     let height = 400;
     let margin = { top: 20, right: 20, bottom: 40, left: 40 };
@@ -28,6 +29,10 @@
     let selectedKernels = [1, 1, 1, 1];
     const maxOpacity = 0.7;
     const minOpacity = 0.1;
+    let coverRect;
+    let coverRectX = margin.left + 2;
+    let coverRectWidth = width - margin.left - margin.right - 4;
+    let interval;
 
     const Xtest = d3.range(-5, 5.1, 0.1);
 
@@ -65,6 +70,20 @@
         paths.push(newPath);
     }
 
+    function updateCoverRect() {
+        /*
+        Atualiza o retângulo de cobertura.
+        */
+        coverRectWidth -= 4;
+        coverRectX += 4;
+        coverRect.attr('width', coverRectWidth).attr('x', coverRectX);
+        if (coverRectWidth <= 0) {
+            clearInterval(interval);
+            coverRect.remove();
+            coverRect = null;
+        }
+    }
+
     function getKernelFunction(kernelName) {
         /*
         Essa função obtém o kernel selecionado e os parâmetros correspondentes.
@@ -79,62 +98,18 @@
             return (x, y) => kernel_RBF(x, y, par_rbf_lengthScale);
         }
     }
-    
-    onMount(() => {
-        svg = d3.select('#gp-svg')
-            .attr('width', width)
-            .attr('height', height);
 
-        // Borda do gráfico
-        svg.append('rect')
-            .attr('x', margin.left)    
-            .attr('y', 0)     
-            .attr('width', width - margin.left - margin.right)
-            .attr('height', height)
-            .attr('fill', 'none')
-            .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('shape-rendering', 'crispEdges'); 
-
-        // Grupos separados para paths e eixos
-        const pathsGroup = svg.append('g').attr('id', 'paths-group');
-        const axesGroup = svg.append('g').attr('id', 'axes-group');
-
-        // Escalas para os eixos
-        const xScale = d3.scaleLinear().domain([-5, 5]).range([margin.left, width - margin.right]);
-        const yScale = d3.scaleLinear().range([height - margin.bottom, margin.top]);
-
-        // Função para desenhar a linha
-        line = d3.line()
-            .x((d, i) => xScale(Xtest[i]))
-            .y(d => yScale(d));
-
-        // const minY = d3.min(firstSamples.y);
-        // const maxY = d3.max(firstSamples.y);
-        yScale.domain([-6, 6]);
-
-        // y = 0
-        axesGroup.append('line')
-            .attr('id', 'y-zero-line')
-            .attr('x1', margin.left)
-            .attr('x2', width - margin.right)
-            .attr('y1', yScale(0))
-            .attr('y2', yScale(0))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('stroke-dasharray', '4 2'); 
-
-        for(let i = 0; i < kernels.length; i++) {
-            const kernel = kernels[i];  
-            addLine(kernel);
-        }
-    });
-
-    
-
-    function updatePlot() {
+    function createGraph()
+    {
         paths.forEach(path => path.remove());
         paths = [];
+        coverRectWidth = width - margin.left - margin.right - 4;
+        coverRectX = margin.left + 2;
+        if(coverRect)
+        {
+            coverRect.remove();
+            coverRect = null;
+        }
 
         svg = d3.select('#gp-svg')
             .attr('width', width)
@@ -153,6 +128,7 @@
 
         // Grupos separados para paths e eixos
         const pathsGroup = svg.append('g').attr('id', 'paths-group');
+        const coverRectGroup = svg.append('g').attr('id', 'cover-rect-group');
         const axesGroup = svg.append('g').attr('id', 'axes-group');
 
         // Escalas para os eixos
@@ -164,21 +140,10 @@
             .x((d, i) => xScale(Xtest[i]))
             .y(d => yScale(d));
 
-        // const minY = d3.min(firstSamples.y);
-        // const maxY = d3.max(firstSamples.y);
         yScale.domain([-6, 6]);
 
         // y = 0
-        axesGroup.append('line')
-            .attr('id', 'y-zero-line')
-            .attr('x1', margin.left)
-            .attr('x2', width - margin.right)
-            .attr('y1', yScale(0))
-            .attr('y2', yScale(0))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('stroke-dasharray', '4 2'); 
-
+        
         for(let i = 0; i < kernels.length; i++) {
             const kernel = kernels[i];  
             addLine(kernel);
@@ -188,7 +153,37 @@
                 paths[i].attr('opacity', maxOpacity);
             }
         }
+        coverRect = coverRectGroup.append('rect')
+        .attr('x', coverRectX)    
+        .attr('y', 2)     
+        .attr('width', coverRectWidth-1)
+        .attr('height', height-4)
+        .attr('fill', backgroundColor)
+        .attr('shape-rendering', 'crispEdges');
+        
+        interval = setInterval(() => updateCoverRect(), 10);
+
+        axesGroup.append('line')
+            .attr('id', 'y-zero-line')
+            .attr('x1', margin.left)
+            .attr('x2', width - margin.right)
+            .attr('y1', yScale(0))
+            .attr('y2', yScale(0))
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '4 2'); 
+        
     }
+    
+    onMount(() => {
+        createGraph();
+    });
+
+    
+    function updatePlot() {
+        createGraph();
+    }
+
 
     function toggle_kernel(index)
     {
@@ -211,7 +206,7 @@
 
 <div class="container">
     <!-- Título do gráfico -->
-    <h2 class="title">Comparação de Kernels</h2>
+    <h2 class="title">Kernel Comparison</h2>
     <!-- Legendas para o gráfico -->
     <div class="kernel-selection">
         <label class="kernel-toggle" id="rbf_subtitle">
