@@ -27,10 +27,9 @@
     let margin = { top: 20, right: 20, bottom: 40, left: 40 };
 
     // Range dos dados
-    const Xvalues = d3.range(0.2, 9.90, 0.3);
+    const Xvalues = d3.range(0.2, 9.90, 0.05);
 
     onMount(() => {
-        console.log('Component mounted - starting render');
         
         // 2. Create test data if auxiliares fails to load
         let Yvalues;
@@ -78,7 +77,20 @@
             .attr('width', width)
             .attr('height', height);
 
-        // 8. Draw points (simplified)
+        // 8. Criar gerador de linha
+        const line = d3.line()
+            .x(d => xScale(d.x))
+            .y(d => yScale(d.y))
+            .curve(d3.curveMonotoneX); // Suavização
+
+        // 9. Desenhar a linha
+        svg.append('path')
+            .datum(data)
+            .attr('d', line)
+            .attr('fill', 'none')
+            .attr('stroke', 'pink')
+            .attr('stroke-width', 2);
+
         svg.selectAll('circle')
             .data(data)
             .enter()
@@ -86,9 +98,9 @@
             .attr('cx', d => xScale(d.x))   
             .attr('cy', d => yScale(d.y))
             .attr('r', 3)
-            .attr('fill', 'black');
+            .attr('fill', 'black'); // Opacidade dos pontos
 
-        // 9. Draw axes
+        // 10. Desenhar eixos
         svg.append('line')
             .attr('x1', xScale(0))
             .attr('x2', xScale(10))
@@ -106,8 +118,6 @@
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
             .attr('opacity', 0.3);
-
-        console.log('Render completed');
     });
 </script>
 

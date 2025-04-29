@@ -27,7 +27,7 @@
     let margin = { top: 20, right: 20, bottom: 40, left: 40 };
 
     // Range dos dados
-    const Xvalues = d3.range(0.2, 9.90, 0.3);
+    const Xvalues = d3.range(0.2, 9.90, 0.01);
 
     onMount(() => {
         console.log('Component mounted - starting render');
