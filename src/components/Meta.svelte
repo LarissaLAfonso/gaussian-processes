@@ -1,1 +1,1 @@
-<link rel="icon" type="image/png" href="/happy.png" />
+<!-- <link rel="icon" type="image/png" href="/happy.png" /> -->
