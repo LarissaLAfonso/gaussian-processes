@@ -1,7 +1,17 @@
+<svelte:head>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+      <script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+      </script>
+</svelte:head>
+
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
     import { kernel_Matern12, kernel_Polynomial, kernel_Periodic, kernel_RBF, generateData } from '$components/plots/auxiliares.js';
+    import kernelDescriptions from '$components/data/kernels.json';
   
     let svg;
 
@@ -115,6 +125,14 @@
         </label>
     </div>
     <svg id="indivualKernels-svg"></svg>
+    <div class = "kernel-explanation">
+        <div class="kernel-description">
+            <p>{kernelDescriptions[selectedKernelIndex].Description}</p>
+        </div>
+        <div class="kernel-formula">
+            <p>${kernelDescriptions[selectedKernelIndex].Formula}$</p>
+        </div>
+    </div>
 </div>
 
 
