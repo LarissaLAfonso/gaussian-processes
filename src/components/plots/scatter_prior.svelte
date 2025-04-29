@@ -159,19 +159,19 @@
     <!-- Botões para seleção do Kernel -->
     <div class="kernel-selection">
         <label class="kernel-toggle">
-            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" bind:group={selectedKernel} />
+            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" bind:group={selectedKernel} on:input={updatePlotKernel} />
             <span>RBF</span>
         </label>
         <label class="kernel-toggle">
-            <input type="radio" id="matern" name="kernel" value="kernel_Matern12" bind:group={selectedKernel} />
+            <input type="radio" id="matern" name="kernel" value="kernel_Matern12" bind:group={selectedKernel} on:input={updatePlotKernel} />
             <span>Matern</span>
         </label>
         <label class="kernel-toggle">
-            <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" bind:group={selectedKernel} />
+            <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" bind:group={selectedKernel} on:input={updatePlotKernel} />
             <span>Periodic</span>
         </label>
         <label class="kernel-toggle">
-            <input type="radio" id="polynomial" name="kernel" value="kernel_Polynomial" bind:group={selectedKernel} />
+            <input type="radio" id="polynomial" name="kernel" value="kernel_Polynomial" bind:group={selectedKernel} on:input={updatePlotKernel} />
             <span>Polynomial</span>
         </label>
     </div>
@@ -220,11 +220,13 @@
 </div>
 
 <style>
-    .container {
+
+.container {
         display: flex;
         flex-direction: column;
         align-items: center;
         font-family: cursive;
+        
     }
 
     .kernel-selection {
@@ -266,8 +268,8 @@
 
     .sliders {
         display: flex;
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row;
+        gap: 80px;
         margin-top: 20px;
     }
 
@@ -283,7 +285,7 @@
         border-radius: 10px;
         background-color: #e0e0e0;
         outline: none;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.5s ease;
         -webkit-appearance: none;
     }
 

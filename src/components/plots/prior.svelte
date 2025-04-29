@@ -38,6 +38,10 @@
         Adiciona novas linhas de amostras.
         */
 
+        if (paths.length >= maxLines) {
+            return;
+        }
+
         const kernelFunction = getKernelFunction(selectedKernel);
         const samples = generateGPSamples(kernelFunction, -5, 5.1, 0.1);
 
@@ -64,10 +68,6 @@
         }
 
         paths.push(newPath);
-
-        if (paths.length >= maxLines) {
-            clearInterval(interval);
-        }
     }
 
     function getKernelFunction(kernelName) {
@@ -136,6 +136,12 @@
     });
 
     function updatePlot() {
+        // Remoção de linhas antigas
+        paths.forEach(path => path.remove());
+        paths = [];
+
+        
+
         // Geração de novas samples
         const kernelFunction = getKernelFunction(selectedKernel);
         const samples = generateGPSamples(kernelFunction, -5, 5.1, 0.1);
@@ -145,7 +151,7 @@
         const maxY = d3.max(samples.y);
 
         // Update yScale domain
-        yScale.domain([minY, maxY]);
+        yScale.domain([-6, 6]);
 
         // Atualização de escala y = 0
         svg.select('#y-zero-line')
@@ -159,10 +165,6 @@
         svg.select('#y-max-label')
             .attr('y', yScale(maxY) + 10)
             .text(`y = ${maxY.toFixed(2)}`);
-
-        // Remoção de linhas antigas
-        paths.forEach(path => path.remove());
-        paths = [];
 
         // Adição de novas linhas
         const path = svg.select('#paths-group').append('path')
@@ -217,19 +219,19 @@
     <!-- Botões para seleção do Kernel -->
     <div class="kernel-selection">
         <label class="kernel-toggle">
-            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" bind:group={selectedKernel} />
+            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" bind:group={selectedKernel} on:input={updatePlotKernel}/>
             <span>RBF</span>
         </label>
         <label class="kernel-toggle">
-            <input type="radio" id="matern" name="kernel" value="kernel_Matern12" bind:group={selectedKernel} />
+            <input type="radio" id="matern" name="kernel" value="kernel_Matern12" bind:group={selectedKernel} on:input={updatePlotKernel} />
             <span>Matern</span>
         </label>
         <label class="kernel-toggle">
-            <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" bind:group={selectedKernel} />
+            <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" bind:group={selectedKernel} on:input={updatePlotKernel}  />
             <span>Periodic</span>
         </label>
         <label class="kernel-toggle">
-            <input type="radio" id="polynomial" name="kernel" value="kernel_Polynomial" bind:group={selectedKernel} />
+            <input type="radio" id="polynomial" name="kernel" value="kernel_Polynomial" bind:group={selectedKernel} on:input={updatePlotKernel} />
             <span>Polynomial</span>
         </label>
     </div>
@@ -283,6 +285,7 @@
         flex-direction: column;
         align-items: center;
         font-family: cursive;
+        
     }
 
     .kernel-selection {
@@ -324,8 +327,8 @@
 
     .sliders {
         display: flex;
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row;
+        gap: 80px;
         margin-top: 20px;
     }
 
@@ -341,7 +344,7 @@
         border-radius: 10px;
         background-color: #e0e0e0;
         outline: none;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.5s ease;
         -webkit-appearance: none;
     }
 
