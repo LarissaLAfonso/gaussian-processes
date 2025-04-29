@@ -50,13 +50,13 @@
         kernel_Polynomial: '#FFC300'
     }
 
-    function addLine(kernel) {
+    function addLine(kernel, seed = -1) {
         /*
         Adiciona novas linhas de amostras.
         */
 
         const kernelFunction = getKernelFunction(kernel);
-        const samples = generateGPSamples(kernelFunction, -5, 5.1, 0.1);
+        const samples = generateGPSamples(kernelFunction, -5, 5.1, 0.1, seed);
 
         // Criação de nova linha
         const newPath = svg.select('#paths-group').append('path')
@@ -110,6 +110,11 @@
             coverRect.remove();
             coverRect = null;
         }
+        if(interval)
+        {
+            clearInterval(interval);
+            interval = null;
+        }
 
         svg = d3.select('#gp-svg')
             .attr('width', width)
@@ -143,10 +148,11 @@
         yScale.domain([-6, 6]);
 
         // y = 0
-        
+        const seed = Math.random();
         for(let i = 0; i < kernels.length; i++) {
             const kernel = kernels[i];  
-            addLine(kernel);
+            addLine(kernel, seed);
+            console.log(kernel)
             if (selectedKernels[i] === 0) {
                 paths[i].attr('opacity', minOpacity);
             } else {

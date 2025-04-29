@@ -1,5 +1,5 @@
 import * as math from 'mathjs'; 
-import { randomNormal } from 'd3-random';
+import { randomNormal, randomLcg } from 'd3-random';
 
 // Funções de Kernel
 export function kernel_Matern12(x, y = 0, lengthScale = 1.5) {
@@ -45,19 +45,22 @@ export function generateData(kernelFunction, start = -5, end = 5, step = 0.05) {
   return data;
 }
 
-export function sampleNormal(mean, cov) {
+export function sampleNormal(mean, cov, seed = -1) {
   /*
   Gera uma amostra de uma distribuição normal multivariada com média e matriz de covariância especificadas.
   */
+  if (seed === -1) {
+    seed = Math.random();
+  }
   const n = mean.length;
   const L = cholesky(cov);
-  const normal = randomNormal(0, 1);
+  const normal = randomNormal.source(randomLcg(seed))(0, 1);
   const z = Array.from({ length: n }, () => normal());
   const sample = math.multiply(L, z);
   return sample.map((val, i) => val + mean[i]);
 }
 
-export function generateGPSamples(kernelFunction, start = -5, end = 5, step = 0.1) {
+export function generateGPSamples(kernelFunction, start = -5, end = 5, step = 0.1, seed = -1) {
     const xArray = [];
     for (let x = start; x <= end; x += step) {
         xArray.push(Number(x.toFixed(2))); 
@@ -75,7 +78,7 @@ export function generateGPSamples(kernelFunction, start = -5, end = 5, step = 0.
 
     // Amostragem
     const mean = Array(xArray.length).fill(0);
-    const sampledY = sampleNormal(mean, K);
+    const sampledY = sampleNormal(mean, K, seed=seed);
     
     return { x: xArray, y: sampledY }; 
 }
