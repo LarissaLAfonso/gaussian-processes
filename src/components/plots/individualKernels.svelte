@@ -1,11 +1,13 @@
 <svelte:head>
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-      </script>
-      <script type="text/javascript"
-        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-      </script>
+    <script>
+        MathJax = {
+          tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+        };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+        
 </svelte:head>
+
 
 <script>
     import * as d3 from 'd3';
@@ -91,15 +93,20 @@
         draw_kernel_func(data);
     }
 
+
     function updateSelectedKernel(index) {
         selectedKernelIndex = index;
         drawNewKernel();
+        d3.select()
     }
   
     onMount(() => {
       drawNewKernel();
-    });
-
+    });;
+    var desc;
+    var formula;
+    $:desc = kernelDescriptions[selectedKernelIndex].Description;
+    $:formula = kernelDescriptions[selectedKernelIndex].Formula;
   </script>
   
 <div class="container">
@@ -125,12 +132,12 @@
         </label>
     </div>
     <svg id="indivualKernels-svg"></svg>
-    <div class = "kernel-explanation">
+    <div class = "kernel-explanation" id="kernel-explanation">
         <div class="kernel-description">
-            <p>{kernelDescriptions[selectedKernelIndex].Description}</p>
+            <p>{desc}</p>
         </div>
         <div class="kernel-formula">
-            <p>${kernelDescriptions[selectedKernelIndex].Formula}$</p>
+            <p>${formula}$</p>
         </div>
     </div>
 </div>
