@@ -2,7 +2,7 @@
     {
         "Name": "RBF",
         "Description": "The RBF kernel is a stationary kernel. It is also known as the “squared exponential” kernel. It is parameterized by a length-scale parameter $l>0$, which can either be a scalar (isotropic variant of the kernel) or a vector with the same number of dimensions as the inputs $x$ (anisotropic variant of the kernel). ",
-        "Formula": "k(x_i, x_j) = \text{exp}\\left(- \\frac{d(x_i, x_j)^2}{2l^2} \\right)"
+        "Formula": "k(x_i, x_j) = \\text{exp}\\left(- \\frac{d(x_i, x_j)^2}{2l^2} \\right)"
     },
     {
         "Name": "Matern",
