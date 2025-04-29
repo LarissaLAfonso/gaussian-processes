@@ -53,17 +53,6 @@
             .attr("width", width)
             .attr("height", height)
         
-        // Borda do gráfico
-        // svg.append('rect')
-        //     .attr('x', margin.left)
-        //     .attr('y', 0)
-        //     .attr('width', width - margin.left - margin.right)
-        //     .attr('height', height)
-        //     .attr('fill', 'none')
-        //     .attr('stroke', 'black')
-        //     .attr('stroke-width', 2)
-        //     .attr('shape-rendering', 'crispEdges'); 
-        
         svg.append("path")
             .datum(data)
             .attr("fill", "none")
@@ -147,49 +136,59 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Fredoka', sans-serif;
-    
-}
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: 'Fredoka', sans-serif;
+        
+    }
 
-.kernel-selection {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    width: 100%;
-}
+    .kernel-selection {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        width: 100%;
+    }
 
-.kernel-toggle {
-    display: inline-flex;
-    align-items: center;
-    font-size: 18px;
-    cursor: pointer;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-}
+    .kernel-toggle {
+        display: inline-flex;
+        align-items: center;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 0 10px;
+        transition: color 0.3s ease;
+    }
 
-.kernel-toggle input {
-    display: none;
-}
+    .kernel-toggle input {
+        display: none;
+    }
 
-.kernel-toggle span {
-    padding: 5px;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, border 0.3s ease;
-}
+    .kernel-toggle span {
+        padding: 5px;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, border 0.3s ease;
+    }
 
-.kernel-toggle input:checked + span {
-    background-color: #52DBA4;
-    color: white;
-    border: 1.5px solid #000000;
-}
+    .kernel-toggle input:checked + span {
+        background-color: #52DBA4;
+        color: white;
+        border: 1.5px solid #000000;
+    }
 
-.kernel-toggle input:not(:checked) + span:hover {
-    background-color: #f0f0f0;
-}
-    
+    .kernel-toggle input:not(:checked) + span:hover {
+        background-color: #f0f0f0;
+    }
+
+    .kernel-explanation {
+        background-color: #e5e7eb; 
+        border-radius: 12px;      
+        margin-top: 20px;         
+        width: 80%;                
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        font-size: 16px;
+        color: #333;
+    }
+        
 </style>
