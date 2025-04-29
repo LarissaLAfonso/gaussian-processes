@@ -11,12 +11,12 @@
     },
     {
         "Name": "Periodic",
-        "Description": "Periodic Kernel",
+        "Description": "The periodic kernel recognizes ciclic patterns in the data. It is able to model data with repretitive behavior.",
         "Formula": "k_{\\text{per}}(x, x') = \\exp\\left(-\\frac{2 \\sin^2\\left( \\frac{\\pi |x - x'|}{p} \\right)}{\\ell^2} \\right)"
     },
     {
         "Name": "Polynomial",
-        "Description": "Polynomial Kernel",
+        "Description": "The polynomial kernel measures how similar two vectors are in a polynomial space. ",
         "Formula": "k(x_i, x_j) = (\\alpha x_i^T x_j + c)^d"
     }
 ]
