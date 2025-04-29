@@ -26,6 +26,15 @@
                             "value": "If \\(n\\) is small enough, you can imagine it as a <b>sample of a random variable</b> \\(X \\sim F(\\theta)\\) living in \\(\\mathbb{R}^d\\), with \\(d\\) at least as big as \\(n\\)."
                         }
                     ]
+                },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "(In this case, \\(n\\) = 3)."
+                        }
+                    ]
                 }
             ],
             "figure": "happy.png"

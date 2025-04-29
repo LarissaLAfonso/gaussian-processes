@@ -17,6 +17,25 @@ export function kernel_RBF(x, y = 0, lengthScale = 1.0) {
   return Math.exp(-0.5 * ((x - y) ** 2) / (lengthScale ** 2));
 }
 
+export function cholesky(A) {
+    const n = A.length;
+    const L = Array.from({ length: n }, () => Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j <= i; j++) {
+        let sum = 0;
+        for (let k = 0; k < j; k++) {
+          sum += L[i][k] * L[j][k];
+        }
+        if (i === j) {
+          L[i][j] = Math.sqrt(A[i][i] - sum);
+        } else {
+          L[i][j] = (A[i][j] - sum) / L[j][j];
+        }
+      }
+    }
+    return L;
+  }
+
 // Geração de dados
 export function generateData(kernelFunction, start = -5, end = 5, step = 0.05) {
   const data = [];
@@ -35,6 +54,29 @@ export function sampleNormal(mean, cov) {
   const z = Array.from({ length: n }, () => d3.randomNormal(0, 1)());
   const sample = math.multiply(L, z);
   return sample.map((val, i) => val + mean[i]);
+}
+
+export function generateGPSamples(kernelFunction, start = -5, end = 5, step = 0.05) {
+  const xArray = [];
+  for (let x = start; x <= end; x += step) {
+    xArray.push(x);
+  }
+
+  const K = [];
+  for (let i = 0; i < xArray.length; i++) {
+    K[i] = [];
+    for (let j = 0; j < xArray.length; j++) {
+      K[i][j] = kernelFunction(xArray[i], xArray[j]);
+      if (i === j) K[i][j] += 1e-8; 
+    }
+  }
+
+  const mean = Array(xArray.length).fill(0);
+  const fSamples = sampleNormal(mean, K);
+
+  const data = xArray.map((xi, idx) => ({ x: xi, y: fSamples[idx] }));
+
+  return data;
 }
 
 // Plot do Kernel

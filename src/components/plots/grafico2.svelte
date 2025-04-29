@@ -23,7 +23,7 @@
         const leftSvg = d3.select('#left-plot');
         const rightSvg = d3.select('#right-plot');
     
-        const xScale2D = d3.scaleLinear().domain([0, 10]).range([margin, leftWidth - margin]);
+        const xScale2D = d3.scaleLinear().domain([-2, 10]).range([margin, leftWidth - margin]);
         const yScale2D = d3.scaleLinear().domain([-3, 3]).range([leftHeight - margin, margin]);
         const realScale = d3.scaleLinear().domain([-3, 3]).range([-1, 1]);
     
@@ -82,7 +82,8 @@
             .attr('y1', yScale2D(0))
             .attr('y2', d => yScale2D(d.y))
             .attr('stroke', (d, i) => [firstColor, secondColor, thirdColor][i])
-            .attr('stroke-width', 3);
+            .attr('stroke-width', 3)
+            .attr('opacity', 0.7);
     
         leftSvg.selectAll('circle')
             .data(points2D)
@@ -90,7 +91,7 @@
             .append('circle')
             .attr('cx', d => xScale2D(d.x))
             .attr('cy', d => yScale2D(d.y))
-            .attr('r', 6)
+            .attr('r', 5)
             .attr('fill', 'black');
     
         leftSvg.append('line')
@@ -99,7 +100,8 @@
             .attr('y1', yScale2D(0))
             .attr('y2', yScale2D(0))
             .attr('stroke', 'black')
-            .attr('opacity', 0.5);
+            .attr('opacity', 0.3)
+            .attr('stroke-width', 1);
     
         leftSvg.append('line')
             .attr('x1', xScale2D(0))
@@ -107,7 +109,8 @@
             .attr('y1', yScale2D(-3))
             .attr('y2', yScale2D(3))
             .attr('stroke', 'black')
-            .attr('opacity', 0.5);
+            .attr('opacity', 0.3)
+            .attr('stroke-width', 1);
 
         const arrowSize = 8;
 
@@ -141,7 +144,8 @@
                 .attr('x2', xScale3D(line.end.x))
                 .attr('y2', yScale3D(line.end.y))
                 .attr('stroke', 'black')
-                .attr('opacity', 0.5);
+                .attr('opacity', 0.5)
+                .attr('stroke-width', 1);
         });
     
         // Prepare animated steps
@@ -261,7 +265,7 @@
 
     .resample-button {
         padding: 10px 20px;
-        background-color: #4CAF50;
+        background-color: #ff968a;
         color: white;
         border: none;
         border-radius: 4px;
@@ -290,7 +294,7 @@
 
     <div class="button-wrapper">
         <button class="resample-button" on:click={resample}>
-            Resample Points
+            Resample
         </button>
     </div>
 </div>
