@@ -66,6 +66,7 @@
   </div>
   
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
     .wrapper {
       height: 100vh;
       display: flex;
@@ -74,7 +75,7 @@
       align-items: center;
       position: relative;
       z-index: 1;
-      font-family: 'Poppins', 'Comic Neue', 'Quicksand', sans-serif;
+      font-family: 'Fredoka', sans-serif;
       text-align: center;
       padding-bottom: 96px;
       padding-top: 15px;
