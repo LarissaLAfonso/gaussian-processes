@@ -49,51 +49,39 @@
   });
 </script>
 
-<svelte:head>
-  <title>❥ Gaussian Processes </title>
-  <script type="text/javascript" async
-    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-  </script>
-</svelte:head>
-
 <!-- Scroll progress bar -->
 <div
   class="progress-bar"
   style="width: {($scrollyIndex ?? 0) / (data.steps.length + 1) * 100}%"
 ></div>
 
-<div class="wrapper" style:pointer-events={$scrollyIndex === 0 ? "auto" : "auto"}>
-  <div class="foreground-wrapper">
-    <ScrollyStepWrapper height="100vh">
-      <ScrollyStep active={$scrollyIndex === 0}>
-          <Title active={$scrollyIndex === 0}/>
+<div
+  class="wrapper"
+  style:pointer-events={$scrollyIndex === 0 ? "none" : "auto"}
+>
+<div class="foreground-wrapper">
+  <ScrollyStepWrapper height={"100vh"}>
+    <Title />
+  </ScrollyStepWrapper>
+
+  {#each data.steps as step, i}
+    <ScrollyStepWrapper>
+      <ScrollyStep active={$scrollyIndex === i + 1}>
+        <div class="step-container">
+          <ScrollyStepContent step={step} />
+          <img src={step.figure} alt="illustration" class="corner-figure" />
+        </div>
       </ScrollyStep>
     </ScrollyStepWrapper>
+  {/each}
 
-    {#each data.steps as step, i}
-      <ScrollyStepWrapper>
-        <ScrollyStep active={$scrollyIndex === i + 1}>
-          <div class="step-container">
-            <ScrollyStepContent step={step} />
-            <img src={step.figure} alt="illustration" class="corner-figure" />
-          </div>
-        </ScrollyStep>
-      </ScrollyStepWrapper>
-    {/each}
+  <div class="spacer" />
+</div>
 
-    <ScrollyStepWrapper height="100vh">
-      <ScrollyStep active={$scrollyIndex === 8}>
-          <Footer active={$scrollyIndex === 8}/>
-      </ScrollyStep>
-    </ScrollyStepWrapper>
-
-    <div class="spacer" />
-  </div>
-
-  <div class="background-wrapper">
-    <!-- <Gaussian /> -->
-     <G2/>
-  </div>
+<div class="background-wrapper">
+  <!-- <Gaussian /> -->
+    <G2/>
+</div>
 </div>
 
 <style>

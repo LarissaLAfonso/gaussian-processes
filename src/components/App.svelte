@@ -15,15 +15,25 @@
     });
 </script>
 
+<svelte:head>
+  <title>❥ Gaussian Processes </title>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</svelte:head>
+
 <!--If the app is not mounted, show loading spinner-->
 {#if !mounted}
   <Loading />
 {:else}
-  <!--If on desktop show scroll driven story-->
+
+  <!--If on desktop, show scroll driven story-->
   {#if $mediaQueries["50rem"]}
     <section id="scrolly">
       <GaussianScrolly />
     </section>
+    <Footer />
+
   <!--If on mobile, show static page-->
   {:else}
     <div class="header-wrapper">

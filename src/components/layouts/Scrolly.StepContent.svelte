@@ -47,11 +47,4 @@
   .text-content {
     margin-top: 1rem;
   }
-
-  .step-content {
-    background-color: #d6f5d6; /* light green */
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1rem 0;
-  }
 </style>

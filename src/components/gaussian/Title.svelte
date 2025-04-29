@@ -3,7 +3,6 @@
 	import scrollY from "$stores/scrollY.js";
 	import { onMount } from "svelte";
 	import * as d3 from "d3";
-	export let active = true;
 
 	$: opacity = Math.max(0, 1 - $scrollY / 200);
 
@@ -48,7 +47,7 @@
 	});
 </script>
 
-<div class="wrapper fullscreen" style="opacity: {opacity}">
+<div class="wrapper fullscreen" style="opacity: {opacity}; pointer-events: {opacity === 0 ? 'none' : 'auto'}">
 	<div class="graph-background" aria-hidden="true">
 		<svg viewBox="0 0 800 200" preserveAspectRatio="none">
 			<!-- Intervalo de Confiança -->
@@ -69,14 +68,11 @@
 
 	<h1 class="montserrat-heading">Gaussian Processes</h1>
 	<h2 class="montserrat-subtitle">An intuitive exploration</h2>
-	<p><span class="author-label">By</span> 
-		{#if active}
-			<Link href="https://github.com/LarissaLAfonso">Larissa Lemos Afonso</Link>, 
-			<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
-			<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
-		{/if}
-	</p>
-
+	<p> By
+		<Link href="https://github.com/LarissaLAfonso">Larissa Lemos Afonso</Link>, 
+		<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
+		<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
+	</p>	
 	<img src="laughing.png" alt="corner decoration" class="corner-image" />
 </div>
 
@@ -109,6 +105,10 @@
 		justify-content: center;
 		align-items: center;
 		background: white;
+	}
+
+	.author-link {
+		display: inline-block;
 	}
 
 	.graph-background {
