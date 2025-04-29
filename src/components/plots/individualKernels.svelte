@@ -10,9 +10,13 @@
     const width = 800;
     const height = 400;
     const margin = { top: 20, right: 20, bottom: 40, left: 40 };
-    // const margin = {top:10, right: 10, bottom: 10, left: 10};
-
-    const kernels = [kernel_Matern12, kernel_Periodic, kernel_Polynomial, kernel_RBF];
+    
+    const kernels = [
+        kernel_RBF,
+        kernel_Matern12,
+        kernel_Periodic,
+        kernel_Polynomial
+    ];
     var selectedKernelIndex = 0;
 
     function draw_kernel_func(data) {
@@ -38,15 +42,15 @@
             .attr("height", height)
         
         // Borda do gráfico
-        svg.append('rect')
-            .attr('x', margin.left)
-            .attr('y', 0)
-            .attr('width', width - margin.left - margin.right)
-            .attr('height', height)
-            .attr('fill', 'none')
-            .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('shape-rendering', 'crispEdges'); 
+        // svg.append('rect')
+        //     .attr('x', margin.left)
+        //     .attr('y', 0)
+        //     .attr('width', width - margin.left - margin.right)
+        //     .attr('height', height)
+        //     .attr('fill', 'none')
+        //     .attr('stroke', 'black')
+        //     .attr('stroke-width', 2)
+        //     .attr('shape-rendering', 'crispEdges'); 
         
         svg.append("path")
             .datum(data)
@@ -61,7 +65,9 @@
             .attr("x2", width - margin.right)
             .attr("y2", height - margin.bottom)
             .attr("stroke", "black")
-            .attr("stroke-width", 1);  
+            .attr("stroke-width", 1)
+            .attr("opacity", 0.5)
+            .attr("stroke-dasharray", "5,5");  
         
         y.domain([0, d3.max(data, d => d.y)])
             .range([height - margin.bottom, margin.top]);

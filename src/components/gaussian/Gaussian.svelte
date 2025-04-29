@@ -7,6 +7,11 @@
   import G6 from "$components/plots/periodic.svelte";
   import G7 from "$components/plots/polinomial.svelte";
   import G8 from "$components/plots/squared_exp.svelte";
+
+  import AllKernels from "../plots/allKernels.svelte";
+  import IndividualKernels from "../plots/individualKernels.svelte";
+  import ScatterPrior from "../plots/scatter_prior.svelte";
+  import Prior from "../plots/prior.svelte";
   
   export let activeStep;
 </script>
@@ -16,15 +21,19 @@
 {:else if activeStep === 2}
   <G2 />
 {:else if activeStep === 3}
-  <G3 />
+  <!-- <G3 /> -->
+  <ScatterPrior />
 {:else if activeStep === 4}
-  <G4 />
-{:else if activeStep === 5}
-  <G5 />
-{:else if activeStep === 6}
-  <G6 />
+  <!-- <G4 /> -->
+  <Prior />
+  {:else if activeStep === 5}
+  <!-- <G5 /> -->
+  <AllKernels />
+  {:else if activeStep === 6}
+  <!-- <G6 /> -->
+  <IndividualKernels />
 {:else if activeStep === 7}
-  <G7 />
-{:else if activeStep === 8}
-  <G8 />
+  <!-- <G7 /> -->
+  {:else if activeStep === 8}
+  <!-- <G8 /> -->
 {/if}
