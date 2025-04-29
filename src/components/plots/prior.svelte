@@ -216,8 +216,6 @@
 </script>
 
 <div class="container">
-    <h2>Prior Distribution</h2>
-
     <!-- Botões para seleção do Kernel -->
     <div class="kernel-selection">
         <label class="kernel-toggle">
@@ -282,19 +280,14 @@
 </div>
 
 <style>
-    h2 {
-        font-size: 27px;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+
     .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: monospace;
+        font-family: 'Fredoka', sans-serif;
         
-    }
-
-    .h2 {
-        font-size: 14px;
     }
 
     .kernel-selection {
