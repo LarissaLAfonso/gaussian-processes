@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     import { sharedData } from '$stores/graphData.js';
 
-    export let scrollyIndex;
+    export let activeStep;
 
     let svg;
     let data = [];
@@ -118,26 +118,29 @@
             .attr('marker-end', 'url(#arrow)');
     });
 
-    $: if (scrollyIndex === 2 && svg && data.length) {
+    $: if (activeStep === 2 && svg && data.length) {
         svg.selectAll('.highlight-line').remove();
         data.forEach((point, i) => {
             setTimeout(() => {
                 svg.append('line')
                     .attr('class', 'highlight-line')
-                    .attr('x1', xScale(0))
+                    .attr('x1', xScale(point.x))
                     .attr('x2', xScale(point.x))
-                    .attr('y1', yScale(point.y))
-                    .attr('y2', yScale(point.y))
-                    .attr('stroke', 'red')
-                    .attr('stroke-dasharray', '4,2')
+                    .attr('y1', yScale(0))
+                    .attr('y2', yScale(0))
+                    .attr('stroke', '#ff968a')
                     .attr('stroke-width', 1.5)
-                    .attr('opacity', 0.8);
+                    .attr('opacity', 0.5)
+                    .transition()
+                    .duration(300)
+                    .attr('y2', yScale(point.y));
             }, i * 150);
         });
+        svg.selectAll('circle').raise();
     }
 </script>
 
-<style>
+<style> 
     .container {
         display: flex;
         flex-direction: column;

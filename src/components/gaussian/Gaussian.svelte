@@ -11,20 +11,20 @@
   export let activeStep;
 </script>
 
-{#if activeStep === 1}
-  <G1 />
-{:else if activeStep === 2}
-  <G2 />
+{#if activeStep === 1 || activeStep === 2}
+  <G1 activeStep={activeStep}/>
 {:else if activeStep === 3}
-  <G3 />
-{:else if activeStep === 4}
-<G4 />
-{:else if activeStep === 5}
-<G5 />
-{:else if activeStep === 6}
-<G6 />
+  <G2 />
+{:else if activeStep === 4 || activeStep === 5 || activeStep === 6}
+  <G3/>
 {:else if activeStep === 7}
-<G7 />
+<G4 />
 {:else if activeStep === 8}
+<G5 />
+{:else if activeStep === 9}
+<G6 />
+{:else if activeStep === 10}
+<G7 />
+{:else if activeStep === 11}
 <G8 />
 {/if}
