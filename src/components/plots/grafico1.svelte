@@ -17,15 +17,15 @@
             .then(module => {
                 window.auxiliares = module;
                 auxLoaded = true;
-                console.log('auxiliares loaded successfully', module);
+                //console.log('auxiliares loaded successfully', module);
             })
             .catch(err => {
                 importError = err;
-                console.error('Failed to load auxiliares:', err);
+                //console.error('Failed to load auxiliares:', err);
             });
     } catch (err) {
         importError = err;
-        console.error('Import error:', err);
+        //console.error('Import error:', err);
     }
 
     let width = 600;
@@ -35,7 +35,6 @@
     const Xvalues = d3.range(0.2, 9.90, 0.3);
 
     onMount(() => {
-        console.log('Component mounted - starting render');
 
         let Yvalues;
         if (!auxLoaded) {
@@ -47,9 +46,9 @@
                 const variance = Array(Xvalues.length).fill(0)
                     .map(() => Array(Xvalues.length).fill(0));
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
-                console.log('Generated data using auxiliares');
+                //console.log('Generated data using auxiliares');
             } catch (err) {
-                console.error('Error in sampleNormal:', err);
+                //console.error('Error in sampleNormal:', err);
                 Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
             }
         }
@@ -58,7 +57,7 @@
 
         const svgEl = document.getElementById('gp-svg');
         if (!svgEl) {
-            console.error('SVG element not found! Check your HTML');
+            //console.error('SVG element not found! Check your HTML');
             return;
         }
 

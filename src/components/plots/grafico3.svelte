@@ -11,15 +11,15 @@
             .then(module => {
                 window.auxiliares = module; // Temporarily expose for debugging
                 auxLoaded = true;
-                console.log('auxiliares loaded successfully', module);
+                //console.log('auxiliares loaded successfully', module);
             })
             .catch(err => {
                 importError = err;
-                console.error('Failed to load auxiliares:', err);
+                //console.error('Failed to load auxiliares:', err);
             });
     } catch (err) {
         importError = err;
-        console.error('Import error:', err);
+        //console.error('Import error:', err);
     }
 
     let width = 600;
@@ -30,12 +30,12 @@
     const Xvalues = d3.range(0.2, 9.90, 0.01);
 
     onMount(() => {
-        console.log('Component mounted - starting render');
+        //console.log('Component mounted - starting render');
         
         // 2. Create test data if auxiliares fails to load
         let Yvalues;
         if (!auxLoaded) {
-            console.warn('Using fallback data - auxiliares not loaded');
+            //console.warn('Using fallback data - auxiliares not loaded');
             Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
         } else {
             try {
@@ -46,7 +46,7 @@
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
                 console.log('Generated data using auxiliares');
             } catch (err) {
-                console.error('Error in sampleNormal:', err);
+                //console.error('Error in sampleNormal:', err);
                 Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
             }
         }
@@ -57,7 +57,7 @@
         // 4. Get SVG element
         const svgEl = document.getElementById('gp-svg');
         if (!svgEl) {
-            console.error('SVG element not found! Check your HTML');
+            //console.error('SVG element not found! Check your HTML');
             return;
         }
 
@@ -121,7 +121,7 @@
             .attr('opacity', 0.5)
             .attr('marker-end', 'url(#arrow)');
 
-        console.log('Render completed');
+        //console.log('Render completed');
     });
 </script>
 
