@@ -40,7 +40,7 @@ You can preview the production build with `npm run preview`.
 ---
 
 # Visualization Motivation
-The developed web page aims to provide a didactic and accessible explanation of gaussian processes, having in mind those who have not yet been introduced to this concept. Some background on statistics or analysis might be useful purely facilitating the understanding of the abstract nature of the subject, but there are no pre-requisites.
+The developed web page aims to provide a didactic and accessible explanation of gaussian processes. Some background on statistics or analysis might be useful purely facilitating the understanding of the abstract nature of the subject, but there are no pre-requisites.
 
 A Gaussian process is a stochastic process — a collection of random variables indexed by time or space — of which any finite subset follows a multivariate normal distribution. This type of process is extremely important in areas such as regression and uncertainty modeling.
 
