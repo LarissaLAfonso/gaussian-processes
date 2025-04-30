@@ -132,7 +132,7 @@
                     .attr('stroke-width', 1.5)
                     .attr('opacity', 0.5)
                     .transition()
-                    .duration(300)
+                    .duration(200)
                     .attr('y2', yScale(point.y));
             }, i * 150);
         });

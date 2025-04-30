@@ -4,6 +4,8 @@
     import { scaleLinear } from 'd3-scale';
     import { abs, secondRadiationDependencies } from 'mathjs';
     import * as auxiliares from '$components/plots/auxiliares.js';
+    import { sharedData } from '$stores/graphData.js';
+
     
     const auxLoaded = false;
     
@@ -235,8 +237,8 @@
     
     function resample() {
         let Yvalues;
+
         if (!auxLoaded) {
-            console.warn('Using fallback data - auxiliares not loaded');
             Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
         } else {
             try {
@@ -244,17 +246,17 @@
                 const variance = Array(Xvalues.length).fill(0).map(() => Array(Xvalues.length).fill(0));
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
             } catch (err) {
-                console.error('Error in sampleNormal:', err);
                 Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
             }
         }
 
+        sharedData.set({ x: Xvalues, y: Yvalues });
         createViz(Xvalues, Yvalues);
     }
-
     
     onMount(() => {
         let Yvalues;
+
         if (!auxLoaded) {
             console.warn('Using fallback data - auxiliares not loaded');
             Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
@@ -263,16 +265,16 @@
                 const mean = Array(Xvalues.length).fill(0);
                 const variance = Array(Xvalues.length).fill(0).map(() => Array(Xvalues.length).fill(0));
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
-                Yvalues = 3*Yvalues;
             } catch (err) {
                 console.error('Error in sampleNormal:', err);
                 Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
-                Yvalues = 3*Yvalues;
             }
         }
-    
+
+        sharedData.set({ x: Xvalues, y: Yvalues });
         createViz(Xvalues, Yvalues);
     });
+
 </script>
 
 <style>
