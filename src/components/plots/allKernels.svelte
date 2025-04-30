@@ -246,11 +246,13 @@
 </div>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+
     .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: cursive;
+        font-family: 'Fredoka', sans-serif;
     }
     .kernel-selection {
         display: flex;

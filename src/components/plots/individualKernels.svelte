@@ -1,7 +1,19 @@
+<svelte:head>
+    <script>
+        MathJax = {
+          tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+        };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+</svelte:head>
+
+
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
     import { kernel_Matern12, kernel_Polynomial, kernel_Periodic, kernel_RBF, generateData } from '$components/plots/auxiliares.js';
+    import kernelDescriptions from '$components/data/kernels.json';
   
     let svg;
 
@@ -41,21 +53,10 @@
             .attr("width", width)
             .attr("height", height)
         
-        // Borda do gráfico
-        // svg.append('rect')
-        //     .attr('x', margin.left)
-        //     .attr('y', 0)
-        //     .attr('width', width - margin.left - margin.right)
-        //     .attr('height', height)
-        //     .attr('fill', 'none')
-        //     .attr('stroke', 'black')
-        //     .attr('stroke-width', 2)
-        //     .attr('shape-rendering', 'crispEdges'); 
-        
         svg.append("path")
             .datum(data)
             .attr("fill", "none")
-            .attr("stroke", "blue") 
+            .attr("stroke", "#52DBA4") 
             .attr("stroke-width", 2)
             .attr("d", line);
 
@@ -81,15 +82,20 @@
         draw_kernel_func(data);
     }
 
+
     function updateSelectedKernel(index) {
         selectedKernelIndex = index;
         drawNewKernel();
+        // Limpa o conteúdo anterior
     }
   
     onMount(() => {
       drawNewKernel();
-    });
-
+    });;
+    var desc;
+    // var formula;
+    $:desc = kernelDescriptions[selectedKernelIndex].Description;
+    // $:formula = kernelDescriptions[selectedKernelIndex].Formula;
   </script>
   
 <div class="container">
@@ -115,16 +121,29 @@
         </label>
     </div>
     <svg id="indivualKernels-svg"></svg>
+    <br>
+    <div class = "kernel-explanation" id="kernel-explanation">
+        <div class="kernel-description">
+            <p>{desc}</p>
+        </div>
+        <!-- <div class="kernel-formula" id="kernel-formula">
+            <p>${formula}$</p>
+        </div> -->
+    </div>
 </div>
 
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+
     .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: cursive;
+        font-family: 'Fredoka', sans-serif;
+        
     }
+
     .kernel-selection {
         display: flex;
         justify-content: space-around;
@@ -152,10 +171,6 @@
         transition: background-color 0.3s ease, border 0.3s ease;
     }
 
-    .kernel-toggle input:not(:checked) + span{
-        opacity: 0.5;
-    }
-
     .kernel-toggle input:checked + span {
         background-color: #52DBA4;
         color: white;
@@ -165,18 +180,15 @@
     .kernel-toggle input:not(:checked) + span:hover {
         background-color: #f0f0f0;
     }
-    .kernel-toggle input:checked + span:hover {
-        background-color: #000000;
-        color: white;
-        border: 1.5px solid #000000;
-    }
 
-    .container {
-        display: flex;
-        width: 700px;
-        height: 600px;
-        margin: 10px auto;
-        position: relative;
+    .kernel-explanation {
+        background-color: #e5e7eb; 
+        border-radius: 12px;      
+        margin-top: 20px;         
+        width: 80%;                
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        font-size: 16px;
+        color: #333;
     }
-    
+        
 </style>
