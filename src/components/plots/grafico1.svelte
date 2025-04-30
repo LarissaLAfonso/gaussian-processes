@@ -1,15 +1,21 @@
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
+    import { sharedData } from '$stores/graphData.js';
 
-    // 1. First verify the auxiliares import works
+    export let scrollyIndex;
+
+    let svg;
+    let data = [];
+    let xScale, yScale;
+
     let auxLoaded = false;
     let importError = null;
-    
+
     try {
         import('$components/plots/auxiliares.js')
             .then(module => {
-                window.auxiliares = module; // Temporarily expose for debugging
+                window.auxiliares = module;
                 auxLoaded = true;
                 console.log('auxiliares loaded successfully', module);
             })
@@ -24,15 +30,13 @@
 
     let width = 600;
     let height = 400;
-    let margin = { top: 20, right: 20, bottom: 40, left: 40 };
+    let margin = { top: 20, right: 20, bottom: 40, left: 20 };
 
-    // Range dos dados
     const Xvalues = d3.range(0.2, 9.90, 0.3);
 
     onMount(() => {
         console.log('Component mounted - starting render');
-        
-        // 2. Create test data if auxiliares fails to load
+
         let Yvalues;
         if (!auxLoaded) {
             console.warn('Using fallback data - auxiliares not loaded');
@@ -42,7 +46,6 @@
                 const mean = Array(Xvalues.length).fill(0);
                 const variance = Array(Xvalues.length).fill(0)
                     .map(() => Array(Xvalues.length).fill(0));
-                
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
                 console.log('Generated data using auxiliares');
             } catch (err) {
@@ -51,34 +54,28 @@
             }
         }
 
-        // 3. Create data points
-        const data = Xvalues.map((x, i) => ({ x, y: Yvalues[i] }));
+        data = Xvalues.map((x, i) => ({ x, y: Yvalues[i] }));
 
-        // 4. Get SVG element
         const svgEl = document.getElementById('gp-svg');
         if (!svgEl) {
             console.error('SVG element not found! Check your HTML');
             return;
         }
 
-        // 5. Clear previous content
         svgEl.innerHTML = '';
 
-        // 6. Setup scales
-        const xScale = d3.scaleLinear()
+        xScale = d3.scaleLinear()
             .domain([0, 10])
             .range([margin.left, width - margin.right]);
 
-        const yScale = d3.scaleLinear()
+        yScale = d3.scaleLinear()
             .domain([-3, 3])
             .range([height - margin.bottom, margin.top]);
 
-        // 7. Create SVG
-        const svg = d3.select(svgEl)
+        svg = d3.select(svgEl)
             .attr('width', width)
             .attr('height', height);
 
-        // 8. Draw points (simplified)
         svg.selectAll('circle')
             .data(data)
             .enter()
@@ -88,7 +85,6 @@
             .attr('r', 3)
             .attr('fill', 'black');
 
-        // 9 Add arrow marker
         svg.append('defs').append('marker')
             .attr('id', 'arrow')
             .attr('viewBox', '0 0 10 10')
@@ -101,7 +97,6 @@
             .attr('d', 'M 0 0 L 10 5 L 0 10 z')
             .attr('fill', 'black');
 
-        // 10. Draw axes
         svg.append('line')
             .attr('x1', xScale(0))
             .attr('x2', xScale(10) + 10)
@@ -121,21 +116,25 @@
             .attr('stroke-width', 1)
             .attr('opacity', 0.5)
             .attr('marker-end', 'url(#arrow)');
-
-        // 11. Add labels
-        svg.append('text')
-            .attr('x', xScale(10) + 20)
-            .attr('y', yScale(0) + 5)
-            .text('x')
-            .attr('font-size', '12px');
-
-        svg.append('text')
-            .attr('x', xScale(0) - 10)
-            .attr('y', yScale(3) - 15)
-            .text('y')
-            .attr('font-size', '12px');
-            
     });
+
+    $: if (scrollyIndex === 2 && svg && data.length) {
+        svg.selectAll('.highlight-line').remove();
+        data.forEach((point, i) => {
+            setTimeout(() => {
+                svg.append('line')
+                    .attr('class', 'highlight-line')
+                    .attr('x1', xScale(0))
+                    .attr('x2', xScale(point.x))
+                    .attr('y1', yScale(point.y))
+                    .attr('y2', yScale(point.y))
+                    .attr('stroke', 'red')
+                    .attr('stroke-dasharray', '4,2')
+                    .attr('stroke-width', 1.5)
+                    .attr('opacity', 0.8);
+            }, i * 150);
+        });
+    }
 </script>
 
 <style>
