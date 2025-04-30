@@ -88,26 +88,53 @@
             .attr('r', 3)
             .attr('fill', 'black');
 
-        // 9. Draw axes
+        // 9 Add arrow marker
+        svg.append('defs').append('marker')
+            .attr('id', 'arrow')
+            .attr('viewBox', '0 0 10 10')
+            .attr('refX', 5)
+            .attr('refY', 5)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('orient', 'auto-start-reverse')
+            .append('path')
+            .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+            .attr('fill', 'black');
+
+        // 10. Draw axes
         svg.append('line')
             .attr('x1', xScale(0))
-            .attr('x2', xScale(10))
+            .attr('x2', xScale(10) + 10)
             .attr('y1', yScale(0))
             .attr('y2', yScale(0))
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
-            .attr('opacity', 0.3);
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
 
         svg.append('line')
             .attr('x1', xScale(0))
             .attr('x2', xScale(0))
-            .attr('y1', yScale(-4))
-            .attr('y2', yScale(4))
+            .attr('y1', yScale(-3))
+            .attr('y2', yScale(3) - 10)
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
-            .attr('opacity', 0.3);
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
 
-        console.log('Render completed');
+        // 11. Add labels
+        svg.append('text')
+            .attr('x', xScale(10) + 20)
+            .attr('y', yScale(0) + 5)
+            .text('x')
+            .attr('font-size', '12px');
+
+        svg.append('text')
+            .attr('x', xScale(0) - 10)
+            .attr('y', yScale(3) - 15)
+            .text('y')
+            .attr('font-size', '12px');
+            
     });
 </script>
 
