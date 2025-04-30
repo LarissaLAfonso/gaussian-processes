@@ -38,7 +38,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "Now, if we collect all of those \\(n\\) heights, we'll have \\(n\\) numbers, which we can represent as a single point in \\(\\mathbb{R}^n\\)."
+                            "value": "Now, if we collect all of those \\(n\\) heights, we'll have \\(n\\) numbers, which we can represent as a single point in \\(\\mathbb{R}^n\\). One height for each axis."
                         }
                     ]
                 },

@@ -140,7 +140,7 @@
 		font-style: normal;
 		font-size: 5rem;
 		color: #fba6a6;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0rem;
 		position: relative;
 		z-index: 2;
 		text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
@@ -148,9 +148,9 @@
 
 	.montserrat-subtitle {
 		font-family: 'Fredoka', sans-serif;
-		font-weight: 400;
+		font-weight: 450;
 		font-style: normal;
-		font-size: 1.4rem;
+		font-size: 2rem;
 		color: #a0c4ff;
 		margin-bottom: 1rem;
 		position: relative;
