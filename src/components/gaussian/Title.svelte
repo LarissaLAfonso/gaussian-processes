@@ -73,6 +73,16 @@
 		<Link href="https://github.com/LuuSamp">Luciano Pereira Sampaio</Link> & 
 		<Link href="https://github.com/KaikyBraga">Kaiky Eduardo Alves Braga</Link>
 	</p>	
+	
+	<div class="scroll-indicator">
+		<svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+			<path d="M6 9l6 6 6-6" stroke="#79a98b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg><svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+			<path d="M6 9l6 6 6-6" stroke="#79a98b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>
+		<div class="text">Scroll down</div>
+	</div>
+	
 	<img src="laughing.png" alt="corner decoration" class="corner-image" />
 </div>
 
@@ -81,17 +91,15 @@
 	@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
 
 	.wrapper {
-		height: 100vh;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		position: relative;
 		z-index: 1;
-		font-family: 'Poppins', 'Comic Neue', 'Quicksand', sans-serif;
+		font-family: 'Fredoka', sans-serif;
 		text-align: center;
-		padding: 1rem;
-		border-radius: 1.4rem;
 		overflow: hidden;
 	}
 
@@ -99,18 +107,13 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100vw;
-		height: 100vh;
-		z-index: 100;
+		width: 100%;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		background: white;
-	}
-
-	.author-link {
-		display: inline-block;
 	}
 
 	.graph-background {
@@ -126,16 +129,9 @@
 
 	.dot {
 		fill: #3D30F0;
-		transition: transform 0.3s ease, fill 0.3s ease;
-	}
-
-	.dot:hover {
-		transform: scale(1.4);
-		fill: #5B4FFF;
 	}
 
 	.montserrat-heading {
-		font-family: 'Fredoka', sans-serif;
 		font-weight: 520;
 		font-style: normal;
 		font-size: 5rem;
@@ -146,8 +142,7 @@
 		text-shadow: 0 0 12px rgba(0, 0, 0, 0.21);
 	}
 
-	.montserrat-subtitle {
-		font-family: 'Fredoka', sans-serif;
+	.montserrat-subtitle {		
 		font-weight: 450;
 		font-style: normal;
 		font-size: 2rem;
@@ -158,24 +153,16 @@
 	}
 
 	p {
-		font-family: 'Fredoka', sans-serif;
 		font-size: 1.1rem;
 		color: rgb(200, 200, 200);
 		position: relative;
 		z-index: 2;
 	}
-
-	a {
-		text-decoration: none;
-		color: #ffafcc;
-		font-weight: bold;
-	}
-
 	.corner-image {
 		position: absolute;
 		right: 8rem;
 		bottom: 6rem;
-		width: 300px; /* adjust as needed */
+		width: 300px; 
 		height: auto;
 		opacity: 0.8;
 		pointer-events: none;
@@ -183,6 +170,42 @@
 		transform: rotate(15deg);
 	}
 
+	.scroll-indicator {
+		margin-top: 1rem;
+		text-align: center;
+		animation: fadeIn 2s ease-in;
+		z-index: 2;
+		position: relative;
+	}
+
+	.scroll-indicator {
+		position: absolute;
+		bottom: 40px; 
+		text-align: center;
+		z-index: 2;
+		width: 100%; 
+	}
+
+	.scroll-indicator .arrow-icon {
+		margin: -14px auto;
+		display: block;
+		animation: bounce 1.5s infinite;
+	}
+
+	.scroll-indicator .text {
+		font-size: 1.15rem;
+		margin-top: 13px;
+		color: #79a98b;
+	}
+
+	@keyframes bounce {
+		0%, 100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(8px);
+		}
+	}
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
