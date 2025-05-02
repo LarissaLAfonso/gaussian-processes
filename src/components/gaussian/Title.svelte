@@ -80,7 +80,7 @@
 		</svg><svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
 			<path d="M6 9l6 6 6-6" stroke="#79a98b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 		</svg>
-		<div class="text">Scroll down</div>
+		<div class="text">Scroll Down</div>
 	</div>
 	
 	<img src="laughing.png" alt="corner decoration" class="corner-image" />
