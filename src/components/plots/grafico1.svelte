@@ -128,8 +128,8 @@
                     .attr('y1', yScale(0))
                     .attr('y2', yScale(0))
                     .attr('stroke', '#ff968a')
-                    .attr('stroke-width', 1.5)
-                    .attr('opacity', 0.5)
+                    .attr('stroke-width', 3.5)
+                    .attr('opacity', 0.4)
                     .transition()
                     .duration(200)
                     .attr('y2', yScale(point.y));

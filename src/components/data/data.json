@@ -77,7 +77,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "For that and other reasons, when \\(n\\) grows things start to get messy. The density \\(F\\) becomes a distribution defined in a very high dimensional space, which involves arithmetic operations of <em>humongous</em> matrices. Depending on how high you shoot, not even the best computers in the world can handle that."
+                            "value": "For that and other reasons, when \\(n\\) grows things start to get messy. The density function becomes a distribution defined in a very high dimensional space, which involves arithmetic operations of <em>humongous</em> matrices. Depending on how high you shoot, not even the best computers in the world can handle that."
                         }
                     ]
                 }
@@ -149,24 +149,6 @@
                             "value": "A gaussian process is precisely the extension of a gaussian distribution to \\(\\mathbb{R}^{\\infty}\\) following that logic."
                         }
                     ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "Why gaussians, specifically? Well, for many reasons, but one of them is that they are <b>marginalizable</b>, which means that if we marginalize a gaussian distribution over a subset of its variables, we get another gaussian distribution. That ties the knot between the stochastic process we defined by this infinite-dimensional function and finite dimensional gaussian distributions."
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "And that sets our definition: a gaussian process is a stochastic process such that any finite collection \\(X_1, \\dots, X_n\\) of values follows a gaussian distribution with mean \\(\\mu(x)\\) and covariance matrix \\(K(X_1, \\dots, X_n)\\)."
-                        }
-                    ]
                 }
             ],
             "figure": "happy.png"
@@ -179,7 +161,32 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "We can show that \\(\\mu\\) isn't very important compared to \\(K\\), so we'll just set it to zero. "
+                            "value": "Why gaussians, specifically? Well, for many reasons, but one of them is that they are <b>marginalizable</b>, which means that if we marginalize a gaussian distribution over a subset of its variables, we get another gaussian distribution. That ties the knot between the stochastic process we defined by this infinite-dimensional function and finite dimensional gaussian distributions."
+                        }
+                    ]
+                }
+            ],
+            "figure": "happy.png"
+        },
+        {
+            "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "And that sets our definition: a gaussian process is a stochastic process such that any finite collection \\(X_1, \\dots, X_n\\) of values follows a gaussian distribution with mean \\(\\mu(x)\\) and covariance matrix \\(K(X_1, \\dots, X_n)\\)."
+                        }
+            ],
+            "figure": "laughing.png"
+        },
+        {
+            "type": "step",
+            "value": [
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "It can be shown that \\(\\mu\\) isn't very important compared to \\(K\\), so we'll just set it to zero. "
                         }
                     ]
                 },
@@ -189,15 +196,6 @@
                         {
                             "type": "text",
                             "value": "\\(K\\) is called a <b>kernel function</b>, and each of them has its own properties. For example, the <b>RBF</b>, the <b>Matérn</b> and the <b>periodic kernels</b> are stationary, which means they are invariant to translations."
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "That means that the covariance between two points only depends on the distance between them, not on their absolute position."
                         }
                     ]
                 } 
