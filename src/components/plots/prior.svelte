@@ -9,7 +9,7 @@
         kernel_RBF 
     } from '$components/generate_data_prior/auxiliares';
     import { string } from "mathjs";
-    import Slider from "$lib/components/interactives/Slider.svelte";
+    import Slider from "$components/interactives/Slider.svelte";
 
     // Parâmetros iniciais
     let par_rbf_lengthScale = 1.0;
