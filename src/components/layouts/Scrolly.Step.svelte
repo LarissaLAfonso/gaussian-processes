@@ -1,40 +1,56 @@
 <script>
-    export let active;
+  export let active;
 </script>
-  
+
 <div class:active>
-  <slot />
+<slot />
 </div>
-  
+
 <style>
+div {
+  width: min(90%, 700px);
+  margin: 0 auto 0.5rem;
+  box-sizing: border-box;
+
+  /* Typography */
+  font-size: clamp(1.5rem, 1vw + 0.8rem, 2rem);
+  line-height: 1.5;
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+
+  /* Border styling */
+  --border-color: var(--hsl-gray-100);
+  --border-size: clamp(12px, 0.5vw, 20px);
+  border-left: var(--border-size) solid transparent;
+  transition: 
+    border-left-color 500ms ease,
+    opacity 300ms ease;
+  opacity: 0.7;
+
+  /* Border radius */
+  border-radius: 0.5rem;
+
+  /* Mobile-first adjustments */
+  @media (max-width: 768px) {
+    width: 95%;
+    padding: 1rem;
+    --border-size: 12px;
+  }
+}
+
+div.active {
+  opacity: 1;
+}
+
+/* Touchscreen optimization */
+@media (hover: none) and (pointer: coarse) {
   div {
-    font-size: 1rem;
-    /* background: whitesmoke; */
-    /* color: #ccc; */
-    /* border-radius: 5px; */
-    margin-bottom: 16px;
-    padding-left: 16px;
-    padding-right: 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* transition: background 500ms ease; */
-    /* box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2); */
-    text-align: left;
-
-    width: min(45vw, 600px);
-    /* max-width: 60ch; */
-
-    --border-color: var(--hsl-gray-100);
-    --border-size: 16px;
-    border-left: var(--border-size) solid hsl(var(--border-color), 0);
-    transition: border-left 500ms ease;
-    margin-left: calc(-1 * var(--border-size));
-
-    border-radius: 1%;
+    transition-duration: 250ms;
+    --border-size: 14px;
   }
-
-  div.active {
-    border-left: var(--border-size) solid hsl(var(--border-color), 1);
-  }
+}
 </style>
