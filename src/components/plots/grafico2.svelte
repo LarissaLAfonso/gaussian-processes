@@ -6,7 +6,7 @@
     import * as auxiliares from '$components/plots/auxiliares.js';
     import { sharedData } from '$stores/graphData.js';
 
-    import Button from '$lib/components/interactives/Button.svelte';
+    import Button from '$components/interactives/Button.svelte';
     
     const auxLoaded = false;
     
