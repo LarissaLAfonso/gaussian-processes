@@ -17,9 +17,9 @@
   <G2 />
 {:else if activeStep === 4 || activeStep === 5 || activeStep === 6}
   <G3/>
-{:else if activeStep === 7 || activeStep === 8 || activeStep === 9}
+{:else if activeStep === 7 || activeStep === 8}
 <G4 />
-{:else if activeStep === 10}
+{:else if activeStep === 9 || activeStep === 10}
 <G5 />
 {:else if activeStep === 11}
 <G6 />
