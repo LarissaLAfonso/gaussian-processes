@@ -9,6 +9,7 @@
         kernel_RBF 
     } from '$components/generate_data_prior/auxiliares';
     import { string } from "mathjs";
+    import Slider from "$components/interactives/Slider.svelte";
 
     // Parâmetros iniciais
     let par_rbf_lengthScale = 1.0;
@@ -242,39 +243,45 @@
     <!-- Sliders -->
     <div class="sliders">
         {#if selectedKernel === 'kernel_RBF'}
-            <div class="slider-container">
+            <!-- <div class="slider-container">
                 <label class="slider-label">RBF Length Scale: {par_rbf_lengthScale.toFixed(1)}</label>
                 <input type="range" min="0.1" max="3" step="0.1" value={par_rbf_lengthScale} on:input={updateRBFLengthScale} class="slider" />
-            </div>
+            </div> -->
+            <Slider sliderLabel="RBF Length Scale" minValue={0.1} maxValue={3} stepValue={0.1} bind:associatedValue={par_rbf_lengthScale} updateFunction={updateRBFLengthScale} />
         {/if}
 
         {#if selectedKernel === 'kernel_Matern12'}
-            <div class="slider-container">
+            <!-- <div class="slider-container">
                 <label class="slider-label">Matern Length Scale: {par_matern_lengthScale.toFixed(1)}</label>
                 <input type="range" min="0.1" max="3" step="0.1" value={par_matern_lengthScale} on:input={updateMaternLengthScale} class="slider" />
-            </div>
+            </div> -->
+            <Slider sliderLabel="Matern Length Scale" minValue={0.1} maxValue={3} stepValue={0.1} bind:associatedValue={par_matern_lengthScale} updateFunction={updateMaternLengthScale} />
         {/if}
 
         {#if selectedKernel === 'kernel_Periodic'}
-            <div class="slider-container">
+            <!-- <div class="slider-container">
                 <label class="slider-label">Periodic Period: {par_periodic_period.toFixed(1)}</label>
                 <input type="range" min="0.1" max="5" step="0.1" value={par_periodic_period} on:input={updatePeriodicPeriod} class="slider" />
             </div>
             <div class="slider-container">
                 <label class="slider-label">Periodic Length Scale: {par_periodic_lengthScale.toFixed(1)}</label>
                 <input type="range" min="0.1" max="3" step="0.1" value={par_periodic_lengthScale} on:input={updatePeriodicLengthScale} class="slider" />
-            </div>
+            </div> -->
+            <Slider sliderLabel="Periodic Period" minValue={0.1} maxValue={5} stepValue={0.1} bind:associatedValue={par_periodic_period} updateFunction={updatePeriodicPeriod} />
+            <Slider sliderLabel="Periodic Length Scale" minValue={0.1} maxValue={3} stepValue={0.1} bind:associatedValue={par_periodic_lengthScale} updateFunction={updatePeriodicLengthScale} />
         {/if}
 
         {#if selectedKernel === 'kernel_Polynomial'}
-            <div class="slider-container">
+            <!-- <div class="slider-container">
                 <label class="slider-label">Polynomial Constant: {par_polynomial_constant}</label>
                 <input type="range" min="0" max="10" step="1" value={par_polynomial_constant} on:input={updatePolynomialConstant} class="slider" />
             </div>
             <div class="slider-container">
                 <label class="slider-label">Polynomial Degree: {par_polynomial_degree}</label>
                 <input type="range" min="1" max="5" step="1" value={par_polynomial_degree} on:input={updatePolynomialDegree} class="slider" />
-            </div>
+            </div> -->
+            <Slider sliderLabel="Polynomial Constant" minValue={0} maxValue={10} stepValue={1} bind:associatedValue={par_polynomial_constant} updateFunction={updatePolynomialConstant} />
+            <Slider sliderLabel="Polynomial Degree" minValue={1} maxValue={5} stepValue={1} bind:associatedValue={par_polynomial_degree} updateFunction={updatePolynomialDegree} />
         {/if}
     </div>
 </div>
@@ -334,7 +341,7 @@
         margin-top: 20px;
     }
 
-    .slider-container {
+    /* .slider-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -376,5 +383,5 @@
     .slider-label {
         margin-bottom: 5px;
         font-size: 16px;
-    }
+    } */
 </style>

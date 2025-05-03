@@ -6,6 +6,7 @@
     import * as auxiliares from '$components/plots/auxiliares.js';
     import { sharedData } from '$stores/graphData.js';
 
+    import Button from '$components/interactives/Button.svelte';
     
     const auxLoaded = false;
     
@@ -301,7 +302,7 @@
         background: #f9f9f9;
     }
 
-    .button-wrapper {
+    /* .button-wrapper {
         text-align: center;
         margin-top: 20px;
     }
@@ -319,7 +320,7 @@
 
     .resample-button:hover {
         background-color: #45a049;
-    }
+    } */
 </style>
 
 <div class="main-container">
@@ -335,9 +336,10 @@
         </div>
     </div>
 
-    <div class="button-wrapper">
+    <!-- <div class="button-wrapper">
         <button class="resample-button" on:click={resample}>
             Resample
         </button>
-    </div>
+    </div> -->
+    <Button label="Resample" onClick={resample} />
 </div>
