@@ -23,16 +23,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "If \\(n\\) is small enough, you can imagine it as a <b>sample of a random variable</b> \\(X \\sim F(\\theta)\\) living in \\(\\mathbb{R}^d\\), with \\(d\\) at least as big as \\(n\\)."
-                        }
-                    ]
-                },
-                {
-                    "type": "p",
-                    "value": [
-                        {
-                            "type": "text",
-                            "value": "(In this case, \\(n\\) = 3)."
+                            "value": "Each of them has a height, represented by its \\(y\\) coordinate."
                         }
                     ]
                 }
@@ -47,10 +38,55 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "But as \\(n \\to \\infty\\), things start to get messy. The density \\(F\\) becomes a distribution defined in a very high dimensional space, which involves arithmetic operations of <em>humongous</em> matrices. Depending on how high you shoot, not even the best computers in the world can handle that."
+                            "value": "Now, if we collect all of those \\(n\\) heights, we'll have \\(n\\) numbers, which we can represent as a single point in \\(\\mathbb{R}^n\\). One height for each axis."
                         }
                     ]
                 },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "If we have few enough points, we can visualize that! "
+                        }
+                    ]
+                }
+            ],
+            "figure": "laughing.png"
+        },
+        {
+            "type": "step",
+            "value": [
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "But well, I don't know about you, but <b>I</b> can't visualize \\(\\mathbb{R}^4\\). And that'd be only four points!"
+                        }
+                    ]
+                }
+            ],
+            "figure": "thinking.png"
+        },
+        {
+            "type": "step",
+            "value": [
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "For that and other reasons, when \\(n\\) grows things start to get messy. The density \\(F\\) becomes a distribution defined in a very high dimensional space, which involves arithmetic operations of <em>humongous</em> matrices. Depending on how high you shoot, not even the best computers in the world can handle that."
+                        }
+                    ]
+                }
+            ],
+            "figure": "thinking.png"
+        },
+        {
+            "type": "step",
+            "value": [
                 {
                     "type": "p",
                     "value": [
@@ -61,7 +97,7 @@
                     ]
                 }
             ],
-            "figure": "thinking.png"
+            "figure": "focused.png"
         },
         {
             "type": "step",

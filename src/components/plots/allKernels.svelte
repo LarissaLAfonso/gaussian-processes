@@ -323,7 +323,7 @@
     }
     
 
-    .resample-button {
+    /* .resample-button {
         position: absolute;
         bottom: 10px;
         left: 50%;
@@ -339,5 +339,5 @@
     }
     .resample-button:hover {
         background-color: #45a049;
-    }
+    } */
 </style>

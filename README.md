@@ -40,7 +40,9 @@ You can preview the production build with `npm run preview`.
 ---
 
 # Visualization Motivation
-The developed web page aims to provide a didactic and accessible explanation of gaussian processes, having in mind those who have not yet been introduced to this concept. A Gaussian process is a stochastic process — a collection of random variables indexed by time or space — of which any finite subset follows a multivariate normal distribution. This type of process is extremely important in areas such as regression and uncertainty modeling.
+The developed web page aims to provide a didactic and accessible explanation of gaussian processes. **The only prerequisite is a little background on probability**, and some familiarity with machine learning or some field of pure math might be useful given the abstract nature of the subject.
+
+A Gaussian process is a stochastic process — a collection of random variables indexed by time or space — of which any finite subset follows a multivariate normal distribution. This type of process is extremely important in areas such as regression and uncertainty modeling.
 
 ## Generation of Multivariate Normals
 To generate samples from a multivariate normal distribution in JavaScript, we followed these steps:
@@ -58,7 +60,7 @@ For the explanation of Gaussian Processes, we used a _scrollytelling_ approach, 
 
 - Chart 2: We introduce the idea that a set _n_ points in ℝ² can be represented as _one_ point in R^n. The chart displays three points in ℝ² corresponding to coordinates in ℝ³, highlighted with distinct colors. There is also a button that allows resampling of the points.
 
-- Chart 3: To illustrate the idea of a growing number of points as \( n \to \infty \), we present a scatter plot to represent this phenomenon. The exponential increase in complexity makes the direct analysis of the density \( F \) practically intractable, especially in high-dimensional spaces. The chart used is static, serving as a visual metaphor for how quickly interpretability breaks down as the number of dimensions and data points grows.
+- Chart 3: To illustrate the idea of a growing number of points as _n_ → ∞, we present a scatter plot to represent this phenomenon. The exponential increase in complexity makes the direct analysis of the density \( F \) practically intractable, especially in high-dimensional spaces. The chart used is static, serving as a visual metaphor for how quickly interpretability breaks down as the number of dimensions and data points grows.
 
 - Chart 4: We show prior samples of the function 𝑓 (without incorporating observed data). The data is generated at uniform intervals, and the chart allows users to select different kernels and adjust their parameters. Since the samplings are random, any configuration change generates new curves randomly.
 
@@ -80,3 +82,7 @@ Although we did not record individual working hours, we estimate that each membe
 - Kaiky: Page title, general styling, Chart 4, and Chart 5.
 
 > Note: Despite the division above, the work was carried out collaboratively, with all members contributing to multiple parts of the project.
+
+---
+
+Access the page [here](https://fgv-vis-2025.github.io/tarefa-4-gaussian-processes/).

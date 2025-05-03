@@ -4,6 +4,8 @@
     import { scaleLinear } from 'd3-scale';
     import { abs, secondRadiationDependencies } from 'mathjs';
     import * as auxiliares from '$components/plots/auxiliares.js';
+    import { sharedData } from '$stores/graphData.js';
+
     import Button from '$components/iteractibles/Button.svelte';
     
     const auxLoaded = false;
@@ -30,6 +32,20 @@
     
         leftSvg.selectAll('*').remove();
         rightSvg.selectAll('*').remove();
+
+        // Adiciona marcador de seta
+        rightSvg.append('defs').append('marker')
+            .attr('id', 'arrow')
+            .attr('viewBox', '0 0 10 10')
+            .attr('refX', 5)
+            .attr('refY', 5)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('orient', 'auto')
+            .append('path')
+            .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+            .attr('fill', 'black');
+
     
         const firstColor = '#D99CA7';
         const secondColor = '#CCD9D1';
@@ -83,8 +99,7 @@
             .attr('y1', yScale2D(0))
             .attr('y2', d => yScale2D(d.y))
             .attr('stroke', (d, i) => [firstColor, secondColor, thirdColor][i])
-            .attr('stroke-width', 3)
-            .attr('opacity', 0.7);
+            .attr('stroke-width', 3);
     
         leftSvg.selectAll('circle')
             .data(points2D)
@@ -94,6 +109,19 @@
             .attr('cy', d => yScale2D(d.y))
             .attr('r', 5)
             .attr('fill', 'black');
+
+        leftSvg.selectAll('text.label')
+            .data(points2D)
+            .enter()
+            .append('text')
+            .attr('class', 'label')
+            .attr('x', d => xScale2D(d.x) + 8)
+            .attr('y', d => yScale2D(d.y) - 8)
+            .text((d, i) => ['x', 'y', 'z'][i])
+            .attr('font-size', '12px')
+            .attr('fill', 'black')
+            .attr('font-family', 'Inter, sans-serif');
+
     
         leftSvg.append('line')
             .attr('x1', xScale2D(0))
@@ -102,7 +130,8 @@
             .attr('y2', yScale2D(0))
             .attr('stroke', 'black')
             .attr('opacity', 0.3)
-            .attr('stroke-width', 1);
+            .attr('stroke-width', 1)
+            .attr('marker-end', 'url(#arrow)');
     
         leftSvg.append('line')
             .attr('x1', xScale2D(0))
@@ -111,7 +140,8 @@
             .attr('y2', yScale2D(3))
             .attr('stroke', 'black')
             .attr('opacity', 0.3)
-            .attr('stroke-width', 1);
+            .attr('stroke-width', 1)
+            .attr('marker-end', 'url(#arrow)');
 
         const arrowSize = 8;
 
@@ -120,14 +150,6 @@
             { pos: project3D(0, 1, 0), rotation: 0},   // Y axis → +30°
             { pos: project3D(0, 0, 1), rotation: 2*-angle * (180 / Math.PI) }                          // Z axis → 0°
         ];
-
-        positiveEnds.forEach(p => {
-            rightSvg.append('path')
-                .attr('d', d3.symbol().type(d3.symbolTriangle).size(arrowSize * arrowSize)())
-                .attr('transform', `translate(${xScale3D(p.pos.x)}, ${yScale3D(p.pos.y)}) rotate(${p.rotation})`)
-                .attr('fill', 'black')
-                .attr('opacity', 0.5);
-        });
 
     
         // Draw Right 3D plot
@@ -146,9 +168,28 @@
                 .attr('y2', yScale3D(line.end.y))
                 .attr('stroke', 'black')
                 .attr('opacity', 0.5)
-                .attr('stroke-width', 1);
+                .attr('stroke-width', 1)
+                .attr('marker-end', 'url(#arrow)');
+
         });
-    
+
+        const axisLabels = [
+            { pos: project3D(1.05, 0, 0), text: 'x' },
+            { pos: project3D(0, 1.05, 0), text: 'y' },
+            { pos: project3D(0, 0, 1.05), text: 'z' }
+        ];
+
+        axisLabels.forEach(label => {
+            rightSvg.append('text')
+                .attr('x', xScale3D(label.pos.x) + 4)
+                .attr('y', yScale3D(label.pos.y) - 4)
+                .text(label.text)
+                .attr('font-size', '14px')
+                .attr('fill', 'black')
+                .attr('font-family', 'Inter, sans-serif');
+        });
+
+            
         // Prepare animated steps
         const startX = { x: 0, y: 0, z: 0 };
         const endX = { x: scaledPoint.x, y: 0, z: 0 };
@@ -197,8 +238,8 @@
     
     function resample() {
         let Yvalues;
+
         if (!auxLoaded) {
-            console.warn('Using fallback data - auxiliares not loaded');
             Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
         } else {
             try {
@@ -206,19 +247,19 @@
                 const variance = Array(Xvalues.length).fill(0).map(() => Array(Xvalues.length).fill(0));
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
             } catch (err) {
-                console.error('Error in sampleNormal:', err);
                 Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
             }
         }
 
+        sharedData.set({ x: Xvalues, y: Yvalues });
         createViz(Xvalues, Yvalues);
     }
-
     
     onMount(() => {
         let Yvalues;
+
         if (!auxLoaded) {
-            console.warn('Using fallback data - auxiliares not loaded');
+            //console.warn('Using fallback data - auxiliares not loaded');
             Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
         } else {
             try {
@@ -226,13 +267,15 @@
                 const variance = Array(Xvalues.length).fill(0).map(() => Array(Xvalues.length).fill(0));
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
             } catch (err) {
-                console.error('Error in sampleNormal:', err);
+                //console.error('Error in sampleNormal:', err);
                 Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
             }
         }
-    
+
+        sharedData.set({ x: Xvalues, y: Yvalues });
         createViz(Xvalues, Yvalues);
     });
+
 </script>
 
 <style>
@@ -259,7 +302,7 @@
         background: #f9f9f9;
     }
 
-    .button-wrapper {
+    /* .button-wrapper {
         text-align: center;
         margin-top: 20px;
     }
@@ -277,7 +320,7 @@
 
     .resample-button:hover {
         background-color: #45a049;
-    }
+    } */
 </style>
 
 <div class="main-container">

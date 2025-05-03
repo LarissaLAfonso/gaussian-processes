@@ -74,7 +74,7 @@
 
 <div class="background-wrapper">
   <!-- <Gaussian /> -->
-  <Gaussian activeStep={$scrollyIndex} />
+  <Gaussian activeStep={$scrollyIndex}/>
 </div>
 </div>
 

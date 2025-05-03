@@ -11,31 +11,31 @@
             .then(module => {
                 window.auxiliares = module; // Temporarily expose for debugging
                 auxLoaded = true;
-                console.log('auxiliares loaded successfully', module);
+                //console.log('auxiliares loaded successfully', module);
             })
             .catch(err => {
                 importError = err;
-                console.error('Failed to load auxiliares:', err);
+                //console.error('Failed to load auxiliares:', err);
             });
     } catch (err) {
         importError = err;
-        console.error('Import error:', err);
+        //console.error('Import error:', err);
     }
 
     let width = 600;
     let height = 400;
-    let margin = { top: 20, right: 20, bottom: 40, left: 40 };
+    let margin = { top: 20, right: 20, bottom: 40, left: 20 };
 
     // Range dos dados
     const Xvalues = d3.range(0.2, 9.90, 0.01);
 
     onMount(() => {
-        console.log('Component mounted - starting render');
+        //console.log('Component mounted - starting render');
         
         // 2. Create test data if auxiliares fails to load
         let Yvalues;
         if (!auxLoaded) {
-            console.warn('Using fallback data - auxiliares not loaded');
+            //console.warn('Using fallback data - auxiliares not loaded');
             Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
         } else {
             try {
@@ -46,7 +46,7 @@
                 Yvalues = window.auxiliares.sampleNormal(mean, variance);
                 console.log('Generated data using auxiliares');
             } catch (err) {
-                console.error('Error in sampleNormal:', err);
+                //console.error('Error in sampleNormal:', err);
                 Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
             }
         }
@@ -57,7 +57,7 @@
         // 4. Get SVG element
         const svgEl = document.getElementById('gp-svg');
         if (!svgEl) {
-            console.error('SVG element not found! Check your HTML');
+            //console.error('SVG element not found! Check your HTML');
             return;
         }
 
@@ -88,26 +88,40 @@
             .attr('r', 3)
             .attr('fill', 'black');
 
+        svg.append('defs').append('marker')
+            .attr('id', 'arrow')
+            .attr('viewBox', '0 0 10 10')
+            .attr('refX', 5)
+            .attr('refY', 5)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('orient', 'auto-start-reverse')
+            .append('path')
+            .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+            .attr('fill', 'black');
+
         // 9. Draw axes
         svg.append('line')
             .attr('x1', xScale(0))
-            .attr('x2', xScale(10))
+            .attr('x2', xScale(10) + 10)
             .attr('y1', yScale(0))
             .attr('y2', yScale(0))
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
-            .attr('opacity', 0.3);
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
 
         svg.append('line')
             .attr('x1', xScale(0))
             .attr('x2', xScale(0))
-            .attr('y1', yScale(-4))
-            .attr('y2', yScale(4))
+            .attr('y1', yScale(-3))
+            .attr('y2', yScale(3) - 10)
             .attr('stroke', 'black')
             .attr('stroke-width', 1)
-            .attr('opacity', 0.3);
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
 
-        console.log('Render completed');
+        //console.log('Render completed');
     });
 </script>
 
