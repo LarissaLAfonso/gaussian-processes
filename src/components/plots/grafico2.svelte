@@ -4,6 +4,7 @@
     import { scaleLinear } from 'd3-scale';
     import { abs, secondRadiationDependencies } from 'mathjs';
     import * as auxiliares from '$components/plots/auxiliares.js';
+    import Button from '$components/iteractibles/Button.svelte';
     
     const auxLoaded = false;
     
@@ -292,9 +293,10 @@
         </div>
     </div>
 
-    <div class="button-wrapper">
+    <!-- <div class="button-wrapper">
         <button class="resample-button" on:click={resample}>
             Resample
         </button>
-    </div>
+    </div> -->
+    <Button label="Resample" onClick={resample} />
 </div>

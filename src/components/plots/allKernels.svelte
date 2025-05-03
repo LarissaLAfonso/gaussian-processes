@@ -9,6 +9,7 @@
         kernel_RBF 
     } from '$components/generate_data_prior/auxiliares';
     import { create, string } from "mathjs";
+    import Button from "$components/iteractibles/Button.svelte";
 
     // Parâmetros iniciais
     let par_rbf_lengthScale = 1.0;
@@ -239,9 +240,10 @@
     <!-- SVG para o gráfico -->
     <svg id="gp-svg"></svg>
 
-    <div class="resample">
+    <!-- <div class="resample">
         <button on:click={updatePlot} class="resample-button">Resample</button>
-    </div>
+    </div> -->
+    <Button label="Resample" onClick={updatePlot} />
 
 </div>
 
