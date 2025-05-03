@@ -14,7 +14,7 @@
     import { onMount } from 'svelte';
     import { kernel_Matern12, kernel_Polynomial, kernel_Periodic, kernel_RBF, generateData } from '$components/plots/auxiliares.js';
     import kernelDescriptions from '$components/data/kernels.json';
-  
+    import HelperText from '$components/layouts/HelperText.svelte';
     let svg;
 
     // Dimensões do gráfico
@@ -30,6 +30,7 @@
         kernel_Polynomial
     ];
     var selectedKernelIndex = 0;
+    var desc = kernelDescriptions[selectedKernelIndex].Description;
 
     function draw_kernel_func(data) {
         if (svg) {
@@ -81,20 +82,22 @@
         // draw_kernel_func(svg, data);
         draw_kernel_func(data);
     }
-
-
+    
+    
     function updateSelectedKernel(index) {
         selectedKernelIndex = index;
         drawNewKernel();
-        // Limpa o conteúdo anterior
+        desc = kernelDescriptions[selectedKernelIndex].Description;
+        console.log(desc)
     }
   
     onMount(() => {
       drawNewKernel();
+      MathJax = {
+          tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+        };
     });;
-    var desc;
     // var formula;
-    $:desc = kernelDescriptions[selectedKernelIndex].Description;
     // $:formula = kernelDescriptions[selectedKernelIndex].Formula;
   </script>
   
@@ -122,14 +125,23 @@
     </div>
     <svg id="indivualKernels-svg"></svg>
     <br>
-    <div class = "kernel-explanation" id="kernel-explanation">
+    <!-- <div class = "kernel-explanation" id="kernel-explanation">
+        <div class="kernel-description">
+            <p>{desc}</p>
+        </div>
+        <div class="kernel-formula" id="kernel-formula">
+            <p>${formula}$</p>
+        </div>
+    </div> -->
+    <HelperText>
         <div class="kernel-description">
             <p>{desc}</p>
         </div>
         <!-- <div class="kernel-formula" id="kernel-formula">
             <p>${formula}$</p>
         </div> -->
-    </div>
+    </HelperText>
+
 </div>
 
 
