@@ -9,7 +9,7 @@
         kernel_RBF 
     } from '$components/generate_data_prior/auxiliares';
     import { create, string } from "mathjs";
-    import Button from "$components/iteractibles/Button.svelte";
+    import Button from "$lib/components/interactives/Button.svelte";
 
     // Parâmetros iniciais
     let par_rbf_lengthScale = 1.0;
