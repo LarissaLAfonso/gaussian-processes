@@ -9,6 +9,7 @@
         kernel_RBF 
     } from '$components/generate_data_prior/auxiliares';
     import { create, string } from "mathjs";
+    import Button from "$components/interactives/Button.svelte";
 
     // Parâmetros iniciais
     let par_rbf_lengthScale = 1.0;
@@ -234,22 +235,13 @@
             <span>Polynomial</span>
         </label>
     </div>
-    
-    <div class="graph-wrapper">
-        <div class="graph-inner">
-            <svg id="gp-svg" viewBox="0 0 700 400" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                    <clipPath id="chart-bounds">
-                        <rect width="700" height="400"></rect>
-                    </clipPath>
-                </defs>
-            </svg>
-        </div>
-    </div>
+    <!-- SVG para o gráfico -->
+    <svg id="gp-svg"></svg>
 
-    <div class="resample">
+    <!-- <div class="resample">
         <button on:click={updatePlot} class="resample-button">Resample</button>
-    </div>
+    </div> -->
+    <Button label="Resample" onClick={updatePlot} />
 </div>
 
 <style>
@@ -340,7 +332,7 @@
     #polynomial_subtitle span { background-color: #FFC300; }
 
     /* Resample button */
-    .resample-button {
+    /* .resample-button {
         padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
         background-color:#e9a982;
         color: white;

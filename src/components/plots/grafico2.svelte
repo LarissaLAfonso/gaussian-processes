@@ -6,6 +6,7 @@
     import * as auxiliares from '$components/plots/auxiliares.js';
     import { sharedData } from '$stores/graphData.js';
 
+    import Button from '$components/interactives/Button.svelte';
     
     const auxLoaded = false;
     
@@ -313,7 +314,7 @@
         display: block;
     }
 
-    .button-wrapper {
+    /* .button-wrapper {
         text-align: center;
         margin-top: 1rem;
     }
@@ -335,7 +336,7 @@
         background-color: #3de467;
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
+    }*/
 
     @media (max-width: 480px) {
         .panel {
@@ -346,7 +347,7 @@
             width: 100%;
             padding: 1rem;
         }
-    }
+    } 
 </style>
 
 <div class="main-container">
@@ -362,9 +363,10 @@
         </div>
     </div>
 
-    <div class="button-wrapper">
+    <!-- <div class="button-wrapper">
         <button class="resample-button" on:click={resample}>
             Resample
         </button>
-    </div>
+    </div> -->
+    <Button label="Resample" onClick={resample} />
 </div>
