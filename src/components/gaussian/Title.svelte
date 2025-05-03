@@ -172,15 +172,42 @@
 	}
 
 	.corner-image {
-		position: absolute;
-		right: 8rem;
-		bottom: 6rem;
-		width: 300px; /* adjust as needed */
-		height: auto;
-		opacity: 0.8;
-		pointer-events: none;
-		z-index: 1;
-		transform: rotate(15deg);
+    position: absolute;
+    right: clamp(4rem, 10vw, 8rem);
+    bottom: clamp(3rem, 8vw, 6rem);
+    width: clamp(150px, 25vw, 300px);
+    height: auto;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 1;
+    transform: rotate(15deg);
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  	}
+
+	  @media (max-width: 768px) {
+		.corner-image {
+		width: clamp(120px, 30vw, 200px);
+		right: clamp(1rem, 5vw, 3rem);
+		bottom: clamp(2rem, 6vw, 4rem);
+		opacity: 0.7;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.corner-image {
+		width: 100px;
+		right: 1rem;
+		bottom: 2rem;
+		opacity: 0.6;
+		}
+	}
+
+	@media (hover: hover) {
+		.corner-image:hover {
+		opacity: 0.9;
+		transform: rotate(15deg) scale(1.05);
+		}
 	}
 
 </style>
