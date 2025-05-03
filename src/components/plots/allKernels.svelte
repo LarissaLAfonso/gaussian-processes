@@ -127,7 +127,7 @@
             .attr('width', width - margin.left - margin.right)
             .attr('height', height)
             .attr('fill', 'none')
-            .attr('stroke', 'black')
+            //.attr('stroke', 'black')
             .attr('stroke-width', 2)
             .attr('shape-rendering', 'crispEdges'); 
 
@@ -207,13 +207,11 @@
             paths[index].attr('opacity', minOpacity);
         }
     }
-
 </script>
 
 <div class="container">
-    <!-- Título do gráfico -->
     <h2 class="title">Kernel Comparison</h2>
-    <!-- Legendas para o gráfico -->
+    
     <div class="kernel-selection">
         <label class="kernel-toggle" id="rbf_subtitle">
             <input type="checkbox" id="rbf" name="kernel"
@@ -236,13 +234,22 @@
             <span>Polynomial</span>
         </label>
     </div>
-    <!-- SVG para o gráfico -->
-    <svg id="gp-svg"></svg>
+    
+    <div class="graph-wrapper">
+        <div class="graph-inner">
+            <svg id="gp-svg" viewBox="0 0 700 400" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                    <clipPath id="chart-bounds">
+                        <rect width="700" height="400"></rect>
+                    </clipPath>
+                </defs>
+            </svg>
+        </div>
+    </div>
 
     <div class="resample">
         <button on:click={updatePlot} class="resample-button">Resample</button>
     </div>
-
 </div>
 
 <style>
@@ -253,21 +260,55 @@
         flex-direction: column;
         align-items: center;
         font-family: 'Fredoka', sans-serif;
+        width: min(90%, 800px);
+        margin: 1rem auto;
+        padding: 1.5rem;
+        border-radius: 8px;
     }
-    .kernel-selection {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 20px;
+
+    .title {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        color: #2d3748;
+        margin-bottom: 1.5rem;
+        text-align: center;
         width: 100%;
     }
 
+    .kernel-selection {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(0.5rem, 1.5vw, 1rem);
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    .graph-wrapper {
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        
+    }
+
+    .graph-inner {
+        width: clamp(115%, 120%, 135%); /* Extra width to allow left shift */
+        margin-left: clamp(-15%, -20%, -25%); /* Pulls content left */
+        position: relative;
+    }
+
+    #gp-svg {
+        width: 100%;
+        height: auto;
+        min-height: min(400px, 60vh);
+        display: block;
+    }
+
+    /* Kernel toggle styles */
     .kernel-toggle {
         display: inline-flex;
         align-items: center;
-        font-size: 18px;
+        font-size: clamp(0.9rem, 1.1vw, 1.1rem);
         cursor: pointer;
-        margin: 0 10px;
-        transition: color 0.3s ease;
     }
 
     .kernel-toggle input {
@@ -275,67 +316,78 @@
     }
 
     .kernel-toggle span {
-        padding: 5px;
+        padding: 0.5rem 1rem;
         border: 2px solid transparent;
         border-radius: 5px;
-        transition: background-color 0.3s ease, border 0.3s ease;
+        transition: all 0.3s ease;
+        font-weight: 500;
     }
 
-    .kernel-toggle input:not(:checked) + span{
-        opacity: 0.5;
+    .kernel-toggle input:not(:checked) + span {
+        opacity: 0.7;
     }
 
     .kernel-toggle input:checked + span {
-        background-color: #52DBA4;
         color: white;
-        border: 1.5px solid #000000;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
-    .kernel-toggle input:not(:checked) + span:hover {
-        background-color: #f0f0f0;
-    }
-    .kernel-toggle input:checked + span:hover {
-        background-color: #000000;
-        color: white;
-        border: 1.5px solid #000000;
-    }
+    /* Kernel colors */
+    #rbf_subtitle span { background-color: #47A2A4; }
+    #matern_subtitle span { background-color: #FF5733; }
+    #periodic_subtitle span { background-color: #C70039; }
+    #polynomial_subtitle span { background-color: #FFC300; }
 
-    #rbf_subtitle span{
-        background-color: #47A2A4;
-    }
-    #matern_subtitle span{
-        background-color: #FF5733;
-    }
-    #periodic_subtitle span{
-        background-color: #C70039;
-    }
-    #polynomial_subtitle span{
-        background-color: #FFC300;
-    }
-    .container {
-        display: flex;
-        width: 700px;
-        height: 600px;
-        margin: 10px auto;
-        position: relative;
-    }
-    
-
+    /* Resample button */
     .resample-button {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 8px 16px;
-        background-color: #4CAF50;
+        padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+        background-color:#e9a982;
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 14px;
-        z-index: 10;
+        font-size: clamp(1rem, 1.2vw, 1.25rem);
+        transition: all 0.3s ease;
+        font-family: 'Fredoka', sans-serif;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     .resample-button:hover {
-        background-color: #45a049;
+        background-color: #3de467;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+            width: 95%;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+        }
+        
+        .kernel-selection {
+            gap: 0.5rem;
+        }
+        
+        .kernel-toggle span {
+            padding: 0.4rem 0.8rem;
+            font-size: 1rem;
+        }
+        
+        #gp-svg {
+            min-height: 300px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .kernel-selection {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 </style>

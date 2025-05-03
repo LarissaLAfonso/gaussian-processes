@@ -141,22 +141,26 @@
         flex-direction: column;
         align-items: center;
         font-family: 'Fredoka', sans-serif;
-        
+        width: min(90%, 800px);
+        margin: 1rem auto;
+        padding: 1.5rem;
+        border-radius: 8px;
     }
 
     .kernel-selection {
         display: flex;
-        justify-content: space-around;
-        margin-bottom: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(0.5rem, 1.5vw, 1rem);
+        margin-bottom: 1.5rem;
         width: 100%;
     }
 
     .kernel-toggle {
         display: inline-flex;
         align-items: center;
-        font-size: 18px;
+        font-size: clamp(0.9rem, 1.1vw, 1.1rem);
         cursor: pointer;
-        margin: 0 10px;
         transition: color 0.3s ease;
     }
 
@@ -165,30 +169,53 @@
     }
 
     .kernel-toggle span {
-        padding: 5px;
+        padding: 0.5rem 1rem;
         border: 2px solid transparent;
         border-radius: 5px;
-        transition: background-color 0.3s ease, border 0.3s ease;
+        transition: all 0.3s ease;
+        font-weight: 500;
     }
 
     .kernel-toggle input:checked + span {
-        background-color: #52DBA4;
         color: white;
-        border: 1.5px solid #000000;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        background-color: #52DBA4; /* Cor de fundo quando selecionado */
     }
 
-    .kernel-toggle input:not(:checked) + span:hover {
-        background-color: #f0f0f0;
+    .kernel-toggle input:not(:checked) + span {
+        opacity: 0.7;
     }
 
     .kernel-explanation {
-        background-color: #e5e7eb; 
-        border-radius: 12px;      
-        margin-top: 20px;         
-        width: 80%;                
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-        font-size: 16px;
-        color: #333;
+        background-color: #e5e7eb;
+        border-radius: clamp(0.5rem, 1.5vw, 0.75rem);
+        margin: clamp(0.25rem, 0.5vw, 0.5rem) auto 0; /* Increased top margin */
+        width: min(92%, 720px); 
+        padding: clamp(0.25rem, 0.5vw, 1rem);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        font-size: clamp(0.9rem, 1.1vw + 0.5rem, 1.1rem); /* Slightly smaller growth rate */
+        line-height: 1.2; /* Increased line spacing */
+        color: #374151;
+        overflow: visible; /* Prevent content clipping */
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+        .kernel-explanation {
+            width: 95%;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9375rem; /* 15px */
+        }
+    }
+
+    /* Small mobile */
+    @media (max-width: 480px) {
+        .kernel-explanation {
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
     }
         
 </style>

@@ -46,9 +46,9 @@
             .attr('fill', 'black');
 
     
-        const firstColor = '#D99CA7';
-        const secondColor = '#CCD9D1';
-        const thirdColor = '#403231';
+        const firstColor = '#ACBEF2';
+        const secondColor = '#F2BC57';
+        const thirdColor = '#8C8303';
     
         const angle = Math.PI / 6;
         const cosAngle = Math.cos(angle);
@@ -128,7 +128,7 @@
             .attr('y1', yScale2D(0))
             .attr('y2', yScale2D(0))
             .attr('stroke', 'black')
-            .attr('opacity', 0.3)
+            .attr('opacity', 0.7)
             .attr('stroke-width', 1)
             .attr('marker-end', 'url(#arrow)');
     
@@ -138,7 +138,7 @@
             .attr('y1', yScale2D(-3))
             .attr('y2', yScale2D(3))
             .attr('stroke', 'black')
-            .attr('opacity', 0.3)
+            .attr('opacity', 0.7)
             .attr('stroke-width', 1)
             .attr('marker-end', 'url(#arrow)');
 
@@ -166,8 +166,7 @@
                 .attr('x2', xScale3D(line.end.x))
                 .attr('y2', yScale3D(line.end.y))
                 .attr('stroke', 'black')
-                .attr('opacity', 0.5)
-                .attr('stroke-width', 1)
+                .attr('stroke-width', 0.7)
                 .attr('marker-end', 'url(#arrow)');
 
         });
@@ -215,7 +214,7 @@
                 .attr('y2', yScale3D(line.start.y))
                 .attr('stroke', line.color)
                 .attr('stroke-width', 4)
-                .attr('opacity', 0.9)
+                .attr('opacity', 1)
                 .transition()
                 .delay(i * totalDuration)
                 .duration(totalDuration)
@@ -276,49 +275,77 @@
     });
 
 </script>
-
 <style>
     .main-container {
         display: flex;
         flex-direction: column;
-        width: 800px;
-        margin: 10px auto;
+        width: min(90%, 800px);
+        margin: clamp(0.5rem, 2vw, 1.5rem) auto;
+        gap: 1.5rem;
     }
 
     .graph-container {
         display: flex;
-        justify-content: space-between;
-        height: 400px;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .graph-container {
+            flex-direction: row;
+            justify-content: space-between;
+            height: min(60vh, 400px);
+        }
     }
 
     .panel {
-        flex: 0 0 48%;
+        flex: 1 1 48%;
+        min-height: 300px;
         height: 100%;
+        border-radius: 8px;
+        overflow: hidden;
     }
 
     svg {
+        width: 100%;
+        height: 100%;
         display: block;
-        background: #f9f9f9;
     }
 
     .button-wrapper {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 1rem;
     }
 
     .resample-button {
-        padding: 10px 20px;
-        background-color: #ff968a;
+        padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+        background-color:#e9a982;
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
+        font-size: clamp(1rem, 1.2vw, 1.25rem);
+        transition: all 0.3s ease;
+        font-family: 'Fredoka', sans-serif;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .resample-button:hover {
-        background-color: #45a049;
+        background-color: #3de467;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 480px) {
+        .panel {
+            min-height: 250px;
+        }
+        
+        .resample-button {
+            width: 100%;
+            padding: 1rem;
+        }
     }
 </style>
 
@@ -326,12 +353,12 @@
     <div class="graph-container">
         <!-- Left Panel - 2D Plot -->
         <div class="panel">
-            <svg id="left-plot" width={leftWidth} height={leftHeight}></svg>
+            <svg id="left-plot" viewBox="0 0 {leftWidth} {leftHeight}" preserveAspectRatio="xMidYMid meet"></svg>
         </div>
         
         <!-- Right Panel - 3D Representation -->
         <div class="panel">
-            <svg id="right-plot" width={rightWidth} height={rightHeight}></svg>
+            <svg id="right-plot" viewBox="0 0 {rightWidth} {rightHeight}" preserveAspectRatio="xMidYMid meet"></svg>
         </div>
     </div>
 
