@@ -27,7 +27,7 @@
         kernel_RBF,
         kernel_Matern12,
         kernel_Periodic,
-        kernel_Polynomial
+        (x) => kernel_Polynomial(x, x)
     ];
     var selectedKernelIndex = 0;
     var desc = kernelDescriptions[selectedKernelIndex].Description;
@@ -79,7 +79,6 @@
     function drawNewKernel()
     {
         const data = generateData(kernels[selectedKernelIndex]);
-        // draw_kernel_func(svg, data);
         draw_kernel_func(data);
     }
     
