@@ -48,9 +48,9 @@
         if (trainingPoints.length === 0) {
             yMean = Array(xPred.length).fill(0);
             yStd = Array(xPred.length).fill(1);
-            samples = Array.from({ length: 5 }, () =>
-                yMean.map((mu, i) => mu + yStd[i] * d3.randomNormal(0, 1, 0.5))
-            );
+            const samples = Array.from({ length: 5 }, () => 
+                yMean.map((mu, i) => mu + yStd[i] * d3.randomNormal()())
+        );
         } else {
             const X_train = trainingPoints.map(p => p.x);
             const y_train = trainingPoints.map(p => p.y);
@@ -86,7 +86,7 @@
             });
 
             samples = Array.from({ length: 5 }, () =>
-                yMean.map((mu, i) => mu + yStd[i] * d3.randomNormal(0, 1))
+                yMean.map((mu, i) => mu + yStd[i] * d3.randomNormal()())
             );
         }
 
@@ -107,10 +107,21 @@
             .attr("width", width - margin.left - margin.right)
             .attr("height", height - margin.top - margin.bottom);
 
+        svg.append("defs").append("marker")
+            .attr("id", "arrow")
+            .attr("viewBox", "0 0 10 10")
+            .attr("refX", 5)
+            .attr("refY", 5)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto-start-reverse")
+            .append("path")
+            .attr("d", "M 0 0 L 10 5 L 0 10 z")
+            .attr("fill", "black");
+
         const g = svg.append("g")
             .attr("clip-path", "url(#plot-area-clip)")
             .on("click", handleClick);
-
 
         const areaGenerator = d3.area()
             .x(d => xScale(d.x))
@@ -163,36 +174,47 @@
                 .attr("stroke-width", 1.2);
         });
 
-        // Y = 0 linha
-        g.append("line")
-            .attr("class", "zero-line")
-            .attr("x1", xScale(-5))
-            .attr("x2", xScale(5))
-            .attr("y1", yScale(0))
-            .attr("y2", yScale(0))
-            .attr("stroke", "#000000") 
-            .attr("stroke-width", 1.5)
-            .attr("stroke-dasharray", "5,3");
+        // Eixo X
+        svg.append('line')
+            .attr('x1', xScale(-5))
+            .attr('x2', xScale(5))
+            .attr('y1', yScale(0))
+            .attr('y2', yScale(0))
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
 
-        // Y = 0 texto
-        g.append("text")
-            .attr("x", xScale(-5) + 5)
-            .attr("y", yScale(0) - 8)
-            .attr("fill", "#000000")
-            .attr("font-size", "12")
+        // Eixo Y
+        svg.append('line')
+            .attr('x1', xScale(0))
+            .attr('x2', xScale(0))
+            .attr('y1', yScale(-4))
+            .attr('y2', yScale(4))
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
+
+        // Label do eixo x
+        svg.append("text")
+            .attr("x", xScale(5) + 5)
+            .attr("y", yScale(0) + 3)
+            .attr("fill", "#000")
+            .attr("font-size", "14px")
             .attr("font-family", "'Fredoka', sans-serif")
-            .style("user-select", "none") 
-            .text("y = 0");
+            .text("x")
+            .style("user-select", "none");
 
-        // Borda do gráfico
-        svg.append("rect")
-            .attr("x", margin.left)
-            .attr("y", margin.top)
-            .attr("width", width - margin.left - margin.right)
-            .attr("height", height - margin.top - margin.bottom)
-            .attr("fill", "none")
-            .attr("stroke", "#2c3e50")
-            .attr("stroke-width", 2);
+        // Label do eixo y
+        svg.append("text")
+            .attr("x", xScale(0) + 5)
+            .attr("y", yScale(4) + 5)
+            .attr("fill", "#000")
+            .attr("font-size", "14px")
+            .attr("font-family", "'Fredoka', sans-serif")
+            .text("y")
+            .style("user-select", "none");
 
         // Legenda
         const legendData = [
@@ -204,16 +226,37 @@
         const legend = svg.append("g")
             .attr("class", "legend");
 
-        // Primeiro criar todos os elementos
-        const legendItems = legend.selectAll(".legend-item")
+        // Caixa de fundo 
+        const background = legend.append("rect")
+            .attr("fill", "#f9f9f9")
+            .attr("stroke", "#ccc")
+            .attr("stroke-width", 1)
+            .attr("rx", 6)
+            .attr("ry", 6);
+
+        // Título da legenda
+        legend.append("text")
+            .attr("class", "legend-title")
+            .attr("x", 18)
+            .attr("y", 13)
+            .style("font-family", "'Fredoka', sans-serif")
+            .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .text("Legend")
+            .style("user-select", "none");
+
+        // Grupo de itens da legenda
+        const legendItemsGroup = legend.append("g")
+            .attr("transform", "translate(10, 15)"); 
+
+        const legendItems = legendItemsGroup.selectAll(".legend-item")
             .data(legendData)
             .enter()
             .append("g")
             .attr("class", "legend-item")
             .each(function(d) {
                 const item = d3.select(this);
-                
-                // Símbolo
+
                 if (d.symbol === "circle") {
                     item.append("circle")
                         .attr("cx", 15)
@@ -238,30 +281,37 @@
                         .attr("height", 10)
                         .attr("fill", d.color);
                 }
+
                 item.append("text")
-                    .attr("x", 45) 
+                    .attr("x", 45)
                     .attr("y", 15)
                     .attr("dominant-baseline", "middle")
                     .style("font-family", "'Fredoka', sans-serif")
-                    .style("font-size", "12px")
+                    .style("font-size", "10px")
                     .text(d.label)
-                    .style("user-select", "none") ;
+                    .style("user-select", "none");
             });
 
-        let xPosition = 0;
-        const padding = 30; // Espaço entre elementos
+        // Empilhamento vertical dos itens
+        let yPosition = 0;
+        const verticalPadding = 5;
 
         legendItems.each(function() {
             const bbox = this.getBBox();
             d3.select(this)
-                .attr("transform", `translate(${xPosition}, 0)`);
-            xPosition += bbox.width + padding;
+                .attr("transform", `translate(0, ${yPosition})`);
+            yPosition += bbox.height + verticalPadding;
         });
 
-        // Centralização
-        const totalWidth = xPosition - padding; // Remoção do último padding
-        legend.attr("transform", `translate(${(width - totalWidth)/2}, ${margin.top + 10})`);
+        const legendGroupBBox = legend.node().getBBox();
+        background
+            .attr("x", legendGroupBBox.x - 10)
+            .attr("y", legendGroupBBox.y - 10)
+            .attr("width", legendGroupBBox.width + 20)
+            .attr("height", legendGroupBBox.height + 20);
 
+        // Posição final da legenda no SVG
+        legend.attr("transform", `translate(${margin.left}, ${margin.top})`);
     }
 
     function handleClick(event) {
