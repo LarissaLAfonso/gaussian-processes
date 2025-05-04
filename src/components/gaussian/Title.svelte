@@ -158,11 +158,12 @@
 		position: relative;
 		z-index: 2;
 	}
+
 	.corner-image {
     position: absolute;
-    right: clamp(4rem, 10vw, 8rem);
-    bottom: clamp(3rem, 8vw, 6rem);
-    width: clamp(150px, 25vw, 300px);
+    right: clamp(2rem, 4vw, 8rem);
+    bottom: clamp(2rem, 4vw, 8rem);
+    width: clamp(150px, 23vw, 300px);
     height: auto;
     opacity: 0.8;
     pointer-events: none;
@@ -171,31 +172,6 @@
     transition: all 0.3s ease;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
   	}
-
-	  @media (max-width: 768px) {
-		.corner-image {
-		width: clamp(120px, 30vw, 200px);
-		right: clamp(1rem, 5vw, 3rem);
-		bottom: clamp(2rem, 6vw, 4rem);
-		opacity: 0.7;
-		}
-	}
-
-	@media (max-width: 480px) {
-		.corner-image {
-		width: 100px;
-		right: 1rem;
-		bottom: 2rem;
-		opacity: 0.6;
-		}
-	}
-
-	@media (hover: hover) {
-		.corner-image:hover {
-		opacity: 0.9;
-		transform: rotate(15deg) scale(1.05);
-		}
-	}
 
 	.scroll-indicator {
 		margin-top: 1rem;
