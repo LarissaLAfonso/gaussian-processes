@@ -178,7 +178,7 @@
                 .attr("cx", xScale(point.x))
                 .attr("cy", yScale(point.y))
                 .attr("r", 7)
-                .attr("fill", "#F41300") 
+                .attr("fill", "#F56127") 
                 .attr("stroke", "#fff")
                 .attr("stroke-width", 1.2);
         });
@@ -272,7 +272,7 @@
                         .attr("cx", 15)
                         .attr("cy", 15)
                         .attr("r", 7)
-                        .attr("fill", "#F41300")
+                        .attr("fill", "#F56127")
                         .attr("stroke", "#fff")
                         .attr("stroke-width", 1.2);
                 } else if (d.symbol === "line" || d.symbol === "line-dashed") {
