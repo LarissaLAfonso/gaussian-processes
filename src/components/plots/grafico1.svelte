@@ -158,31 +158,6 @@
         aspect-ratio: 2 / 1;
         border-radius: 8px;
     }
-
-    @media (max-width: 900px) {
-        .container {
-            max-width: 100%;
-            margin-left: 0.5rem;
-        }
-        
-        #gp-svg {
-            min-width: unset;
-            width: calc(100% - 1rem); /* Account for left margin */
-            aspect-ratio: 16/9;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .container {
-            margin: 0.5rem 0.2rem 0.5rem 0.5rem; /* Tight right margin */
-        }
-        
-        #gp-svg {
-            border-radius: 4px;
-            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-            width: calc(100% - 0.5rem);
-        }
-    }
 </style>
 
 <div class="container">

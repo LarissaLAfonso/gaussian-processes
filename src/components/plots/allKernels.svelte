@@ -350,36 +350,4 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .container {
-            padding: 1rem;
-            width: 95%;
-        }
-        
-        .title {
-            font-size: 1.5rem;
-        }
-        
-        .kernel-selection {
-            gap: 0.5rem;
-        }
-        
-        .kernel-toggle span {
-            padding: 0.4rem 0.8rem;
-            font-size: 1rem;
-        }
-        
-        #gp-svg {
-            min-height: 300px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .kernel-selection {
-            flex-direction: column;
-            align-items: center;
-        }
-    }
 </style>

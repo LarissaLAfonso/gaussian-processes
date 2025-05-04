@@ -157,6 +157,7 @@
         margin: 1rem auto;
         padding: 1.5rem;
         border-radius: 8px;
+        border: 2px solid black;
     }
 
     .kernel-selection {
@@ -197,37 +198,6 @@
 
     .kernel-toggle input:not(:checked) + span {
         opacity: 0.7;
-    }
-
-    .kernel-explanation {
-        background-color: #e5e7eb;
-        border-radius: clamp(0.5rem, 1.5vw, 0.75rem);
-        margin: clamp(0.25rem, 0.5vw, 0.5rem) auto 0; /* Increased top margin */
-        width: min(92%, 720px); 
-        padding: clamp(0.25rem, 0.5vw, 1rem);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        font-size: clamp(0.9rem, 1.1vw + 0.5rem, 1.1rem); /* Slightly smaller growth rate */
-        line-height: 1.2; /* Increased line spacing */
-        color: #374151;
-        overflow: visible; /* Prevent content clipping */
-    }
-
-    /* Mobile adjustments */
-    @media (max-width: 768px) {
-        .kernel-explanation {
-            width: 95%;
-            padding: 1rem;
-            margin-top: 1rem;
-            font-size: 0.9375rem; /* 15px */
-        }
-    }
-
-    /* Small mobile */
-    @media (max-width: 480px) {
-        .kernel-explanation {
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-        }
     }
         
 </style>

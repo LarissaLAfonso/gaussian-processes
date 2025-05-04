@@ -120,3 +120,49 @@ export function draw_kernel_func(svgContainer, data) {
     .attr("stroke", "black")
     .attr("stroke-width", 1);  
 }
+
+export function updateDimensions(containerElement) {
+  if (!containerElement) return fallbackDimensions();
+  
+  try {
+      const rect = containerElement.getBoundingClientRect();
+      const containerWidth = rect.width;
+      const containerHeight = rect.height;
+      
+      return {
+          container: {
+              width: containerWidth,
+              height: containerHeight
+          },
+          panels: {
+              left: {
+                  width: containerWidth * 0.48,
+                  height: containerHeight * 0.7
+              },
+              right: {
+                  width: containerWidth * 0.48,
+                  height: containerHeight * 0.7
+              }
+          },
+          margin: containerWidth * 0.02
+      };
+  } catch (error) {
+      console.error('Dimension error:', error);
+      return fallbackDimensions();
+  }
+}
+
+function fallbackDimensions() {
+  return {
+      container: { width: 800, height: 600 },
+      panels: {
+          left: { width: 380, height: 500 },
+          right: { width: 380, height: 500 }
+      },
+      margin: 20
+  };
+}
+
+export default {
+  updateDimensions
+};
