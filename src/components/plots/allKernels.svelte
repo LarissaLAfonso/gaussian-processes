@@ -43,6 +43,12 @@
         'kernel_Periodic',
         'kernel_Polynomial'
     ];
+    const checkboxIds = [
+        'rbf',
+        'matern',
+        'periodic',
+        'polynomial'
+    ];
 
     const colors = {
         kernel_RBF: '#47A2A4',
@@ -191,7 +197,30 @@
         createGraph();
     }
 
-
+    function check_all()
+    {
+        /*
+        Marca todos os kernels.
+        */
+        for(let i = 0; i < selectedKernels.length; i++)
+        {
+            selectedKernels[i] = 1;
+            paths[i].attr('opacity', maxOpacity);
+            document.getElementById(checkboxIds[i]).checked = true;
+        }
+    }
+    function uncheck_all()
+    {
+        /*
+        Desmarca todos os kernels.
+        */
+        for(let i = 0; i < selectedKernels.length; i++)
+        {
+            selectedKernels[i] = 0;
+            paths[i].attr('opacity', minOpacity);
+            document.getElementById(checkboxIds[i]).checked = false;
+        }
+    }
     function toggle_kernel(index)
     {
         /*
@@ -199,13 +228,16 @@
         */
         const kernel = kernels[index];
         const isChecked = selectedKernels[index];
+        const allChecked = !selectedKernels.includes(0);
+        console.log(allChecked)
 
-        if (!isChecked) {
+        if (!isChecked || allChecked) {
+            uncheck_all();
             selectedKernels[index] = 1;
             paths[index].attr('opacity', maxOpacity);
-        } else {
-            selectedKernels[index] = 0;
-            paths[index].attr('opacity', minOpacity);
+            document.getElementById(checkboxIds[index]).checked = true;
+        } else{
+            check_all();
         }
     }
 </script>
