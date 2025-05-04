@@ -279,19 +279,7 @@
     }
     
     function resample() {
-        let Yvalues;
-
-        if (!auxLoaded) {
-            Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
-        } else {
-            try {
-                const mean = Array(Xvalues.length).fill(0);
-                const variance = Array(Xvalues.length).fill(0).map(() => Array(Xvalues.length).fill(0));
-                Yvalues = window.auxiliares.sampleNormal(mean, variance);
-            } catch (err) {
-                Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
-            }
-        }
+        let Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
 
         sharedData.set({ x: Xvalues, y: Yvalues });
         createViz(Xvalues, Yvalues);

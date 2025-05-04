@@ -44,7 +44,7 @@
         svg.selectAll('*').remove();
 
         // Update scales
-        xScale.domain([start+1, end])
+        xScale.domain([start, end])
             .range([margin.left, width - margin.right]);
         
         yScale.domain([-3, 3])
@@ -95,6 +95,7 @@
         min-height: 300px;
         display: block;
         margin-bottom: 1rem;
+        overflow: visible;
     }
 
     .explanation {
