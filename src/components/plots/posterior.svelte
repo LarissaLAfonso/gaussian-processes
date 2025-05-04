@@ -44,18 +44,25 @@
         }
 
         let yMean, yStd, samples;
+        const numSamples = 3;
 
-        if (trainingPoints.length === 0) {
+        // Se nenhum kernel for selecionado, limpa os pontos e plota apenas a média 0
+        if (selectedKernels.length === 0) {
+            trainingPoints = [];
             yMean = Array(xPred.length).fill(0);
             yStd = Array(xPred.length).fill(1);
-            const samples = Array.from({ length: 5 }, () => 
+            samples = []; // sem amostras nesse caso
+        } else if (trainingPoints.length === 0) {
+            yMean = Array(xPred.length).fill(0);
+            yStd = Array(xPred.length).fill(1);
+            samples = Array.from({ length: numSamples }, () => 
                 yMean.map((mu, i) => mu + yStd[i] * d3.randomNormal()())
-        );
+            );
         } else {
             const X_train = trainingPoints.map(p => p.x);
             const y_train = trainingPoints.map(p => p.y);
 
-            // Mapeamento das funções de kernel
+            // Mapeamento das funções de Kernel
             const kernels = {
                 RBF: kernel_RBF,
                 Matern: kernel_Matern12,
@@ -69,7 +76,9 @@
                 return values.reduce((sum, val) => sum + val, 0) / values.length;
             };
 
-            const K = X_train.map(x1 => X_train.map(x2 => selectedKernel(x1, x2) + (x1 === x2 ? 1e-10 : 0)));
+            const K = X_train.map(x1 =>
+                X_train.map(x2 => selectedKernel(x1, x2) + (x1 === x2 ? 1e-10 : 0))
+            );
             const L = cholesky(K);
             const alpha = solveLowerTriangular(L, y_train);
             const v = solveUpperTriangular(transposeMatrix(L), alpha);
@@ -85,7 +94,7 @@
                 return Math.sqrt(selectedKernel(x, x) - dotProduct(K_inv_k, K_inv_k));
             });
 
-            samples = Array.from({ length: 5 }, () =>
+            samples = Array.from({ length: numSamples }, () =>
                 yMean.map((mu, i) => mu + yStd[i] * d3.randomNormal()())
             );
         }
@@ -132,7 +141,7 @@
         const confidenceAreaData = xPred.map((x, i) => ({ x, mean: yMean[i], std: yStd[i] }));
         g.append("path")
             .attr("class", "confidence")
-            .attr("fill", "#bcdada")
+            .attr("fill", "#DDF2DC")
             .attr("d", areaGenerator(confidenceAreaData));
 
         const lineGenerator = d3.line()
@@ -157,7 +166,7 @@
                     .attr("d", lineGenerator(sampleData))
                     .attr("stroke", "#adb5bd") 
                     .attr("stroke-width", 1)
-                    .attr("opacity", 0.6)
+                    .attr("opacity", 0.8)
                     .attr("fill", "none");
             });
         }
@@ -169,7 +178,7 @@
                 .attr("cx", xScale(point.x))
                 .attr("cy", yScale(point.y))
                 .attr("r", 7)
-                .attr("fill", "#f72585") 
+                .attr("fill", "#F41300") 
                 .attr("stroke", "#fff")
                 .attr("stroke-width", 1.2);
         });
@@ -219,8 +228,9 @@
         // Legenda
         const legendData = [
             { label: "Train Point", color: "#f72585", symbol: "circle" },
+            { label: "Samples", color: "#adb5bd", symbol: "line-dashed" },
             { label: "Mean Prediction", color: "#1e7d2f", symbol: "line" },
-            { label: "Confidence Interval", color: "#bcdada", symbol: "area" }
+            { label: "Confidence Interval", color: "#DDF2DC", symbol: "area" }
         ];
 
         const legend = svg.append("g")
@@ -262,17 +272,17 @@
                         .attr("cx", 15)
                         .attr("cy", 15)
                         .attr("r", 7)
-                        .attr("fill", d.color)
+                        .attr("fill", "#F41300")
                         .attr("stroke", "#fff")
                         .attr("stroke-width", 1.2);
-                } else if (d.symbol === "line") {
+                } else if (d.symbol === "line" || d.symbol === "line-dashed") {
                     item.append("line")
                         .attr("x1", 10)
                         .attr("x2", 25)
                         .attr("y1", 15)
                         .attr("y2", 15)
                         .attr("stroke", d.color)
-                        .attr("stroke-width", 2.5);
+                        .attr("stroke-width", 2);
                 } else if (d.symbol === "area") {
                     item.append("rect")
                         .attr("x", 10)
