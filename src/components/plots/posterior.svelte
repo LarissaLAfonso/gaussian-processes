@@ -101,7 +101,7 @@
             .attr("fill", "#000")
             .attr("font-size", "14px")
             .text("x")
-            .style("user-select", "none");;
+            .style("user-select", "none");
 
         svg.append("text")
             .attr("x", xScale(0) + 5)
@@ -109,7 +109,7 @@
             .attr("fill", "#000")
             .attr("font-size", "14px")
             .text("y")
-            .style("user-select", "none");;
+            .style("user-select", "none");
 
         // Legenda
         const legend = svg.append("g")
