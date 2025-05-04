@@ -23,47 +23,45 @@
     const kernelFunction = (x, y) => kernel_Periodic(x, y, 0.5, 1.0);
 
     function plotSamples() {
-
         const data = Xtest.map((x, i) => ({ x, y: initialSamples[i] }));
         yScale.domain([-3, 3]);
 
-        // Desvio Padrão do dado
+        // Intervalo de confiança
         const sigma = 1;
-
-        // Adição do bloco do intervalo de confiança
         let confBand = svg.select('#confidence-band');
         const bandTop = yScale(2 * sigma);
         const bandBottom = yScale(-2 * sigma);
+        
         if (confBand.empty()) {
             confBand = svg.insert('rect', '#axes-group')
-                .attr('id', 'confidence-band');
+                .attr('id', 'confidence-band')
+                .attr('x', margin.left)
+                .attr('width', width - margin.left - margin.right)
+                .attr('y', bandTop)
+                .attr('height', bandBottom - bandTop)
+                .attr('fill', '#add8e6')
+                .attr('opacity', 0);
         }
 
-        confBand
-            .attr('x', margin.left)
-            .attr('width', width - margin.left - margin.right)
-            .attr('y', bandTop)
-            .attr('height', bandBottom - bandTop)
-            .attr('fill', '#add8e6')
+        confBand.transition()
+            .duration(2000)
             .attr('opacity', 0.3);
 
-        // Linhas horizontais de referência
+        // Linhas de referência
         const lines = [
-            { y: 0, id: 'u-zero-line', text: 'u = 0', dashed: false },
             { y: 2 * sigma, id: 'u-plus-2sigma', text: 'u + 2σ', dashed: true },
             { y: -2 * sigma, id: 'u-minus-2sigma', text: 'u - 2σ', dashed: true }
         ];
 
-        // Adição de cada linha no gráfico
         lines.forEach(({ y, id, text, dashed }) => {
             let line = svg.select(`#${id}`);
             if (line.empty()) {
-                svg.select('#axes-group')
+                line = svg.select('#axes-group')
                     .append('line')
                     .attr('id', id)
                     .attr('stroke', 'black')
-                    .attr('stroke-width', 1);
-                line = svg.select(`#${id}`);
+                    .attr('stroke-width', 1)
+                    .attr('opacity', 0); // Inicialmente invisível
             }
 
             line
@@ -71,23 +69,48 @@
                 .attr('x2', width - margin.right)
                 .attr('y1', yScale(y))
                 .attr('y2', yScale(y))
-                .attr('stroke-dasharray', dashed ? '4 2' : null);
+                .attr('stroke-dasharray', dashed ? '4 2' : null)
+                .transition() // Animação de aparecimento
+                .delay(2500)
+                .duration(500)
+                .attr('opacity', 1);
 
             let label = svg.select(`#${id}-text`);
             if (label.empty()) {
                 label = svg.append('text')
-                    .attr('id', `${id}-text`);
+                    .attr('id', `${id}-text`)
+                    .attr('opacity', 0); // Inicialmente invisível
             }
+            
             label
-                .attr('x', margin.left + 30)
+                .attr('x', margin.left + 5)
                 .attr('y', yScale(y) - 7)
-                .attr('text-anchor', 'middle')
+                .attr('text-anchor', 'left')
                 .attr('font-size', '14px')
                 .attr('fill', 'black')
-                .text(text);
+                .text(text)
+                .transition() // Animação de aparecimento
+                .delay(2500)
+                .duration(500)
+                .attr('opacity', 1);
         });
 
-        // Pontos
+        // Label u = 0 (animado no final)
+        svg.append('text')
+            .attr('id', 'u-zero-text')
+            .attr('x', margin.left + 5)
+            .attr('y', yScale(0) - 7)
+            .attr('text-anchor', 'left')
+            .attr('font-size', '14px')
+            .attr('fill', 'black')
+            .attr('opacity', 0) // Inicialmente invisível
+            .transition()
+            .delay(2500)
+            .duration(500)
+            .attr('opacity', 1)
+            .text('u = 0');
+
+        // Animação dos pontos
         const points = svg.select('#points-group')
             .selectAll('circle')
             .data(data, d => d.x);
@@ -107,13 +130,13 @@
 
         points.exit().remove();
 
-        // Linha conectando os pontos
+        // Animação da linha principal
         const line = d3.line()
             .x(d => xScale(d.x))
             .y(d => yScale(d.y));
 
         let path = svg.select('#line-group').selectAll('path').data([data]);
-        const totalDuration = 2000; // Tempo de animação
+        const totalDuration = 2000;
 
         path.enter()
             .append('path')
@@ -121,11 +144,11 @@
             .attr('stroke', '#47A2A4')
             .attr('stroke-width', 2)
             .attr('d', line)
-            .attr('stroke-dasharray', function () {
+            .attr('stroke-dasharray', function() {
                 const totalLength = this.getTotalLength();
                 return totalLength + " " + totalLength;
             })
-            .attr('stroke-dashoffset', function () {
+            .attr('stroke-dashoffset', function() {
                 return this.getTotalLength();
             })
             .transition()
@@ -153,17 +176,6 @@
             .attr('width', width)
             .attr('height', height);
 
-        // Borda do gráfico
-        svg.append('rect')
-            .attr('x', margin.left)
-            .attr('y', 0)
-            .attr('width', width - margin.left - margin.right)
-            .attr('height', height)
-            .attr('fill', 'none')
-            .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('shape-rendering', 'crispEdges');
-
         // Delimitação para pontos não ficarem fora do gráfico
         svg.append("defs")
             .append("clipPath")
@@ -174,16 +186,68 @@
             .attr("width", width - margin.left - margin.right)
             .attr("height", height);
 
+        svg.append("defs").append("marker")
+            .attr("id", "arrow")
+            .attr("viewBox", "0 0 10 10")
+            .attr("refX", 5)
+            .attr("refY", 5)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto-start-reverse")
+            .append("path")
+            .attr("d", "M 0 0 L 10 5 L 0 10 z")
+            .attr("fill", "black");
+
         xScale = d3.scaleLinear()
             .domain([start, end])
             .range([margin.left, width - margin.right]);
 
         yScale = d3.scaleLinear()
-            .range([height - margin.bottom, margin.top]);
+            .range([height - margin.bottom, margin.top])
+            .domain([-3, 3]);
 
         svg.append('g').attr('id', 'points-group').attr("clip-path", "url(#plot-clip)");
         svg.append('g').attr('id', 'axes-group');
         svg.append('g').attr('id', 'line-group').attr("clip-path", "url(#plot-clip)");
+
+        // Eixo x
+        svg.append('line')
+            .attr('x1', xScale(-5))
+            .attr('x2', xScale(5))
+            .attr('y1', yScale(0))
+            .attr('y2', yScale(0))
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
+
+        // Eixo y
+        svg.append('line')
+            .attr('x1', xScale(0))
+            .attr('x2', xScale(0))
+            .attr('y1', yScale(-3))
+            .attr('y2', yScale(3))
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
+
+        // Labels dos eixos
+        svg.append("text")
+            .attr("x", xScale(5) + 5)
+            .attr("y", yScale(0) + 3)
+            .attr("fill", "#000")
+            .attr("font-size", "14px")
+            .text("x")
+            .style("user-select", "none");
+
+        svg.append("text")
+            .attr("x", xScale(0) + 5)
+            .attr("y", yScale(3) + 10)
+            .attr("fill", "#000")
+            .attr("font-size", "14px")
+            .text("f(x)")
+            .style("user-select", "none");
 
         plotSamples();
     });
