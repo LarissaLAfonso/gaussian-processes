@@ -31,7 +31,7 @@
 
     const legendData = [
         { label: "Train Point", color: "#f72585", symbol: "circle" },
-        { label: "Samples", color: "#adb5bd", symbol: "line-dashed" },
+        { label: "Samples", color: "#adb5bd", symbol: "line-sample" },
         { label: "Mean Prediction", color: "#1e7d2f", symbol: "line" },
         { label: "Confidence Interval", color: "#DDEFFF", symbol: "area" }
     ];
@@ -124,15 +124,14 @@
                 .attr("fill", d.color)
                 .attr("stroke", "#fff")
                 .attr("stroke-width", 1.2);
-        } else if (d.symbol === "line" || d.symbol === "line-dashed") {
+        } else if (d.symbol === "line" || d.symbol === "line-sample") {
             item.append("line")
                 .attr("x1", 10)
                 .attr("x2", 25)
                 .attr("y1", 10)
                 .attr("y2", 10)
                 .attr("stroke", d.color)
-                .attr("stroke-width", 2)
-                .attr("stroke-dasharray", d.symbol === "line-dashed" ? "4,2" : null);
+                .attr("stroke-width", 2);
         } else if (d.symbol === "area") {
             item.append("rect")
                 .attr("x", 10)
