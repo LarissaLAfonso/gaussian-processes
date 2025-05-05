@@ -4,6 +4,7 @@
     import { generateGPSamples, kernel_Periodic } from '$components/generate_data_prior/auxiliares';
     import description from '$components/data/descriptions.json';
     import HelperText from "../layouts/HelperText.svelte";
+    import { drawAxes } from "./auxiliares";
 
     // Constants
     const start = -5;
@@ -76,43 +77,7 @@
         svg.append('g').attr('id', 'points-group').attr("clip-path", "url(#plot-clip)");
         svg.append('g').attr('id', 'axes-group');
 
-        svg.append('line')
-            .attr('x1', xScale(-5))
-            .attr('x2', xScale(5))
-            .attr('y1', yScale(0))
-            .attr('y2', yScale(0))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0.5)
-            .attr('marker-end', 'url(#arrow)');
-
-        // Eixo y
-        svg.append('line')
-            .attr('x1', xScale(0))
-            .attr('x2', xScale(0))
-            .attr('y1', yScale(-3))
-            .attr('y2', yScale(3))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0.5)
-            .attr('marker-end', 'url(#arrow)');
-
-        // Labels dos eixos
-        svg.append("text")
-            .attr("x", xScale(5) + 5)
-            .attr("y", yScale(0) + 3)
-            .attr("fill", "#000")
-            .attr("font-size", "14px")
-            .text("x")
-            .style("user-select", "none");
-
-        svg.append("text")
-            .attr("x", xScale(0) + 5)
-            .attr("y", yScale(3) + 10)
-            .attr("fill", "#000")
-            .attr("font-size", "14px")
-            .text("f(x)")
-            .style("user-select", "none");
+        drawAxes(svg, xScale, yScale);
 
         // Plot samples
         const data = initialSamples.map((y, i) => ({
