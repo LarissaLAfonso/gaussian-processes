@@ -82,7 +82,7 @@
   .content-wrapper {
       display: flex;
       flex-direction: column;
-      gap: clamp(1rem, 3vw, 2rem);
+      gap: clamp(0.5rem, 1vw, 1rem);
       width: 100%;
   }
 
@@ -113,7 +113,7 @@
   }
 
   .author-block p {
-      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-size: clamp(1rem, 1.3vw, 1.25rem);
       font-weight: 500;
   }
 
@@ -125,22 +125,5 @@
   p {
       text-align: center;
       margin: 0;
-  }
-
-  @media (max-width: 768px) {
-      .wrapper {
-          padding: 2rem 1rem;
-      }
-      
-      .authors-container {
-          flex-direction: column;
-      }
-  }
-
-  @media (max-width: 480px) {
-      .acknowledgements {
-          text-align: left;
-          padding: 0 0.5rem 2rem;
-      }
   }
 </style>
