@@ -33,7 +33,7 @@
         { label: "Train Point", color: "#f72585", symbol: "circle" },
         { label: "Samples", color: "#adb5bd", symbol: "line-dashed" },
         { label: "Mean Prediction", color: "#1e7d2f", symbol: "line" },
-        { label: "Confidence Interval", color: "#DDF2DC", symbol: "area" }
+        { label: "Confidence Interval", color: "#DDEFFF", symbol: "area" }
     ];
 
     onMount(() => {
@@ -246,7 +246,7 @@
         confidence.enter()
             .append("path")
             .attr("class", "confidence")
-            .attr("fill", "#DDF2DC")
+            .attr("fill", "#DDEFFF")
             .merge(confidence)
             .transition().duration(750)
             .attr("d", areaGenerator);
