@@ -4,6 +4,7 @@
     import { generateGPSamples, kernel_Periodic } from '$components/generate_data_prior/auxiliares';
     import description from '$components/data/descriptions.json';
     import HelperText from "../layouts/HelperText.svelte";
+    import { drawAxes } from "./auxiliares";
 
     // Constants
     const start = -5;
@@ -56,14 +57,6 @@
             .attr('shape-rendering', 'crispEdges');
 
         // Delimitação para pontos não ficarem fora do gráfico
-        svg.append("defs")
-            .append("clipPath")
-            .attr("id", "plot-clip")
-            .append("rect")
-            .attr("x", margin.left)
-            .attr("y", 0)
-            .attr("width", width - margin.left - margin.right)
-            .attr("height", height);
 
         svg.append("defs").append("marker")
             .attr("id", "arrow")
@@ -89,44 +82,7 @@
         svg.append('g').attr('id', 'axes-group');
         svg.append('g').attr('id', 'line-group').attr("clip-path", "url(#plot-clip)");
 
-        // Eixo x
-        svg.append('line')
-            .attr('x1', xScale(-5))
-            .attr('x2', xScale(5))
-            .attr('y1', yScale(0))
-            .attr('y2', yScale(0))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0.5)
-            .attr('marker-end', 'url(#arrow)');
-
-        // Eixo y
-        svg.append('line')
-            .attr('x1', xScale(0))
-            .attr('x2', xScale(0))
-            .attr('y1', yScale(-3))
-            .attr('y2', yScale(3))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0.5)
-            .attr('marker-end', 'url(#arrow)');
-
-        // Labels dos eixos
-        svg.append("text")
-            .attr("x", xScale(5) + 5)
-            .attr("y", yScale(0) + 3)
-            .attr("fill", "#000")
-            .attr("font-size", "14px")
-            .text("x")
-            .style("user-select", "none");
-
-        svg.append("text")
-            .attr("x", xScale(0) + 5)
-            .attr("y", yScale(3) + 10)
-            .attr("fill", "#000")
-            .attr("font-size", "14px")
-            .text("f(x)")
-            .style("user-select", "none");
+        drawAxes(svg, xScale, yScale)
 
         // Plot samples (from second component's plotSamples)
         const data = initialSamples.map((y, i) => ({
@@ -307,27 +263,11 @@
         margin-bottom: 1rem;
         overflow: visible;
     }
-
-    /* From second component */
-    .explanation {
-        padding: 1rem;
-        font-family: 'Fredoka', sans-serif;
-        background-color: #e5e7eb;
-        border-radius: 12px;
-        margin-top: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-size: 16px;
-        text-align: justify;
-        color: #333;
-    }
 </style>
 
 <div class="main-container" bind:this={containerElement}>
     <svg id="gp-svg"></svg>
-    <!-- <div class="explanation"> -->
     <HelperText>
-
         <p>{description[1].text}</p>
     </HelperText>
-    <!-- </div> -->
 </div>

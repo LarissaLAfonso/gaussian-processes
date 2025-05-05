@@ -274,9 +274,6 @@
     <!-- SVG para o gráfico -->
     <svg id="gp-svg"></svg>
 
-    <!-- <div class="resample">
-        <button on:click={updatePlot} class="resample-button">Resample</button>
-    </div> -->
     <Button label="Resample" onClick={updatePlot} />
 </div>
 
@@ -296,14 +293,6 @@
         overflow: hidden;
     }
 
-    .title {
-        font-size: clamp(1.5rem, 4vw, 2rem);
-        color: #2d3748;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        width: 100%;
-    }
-
     .kernel-selection {
         display: flex;
         flex-wrap: wrap;
@@ -311,19 +300,6 @@
         gap: clamp(0.5rem, 1.5vw, 1rem);
         margin-bottom: 1.5rem;
         width: 100%;
-    }
-
-    .graph-wrapper {
-        width: 100%;
-        overflow: hidden;
-        margin: 0 auto;
-        
-    }
-
-    .graph-inner {
-        width: clamp(115%, 120%, 135%); /* Extra width to allow left shift */
-        margin-left: clamp(-15%, -20%, -25%); /* Pulls content left */
-        position: relative;
     }
 
     #gp-svg {

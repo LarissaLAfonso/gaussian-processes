@@ -166,3 +166,49 @@ function fallbackDimensions() {
 export default {
   updateDimensions
 };
+
+export function drawAxes(svg, xScale, yScale)
+{
+  xScale.clamp(true);
+  yScale.clamp(true);
+  // Eixo x
+  svg.append('line')
+    .attr('x1', xScale(-5))
+    .attr('x2', xScale(5))
+    .attr('y1', yScale(0))
+    .attr('y2', yScale(0))
+    .attr('stroke', 'black')
+    .attr('stroke-width', 1)
+    .attr('opacity', 0.5)
+    .attr('marker-end', 'url(#arrow)');
+
+  // Eixo y
+  svg.append('line')
+    .attr('x1', xScale(0))
+    .attr('x2', xScale(0))
+    .attr('y1', yScale(-Infinity))
+    .attr('y2', yScale(Infinity))
+    .attr('stroke', 'black')
+    .attr('stroke-width', 1)
+    .attr('opacity', 0.5)
+    .attr('marker-end', 'url(#arrow)');
+
+  // Labels dos eixos
+  svg.append("text")
+  .attr("x", xScale(Infinity) + 5)
+  .attr("y", yScale(0) + 3)
+  .attr("fill", "#000")
+  .attr("font-size", "14px")
+  .text("x")
+  .style("user-select", "none");
+
+  svg.append("text")
+    .attr("x", xScale(0) + 5)
+    .attr("y", yScale(Infinity) - 10)
+    .attr("fill", "#000")
+    .attr("font-size", "14px")
+    .text("f(x)")
+    .style("user-select", "none");
+  xScale.clamp(false);
+  yScale.clamp(false);
+}

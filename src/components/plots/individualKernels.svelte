@@ -12,7 +12,7 @@
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
-    import { kernel_Matern12, kernel_Polynomial, kernel_Periodic, kernel_RBF, generateData } from '$components/plots/auxiliares.js';
+    import { kernel_Matern12, kernel_Polynomial, kernel_Periodic, kernel_RBF, generateData, drawAxes } from '$components/plots/auxiliares.js';
     import kernelDescriptions from '$components/data/kernels.json';
     import HelperText from '$components/layouts/HelperText.svelte';
     let svg;
@@ -65,16 +65,8 @@
             .attr("stroke", "#52DBA4") 
             .attr("stroke-width", 2)
             .attr("d", line);
-
-        svg.append("line")
-            .attr("x1", margin.left)
-            .attr("y1", height - margin.bottom)
-            .attr("x2", width - margin.right)
-            .attr("y2", height - margin.bottom)
-            .attr("stroke", "black")
-            .attr("stroke-width", 1)
-            .attr("opacity", 0.5)
-            .attr("stroke-dasharray", "5,5");  
+        
+        drawAxes(svg, x, y);
         
         y.domain([0, d3.max(data, d => d.y)])
             .range([height - margin.bottom, margin.top]);

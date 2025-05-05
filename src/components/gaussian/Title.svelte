@@ -146,7 +146,7 @@
 		font-weight: 450;
 		font-style: normal;
 		font-size: 2rem;
-		color: #a0c4ff;
+		color: #73a5f6;
 		margin-bottom: 1rem;
 		position: relative;
 		z-index: 2;
@@ -154,7 +154,7 @@
 
 	p {
 		font-size: 1.1rem;
-		color: rgb(200, 200, 200);
+		color: rgb(154, 154, 154);
 		position: relative;
 		z-index: 2;
 	}
@@ -198,7 +198,7 @@
 	.scroll-indicator .text {
 		font-size: 1.15rem;
 		margin-top: 13px;
-		color: #79a98b;
+		color: #638f74;
 	}
 
 	@keyframes bounce {
