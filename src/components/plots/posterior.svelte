@@ -15,6 +15,7 @@
     import * as d3 from 'd3';
     import HelperText from "$components/layouts/HelperText.svelte"
     import description from '$components/data/descriptions.json';
+    import { drawAxes } from './auxiliares';
 
     const width = 800;
     const height = 400;
@@ -79,44 +80,7 @@
             .attr("clip-path", "url(#plot-area-clip)")
             .on("click", handleClick);
 
-        // Eixo X
-        svg.append('line')
-            .attr('x1', xScale(-5))
-            .attr('x2', xScale(5))
-            .attr('y1', yScale(0))
-            .attr('y2', yScale(0))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0.5)
-            .attr('marker-end', 'url(#arrow)');
-
-        // Eixo y
-        svg.append('line')
-            .attr('x1', xScale(0))
-            .attr('x2', xScale(0))
-            .attr('y1', yScale(-4))
-            .attr('y2', yScale(4))
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0.5)
-            .attr('marker-end', 'url(#arrow)');
-
-        // Labels dos eixos
-        svg.append("text")
-            .attr("x", xScale(5) + 5)
-            .attr("y", yScale(0) + 3)
-            .attr("fill", "#000")
-            .attr("font-size", "14px")
-            .text("x")
-            .style("user-select", "none");
-
-        svg.append("text")
-            .attr("x", xScale(0) + 5)
-            .attr("y", yScale(4) + 5)
-            .attr("fill", "#000")
-            .attr("font-size", "14px")
-            .text("y")
-            .style("user-select", "none");
+        drawAxes(svg, xScale, yScale, true, "x", "y");
 
         // Legenda
         const legend = svg.append("g")
