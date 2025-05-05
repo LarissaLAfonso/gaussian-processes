@@ -3,6 +3,7 @@
     import * as d3 from "d3";
     import { generateGPSamples, kernel_Periodic } from '$components/generate_data_prior/auxiliares';
     import description from '$components/data/descriptions.json';
+    import HelperText from "../layouts/HelperText.svelte";
 
     // Constants
     const start = -5;
@@ -323,7 +324,10 @@
 
 <div class="main-container" bind:this={containerElement}>
     <svg id="gp-svg"></svg>
-    <div class="explanation">
+    <!-- <div class="explanation"> -->
+    <HelperText>
+
         <p>{description[1].text}</p>
-    </div>
+    </HelperText>
+    <!-- </div> -->
 </div>
