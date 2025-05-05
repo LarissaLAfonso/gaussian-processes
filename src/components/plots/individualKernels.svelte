@@ -66,7 +66,7 @@
             .attr("stroke-width", 2)
             .attr("d", line);
         
-        drawAxes(svg, x, y);
+        drawAxes(svg, x, y, true, "x", "f(x)");
         
         y.domain([0, d3.max(data, d => d.y)])
             .range([height - margin.bottom, margin.top]);
