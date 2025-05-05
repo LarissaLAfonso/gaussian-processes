@@ -7,7 +7,7 @@
     // Constants
     const start = -5;
     const end = 5;
-    const numberOfPoints = 28;
+    const numberOfPoints = 50;
     const step = (end - start) / (numberOfPoints - 1);
     const seed = 0.5;
     const kernelFunction = (x, y) => kernel_Periodic(x, y, 0.5, 1.0);
@@ -163,9 +163,14 @@
 
     .explanation {
         padding: 1rem;
-        background: #f0f0f0;
-        border-radius: 8px;
         font-family: 'Fredoka', sans-serif;
+        background-color: #e5e7eb;
+        border-radius: 12px;
+        margin-top: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        text-align: justify;
+        color: #333;
     }
 </style>
 

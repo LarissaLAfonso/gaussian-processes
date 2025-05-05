@@ -7,7 +7,7 @@
     // Constants
     const start = -5;
     const end = 5;
-    const numberOfPoints = 28;
+    const numberOfPoints = 50;
     const step = (end - start) / (numberOfPoints - 1);
     const seed = 0.5;
     const kernelFunction = (x, y) => kernel_Periodic(x, y, 0.5, 1.0);
@@ -307,15 +307,10 @@
         overflow: visible;
     }
 
-    .explanation {
-        padding: 1rem;
-        background: #f0f0f0;
-        border-radius: 8px;
-        font-family: 'Fredoka', sans-serif;
-    }
-
     /* From second component */
     .explanation {
+        padding: 1rem;
+        font-family: 'Fredoka', sans-serif;
         background-color: #e5e7eb;
         border-radius: 12px;
         margin-top: 20px;
@@ -329,6 +324,6 @@
 <div class="main-container" bind:this={containerElement}>
     <svg id="gp-svg"></svg>
     <div class="explanation">
-        <p>{description[0].text}</p>
+        <p>{description[1].text}</p>
     </div>
 </div>

@@ -145,7 +145,7 @@
         flex-direction: column;
         align-items: flex-start;
         margin: clamp(0.5rem, 2vw, 1rem) 0 clamp(0.5rem, 2vw, 1rem) clamp(0.5rem, 2vw, 1rem); /* Reduced right margin */
-        width: auto; /* Changed from 100% */
+        width: auto; 
         max-width: calc(100% - 1rem); /* Compensate for left margin */
         overflow: visible; /* Changed from hidden */
     }
