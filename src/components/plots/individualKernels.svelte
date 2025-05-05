@@ -65,16 +65,6 @@
             .attr("stroke", "#52DBA4") 
             .attr("stroke-width", 2)
             .attr("d", line);
-
-        svg.append("line")
-            .attr("x1", margin.left)
-            .attr("y1", height - margin.bottom)
-            .attr("x2", width - margin.right)
-            .attr("y2", height - margin.bottom)
-            .attr("stroke", "black")
-            .attr("stroke-width", 1)
-            .attr("opacity", 0.5)
-            .attr("stroke-dasharray", "5,5");  
         
         y.domain([0, d3.max(data, d => d.y)])
             .range([height - margin.bottom, margin.top]);
