@@ -22,6 +22,6 @@
 <G6 />
 {:else if activeStep === 13}
 <G7 />
-{:else if activeStep === 14}
+{:else if activeStep === 14 || activeStep === 15}
 <G8 />
 {/if}

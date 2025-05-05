@@ -195,7 +195,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "\\(K\\) is called a <b>kernel function</b>, and each of them has its own properties. For example, the <b>RBF</b>, the <b>Matérn</b> and the <b>periodic kernels</b> are stationary, which means they are invariant to translations."
+                            "value": "\\(K\\) is called a <b>kernel function</b>, and each of them has its own properties. For example, the <b>RBF</b>, the <b>Matérn</b> and the <b>periodic kernels</b> are stationary, which means they are invariant to translations. You can even combine kernel functions to have your own tailored kernel!"
                         }
                     ]
                 } 
@@ -210,7 +210,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "Different kernels lead to very different gaussian processes for the same set of samples. Try playing around with it for a bit!"
+                            "value": "Different kernels lead to very different gaussian processes for the same set of samples. Play with it for a bit, <b>click on the buttons</b>!"
                         }
                     ]
                 }
@@ -225,12 +225,36 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "And what's more: as gaussians are closed under conditioning, that means all the framework we developed here still holds in the light of new data. You just have to update the mean and the covariance!"
+                            "value": "And what's more: as gaussians are closed under conditioning, that means all the framework we developed here still holds in the light of new data!"
+                        }
+                    ]
+                },
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "To condition your gaussian process, <b>click on a point</b> on the graph!"
                         }
                     ]
                 }
             ],
-            "figure": "happy.png"
+            "figure": "super_happy.png"
+        },
+        {
+            "type": "step",
+            "value": [
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "By just updating the mean and the covariance, we can update our probabilities, like the good bayesians we are, and get a <b>brand new gaussian process</b>, just for us!"
+                        }
+                    ]
+                }
+            ],
+            "figure": "laughing.png"
         }
     ]
 }

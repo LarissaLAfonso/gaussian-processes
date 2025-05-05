@@ -14,7 +14,7 @@
         font-family: 'Fredoka', sans-serif;
         background-color: #e5e7eb;
         border-radius: 12px;
-        margin-top: 0.5rem;
+        margin-top: 0.25rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         font-size: 16px;
         text-align: justify;

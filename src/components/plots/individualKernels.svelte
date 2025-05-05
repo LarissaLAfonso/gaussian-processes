@@ -107,7 +107,7 @@
     .main-container {
         width: 90%;
         max-width: 800px;
-        margin: 2rem auto;
+        margin: 0.5rem 0rem 2rem 0rem;
         padding: 1.5rem;
         border-radius: 8px;
         font-family: 'Fredoka', sans-serif;
@@ -115,6 +115,8 @@
         flex-direction: column;
         align-items: center;
     }
+
+    
 
     .kernel-selection {
         display: flex;

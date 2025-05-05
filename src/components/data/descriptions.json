@@ -7,6 +7,10 @@
     {
         "name": "linear_prior",
         "text": "Like before, the points are sampled from a gaussian process. If you imagine that we get a huge, almost infinite number of points, you can imagine those as being almost like the graph of a function. Here, u is the mean and σ is the standard deviation of this random function."
+    },
+    {
+        "name": "posterior",
+        "text": "When you add or remove a point, the the mean and the confidence interval of the estimated function are updated. Additionally, selecting different kernels allows you to observe how different assumptions about the function influence the shape of the prediction."
     }
 ]
 

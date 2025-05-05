@@ -13,6 +13,8 @@
     } from '$components/generate_data_prior/auxiliares';
 
     import * as d3 from 'd3';
+    import HelperText from "$components/layouts/HelperText.svelte"
+    import description from '$components/data/descriptions.json';
 
     const width = 800;
     const height = 400;
@@ -44,6 +46,11 @@
         */
 
         const svg = d3.select(svgElement);
+
+        // Center the image into the svg box
+        svg.attr("viewBox", `0 0 ${width} ${height}`)
+            .style("display", "block")
+            .style("margin", "0 auto");
 
         // Delimitação do gráfico
         svg.append("defs")
@@ -352,8 +359,8 @@
     }
 </script>
 
-<div class="container">
-    <h1>The influence of the training set on the test result</h1>
+<div class="main-container">
+    <h2>Adding Training Points</h2>
 
     <div class="select_kernel">
         <div class="option">
@@ -376,100 +383,75 @@
 
     <svg bind:this={svgElement} {width} {height}></svg>
 
-    <div class="explanation">
-        <p>You can click directly on it to add or remove training points.
-            When you do this, the prediction of the mean and the confidence interval of the estimated function are automatically updated.
-            The more points are added—especially in nearby regions—the lower the uncertainty tends to be (represented by the light blue area),
-            as the model gains more information about the function's behavior in that region.
-            Additionally, selecting different kernels allows you to observe how different assumptions about the function influence the shape of the prediction.</p>
-    </div>
+    <HelperText>
+        {@html description[2].text}
+    </HelperText>
 </div>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-family: 'Fredoka', sans-serif;
+    .main-container {
         width: 90%;
-        margin: 0 auto;
+        max-width: 800px;
+        margin: 0.5rem 0rem 2rem 0rem;
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Fredoka', sans-serif;
     }
 
-    h1 {
+    h2 {
+        padding-bottom: 1rem;
         text-align: center;
-        color: #2c3e50;
-        margin: 20px 0;
     }
 
     .select_kernel {
         display: flex;
-        gap: 25px;
         flex-wrap: wrap;
-        align-items: center;
-        padding: 15px;
-        border: 2px solid #e0e0e0;
+        gap: 0.8rem;
+        justify-content: center;
+        margin: 1rem 0;
+        width: 100%;
+        padding: 1rem;
         border-radius: 8px;
-        background: #f8f9fa;
-        max-width: 600px;
     }
 
     .option {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 0.5rem;
     }
 
     input[type="checkbox"] {
-        appearance: none;
-        -webkit-appearance: none;
         width: 18px;
         height: 18px;
-        border: 2px solid #666;
+        border: 2px solid #47A2A4;
         border-radius: 4px;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     input[type="checkbox"]:checked {
-        background: #2196F3;
-        border-color: #2196F3;
+        border-color: #47A2A4;
     }
 
     input[type="checkbox"]:checked::after {
-        content: "✓";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
         color: white;
-        font-size: 14px;
+        font-size: 12px;
     }
 
     label {
-        color: #333;
-        font-size: 14px;
+        color: #2d3748;
+        font-size: 0.9rem;
         cursor: pointer;
     }
 
-    .option:hover input[type="checkbox"] {
-        border-color: #2196F3;
-    }
-
     .option:hover label {
-        color: #2196F3;
+        color: #47A2A4;
     }
 
-    .explanation {
-        background-color: #e5e7eb;
-        border-radius: 12px;
-        width: 100%; 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-size: 16px;
-        text-align: justify;
-        padding: 0 15px;
-        color: #333;
+    svg {
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        margin-bottom: 1rem;
+        display: block;
     }
 </style>

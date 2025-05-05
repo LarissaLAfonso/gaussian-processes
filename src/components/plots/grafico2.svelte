@@ -350,7 +350,7 @@
         width: min(95%, 800px);
         height: auto;
         min-height: 80vh; /* Ensure minimum viewport height */
-        margin: 2rem auto;
+        margin: 0.5rem 0rem 2rem 0rem;
         padding: 1.5rem;
         gap: 1.5rem;
         box-sizing: border-box;
