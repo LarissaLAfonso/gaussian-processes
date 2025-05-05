@@ -72,8 +72,10 @@ For the explanation of Gaussian Processes, we used a _scrollytelling_ approach, 
 
 - Chart 8: Finally, we show how a regression model is trained with data. Red points (training points) can be added or removed interactively. The chart displays sample functions over the test set, along with their predicted values and the uncertainty band. Users can also combine different kernels for the analysis. All elements are indicated in the legend, and animations are used throughout to ensure a smooth user experience.
 
+> Note: We do not put titles on the chats when unnecessary, as well as the axis.
+
 ## Task Division and Working Time
-Although we did not record individual working hours, we estimate that each member dedicated over 40 active hours to the project. A large portion of this time was spent on theoretical understanding of gaussian processes, grasping the scrollama framework and overcoming limitations in generating normal data in JavaScript.
+Although we did not record individual working hours, we estimate that each member dedicated over 50 active hours to the project. A large portion of this time was spent on theoretical understanding of gaussian processes, grasping the scrollama framework and overcoming limitations in generating normal data in JavaScript.
 
 - Larissa: General structure of the page, footer, Chart 1, Chart 2, Chart 3.
 
