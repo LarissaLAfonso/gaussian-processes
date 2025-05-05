@@ -234,7 +234,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "To condition your gaussian process, <b>click anywhere</b> inside the confidence interval!"
+                            "value": "To condition your gaussian process, <b>click anywhere</b> inside the confidence interval! You can also deselect a point by clicking twice."
                         }
                     ]
                 }
