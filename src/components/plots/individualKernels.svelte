@@ -165,7 +165,7 @@
 </style>
 
 <div class="main-container">
-    <h2>Kernel shapes</h2>
+    <h2>Kernel Shapes</h2>
     <!-- Botões para seleção do Kernel -->
     <div class="kernel-selection">
         <label class="kernel-toggle">
@@ -174,7 +174,7 @@
         </label>
         <label class="kernel-toggle">
             <input type="radio" id="matern" name="kernel" value="kernel_Matern12" on:input={()=>updateSelectedKernel(1)} />
-            <span>Matern</span>
+            <span>Matérn</span>
         </label>
         <label class="kernel-toggle">
             <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" on:input={()=>updateSelectedKernel(2)}  />

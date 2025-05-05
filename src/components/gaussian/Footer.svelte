@@ -76,7 +76,7 @@
       z-index: 1;
       font-family: 'Fredoka', sans-serif;
       text-align: center;
-      padding: clamp(1rem, 5vw, 3rem) 0;
+      padding: clamp(1rem, 2vw, 3rem) 0;
   }
 
   .content-wrapper {

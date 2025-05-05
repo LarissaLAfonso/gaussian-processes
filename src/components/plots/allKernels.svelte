@@ -258,7 +258,7 @@
         <label class="kernel-toggle" id="matern_subtitle">
             <input type="checkbox" id="matern" name="kernel" 
                 on:change={() => toggle_kernel(1)} checked>
-            <span>Matern</span>
+            <span>Matérn</span>
         </label>
         <label class="kernel-toggle" id="periodic_subtitle">
             <input type="checkbox" id="periodic" name="kernel" 

@@ -368,7 +368,7 @@
             <label for="rbf">RBF</label>
         </div>
         <div class="option">
-            <input type="checkbox" id="matern" bind:group={selectedKernels} value="Matern" on:change={updatePlot}>
+            <input type="checkbox" id="matern" bind:group={selectedKernels} value="Matérn" on:change={updatePlot}>
             <label for="matern">Matérn</label>
         </div>
         <div class="option">
@@ -399,7 +399,7 @@
     }
 
     h2 {
-        padding-bottom: 1rem;
+        padding-bottom: 0.5rem;
         text-align: center;
     }
 
@@ -408,7 +408,7 @@
         flex-wrap: wrap;
         gap: 0.8rem;
         justify-content: center;
-        margin: 1rem 0;
+        margin: 0.5rem 0;
         width: 100%;
         padding: 1rem;
         border-radius: 8px;
@@ -451,7 +451,7 @@
         width: 100%;
         height: auto;
         min-height: 300px;
-        margin-bottom: 1rem;
+        margin-bottom: 0;
         display: block;
     }
 </style>

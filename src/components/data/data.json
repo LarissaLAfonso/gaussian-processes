@@ -38,7 +38,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "Now, if we collect all of those \\(n\\) heights, we'll have \\(n\\) numbers, which we can represent as a single point in \\(\\mathbb{R}^n\\). One height for each axis."
+                            "value": "Now, if we collect all of those \\(n\\) heights, we'll have \\(n\\) numbers, which we can represent as a single point in \\(\\mathbb{R}^n\\). <b>One height for each axis</b>."
                         }
                     ]
                 },
@@ -195,7 +195,7 @@
                     "value": [
                         {
                             "type": "text",
-                            "value": "\\(K\\) is called a <b>kernel function</b>, and each of them has its own properties. For example, the <b>RBF</b>, the <b>Matérn</b> and the <b>periodic kernels</b> are stationary, which means they are invariant to translations. You can even combine kernel functions to have your own tailored kernel!"
+                            "value": "\\(K\\) is called a <b>kernel function</b>, and each of them has its own properties. For example, the <b>RBF</b>, the <b>Matérn</b> and the <b>periodic kernels</b> are stationary, which means they are invariant to translations. You can even combine kernel functions to have your own self tailored kernel!"
                         }
                     ]
                 } 
