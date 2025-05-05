@@ -167,14 +167,14 @@ export default {
   updateDimensions
 };
 
-export function drawAxes(svg, xScale, yScale)
+export function drawAxes(svg, xScale, yScale, labels = true, xlabel = "x", ylabel = "f(x)")
 {
   xScale.clamp(true);
   yScale.clamp(true);
   // Eixo x
   svg.append('line')
-    .attr('x1', xScale(-5))
-    .attr('x2', xScale(5))
+    .attr('x1', xScale(-Infinity))
+    .attr('x2', xScale(Infinity))
     .attr('y1', yScale(0))
     .attr('y2', yScale(0))
     .attr('stroke', 'black')
@@ -194,21 +194,24 @@ export function drawAxes(svg, xScale, yScale)
     .attr('marker-end', 'url(#arrow)');
 
   // Labels dos eixos
-  svg.append("text")
-  .attr("x", xScale(Infinity) + 5)
-  .attr("y", yScale(0) + 3)
-  .attr("fill", "#000")
-  .attr("font-size", "14px")
-  .text("x")
-  .style("user-select", "none");
+  if(labels)
+  {
+    svg.append("text")
+      .attr("x", xScale(Infinity) + 5)
+      .attr("y", yScale(0) + 3)
+      .attr("fill", "#000")
+      .attr("font-size", "14px")
+      .text(xlabel)
+      .style("user-select", "none");
 
-  svg.append("text")
-    .attr("x", xScale(0) + 5)
-    .attr("y", yScale(Infinity) - 10)
-    .attr("fill", "#000")
-    .attr("font-size", "14px")
-    .text("f(x)")
-    .style("user-select", "none");
+    svg.append("text")
+      .attr("x", xScale(0) + 5)
+      .attr("y", yScale(Infinity) - 10)
+      .attr("fill", "#000")
+      .attr("font-size", "14px")
+      .text(ylabel)
+      .style("user-select", "none");
+  }
   xScale.clamp(false);
   yScale.clamp(false);
 }
