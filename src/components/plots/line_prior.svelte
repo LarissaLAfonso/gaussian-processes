@@ -307,27 +307,11 @@
         margin-bottom: 1rem;
         overflow: visible;
     }
-
-    /* From second component */
-    .explanation {
-        padding: 1rem;
-        font-family: 'Fredoka', sans-serif;
-        background-color: #e5e7eb;
-        border-radius: 12px;
-        margin-top: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-size: 16px;
-        text-align: justify;
-        color: #333;
-    }
 </style>
 
 <div class="main-container" bind:this={containerElement}>
     <svg id="gp-svg"></svg>
-    <!-- <div class="explanation"> -->
     <HelperText>
-
         <p>{description[1].text}</p>
     </HelperText>
-    <!-- </div> -->
 </div>
