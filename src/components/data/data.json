@@ -216,6 +216,21 @@
                 }
             ],
             "figure": "laughing.png"
+        },
+        {
+            "type": "step",
+            "value": [
+                {
+                    "type": "p",
+                    "value": [
+                        {
+                            "type": "text",
+                            "value": "And what's more: as gaussians are closed under conditioning, that means all the framework we developed here still holds in the light of new data. You just have to update the mean and the covariance!"
+                        }
+                    ]
+                }
+            ],
+            "figure": "happy.png"
         }
     ]
 }

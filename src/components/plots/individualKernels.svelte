@@ -175,7 +175,7 @@
     <!-- Botões para seleção do Kernel -->
     <div class="kernel-selection">
         <label class="kernel-toggle">
-            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" on:input={()=>updateSelectedKernel(0)}/>
+            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" on:input={()=>updateSelectedKernel(0)} checked/>
             <span>RBF</span>
         </label>
         <label class="kernel-toggle">
