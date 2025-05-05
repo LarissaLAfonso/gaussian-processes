@@ -40,6 +40,16 @@
             .attr('height', height)
             .attr('viewBox', `0 0 ${width} ${height}`);
 
+        // Delimitação para pontos não ficarem fora do gráfico
+        svg.append("defs")
+            .append("clipPath")
+            .attr("id", "plot-clip")
+            .append("rect")
+            .attr("x", margin.left)
+            .attr("y", 0)
+            .attr("width", width - margin.left - margin.right)
+            .attr("height", height);
+
         // Clear previous content
         svg.selectAll('*').remove();
 
@@ -49,6 +59,59 @@
         
         yScale.domain([-3, 3])
             .range([height - margin.bottom, margin.top]);
+
+        svg.append("defs").append("marker")
+            .attr("id", "arrow")
+            .attr("viewBox", "0 0 10 10")
+            .attr("refX", 5)
+            .attr("refY", 5)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto-start-reverse")
+            .append("path")
+            .attr("d", "M 0 0 L 10 5 L 0 10 z")
+            .attr("fill", "black");
+
+        svg.append('g').attr('id', 'points-group').attr("clip-path", "url(#plot-clip)");
+        svg.append('g').attr('id', 'axes-group');
+
+        svg.append('line')
+            .attr('x1', xScale(-5))
+            .attr('x2', xScale(5))
+            .attr('y1', yScale(0))
+            .attr('y2', yScale(0))
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
+
+        // Eixo y
+        svg.append('line')
+            .attr('x1', xScale(0))
+            .attr('x2', xScale(0))
+            .attr('y1', yScale(-3))
+            .attr('y2', yScale(3))
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1)
+            .attr('opacity', 0.5)
+            .attr('marker-end', 'url(#arrow)');
+
+        // Labels dos eixos
+        svg.append("text")
+            .attr("x", xScale(5) + 5)
+            .attr("y", yScale(0) + 3)
+            .attr("fill", "#000")
+            .attr("font-size", "14px")
+            .text("x")
+            .style("user-select", "none");
+
+        svg.append("text")
+            .attr("x", xScale(0) + 5)
+            .attr("y", yScale(3) + 10)
+            .attr("fill", "#000")
+            .attr("font-size", "14px")
+            .text("f(x)")
+            .style("user-select", "none");
 
         // Plot samples
         const data = initialSamples.map((y, i) => ({
