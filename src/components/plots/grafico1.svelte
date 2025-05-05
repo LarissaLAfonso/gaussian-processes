@@ -127,27 +127,39 @@
                     .attr('x2', xScale(point.x))
                     .attr('y1', yScale(0))
                     .attr('y2', yScale(0))
-                    .attr('stroke', '#ff968a')
-                    .attr('stroke-width', 1.5)
-                    .attr('opacity', 0.5)
+                    .attr('stroke', '#F2C8A2')
+                    .attr('stroke-width', 3.5)
+                    .attr('opacity', 1)
                     .transition()
                     .duration(200)
-                    .attr('y2', yScale(point.y));
+                    .attr('y2', yScale(point.y) + Math.sign(point.y) * 3);
             }, i * 150);
         });
         svg.selectAll('circle').raise();
     }
 </script>
 
-<style> 
+<style>
     .container {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        margin: 1rem;
+        align-items: flex-start;
+        margin: clamp(0.5rem, 2vw, 1rem) 0 clamp(0.5rem, 2vw, 1rem) clamp(0.5rem, 2vw, 1rem); /* Reduced right margin */
+        width: auto; 
+        max-width: calc(100% - 1rem); /* Compensate for left margin */
+        overflow: visible; /* Changed from hidden */
+    }
+
+    #gp-svg {
+        width: auto; /* Flexible width */
+        min-width: 600px; /* Minimum width */
+        height: auto;
+        max-width: 800px;
+        aspect-ratio: 2 / 1;
+        border-radius: 8px;
     }
 </style>
 
 <div class="container">
-    <svg id="gp-svg" width="800" height="400"></svg>
+    <svg id="gp-svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet"></svg>
 </div>

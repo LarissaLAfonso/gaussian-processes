@@ -43,6 +43,12 @@
         'kernel_Periodic',
         'kernel_Polynomial'
     ];
+    const checkboxIds = [
+        'rbf',
+        'matern',
+        'periodic',
+        'polynomial'
+    ];
 
     const colors = {
         kernel_RBF: '#47A2A4',
@@ -121,6 +127,11 @@
             .attr('width', width)
             .attr('height', height);
 
+        // Center the image into the svg box
+        svg.attr("viewBox", `0 0 ${width} ${height}`)
+            .style("display", "block")
+            .style("margin", "0 auto");
+
         // Borda do gráfico
         svg.append('rect')
             .attr('x', margin.left)    
@@ -128,7 +139,7 @@
             .attr('width', width - margin.left - margin.right)
             .attr('height', height)
             .attr('fill', 'none')
-            .attr('stroke', 'black')
+            //.attr('stroke', 'black')
             .attr('stroke-width', 2)
             .attr('shape-rendering', 'crispEdges'); 
 
@@ -191,7 +202,30 @@
         createGraph();
     }
 
-
+    function check_all()
+    {
+        /*
+        Marca todos os kernels.
+        */
+        for(let i = 0; i < selectedKernels.length; i++)
+        {
+            selectedKernels[i] = 1;
+            paths[i].attr('opacity', maxOpacity);
+            document.getElementById(checkboxIds[i]).checked = true;
+        }
+    }
+    function uncheck_all()
+    {
+        /*
+        Desmarca todos os kernels.
+        */
+        for(let i = 0; i < selectedKernels.length; i++)
+        {
+            selectedKernels[i] = 0;
+            paths[i].attr('opacity', minOpacity);
+            document.getElementById(checkboxIds[i]).checked = false;
+        }
+    }
     function toggle_kernel(index)
     {
         /*
@@ -199,22 +233,22 @@
         */
         const kernel = kernels[index];
         const isChecked = selectedKernels[index];
+        const allChecked = !selectedKernels.includes(0);
+        console.log(allChecked)
 
-        if (!isChecked) {
+        if (!isChecked || allChecked) {
+            uncheck_all();
             selectedKernels[index] = 1;
             paths[index].attr('opacity', maxOpacity);
-        } else {
-            selectedKernels[index] = 0;
-            paths[index].attr('opacity', minOpacity);
+            document.getElementById(checkboxIds[index]).checked = true;
+        } else{
+            check_all();
         }
     }
-
 </script>
 
 <div class="container">
-    <!-- Título do gráfico -->
-    <h2 class="title">Kernel Comparison</h2>
-    <!-- Legendas para o gráfico -->
+    <h2>Kernel Comparison</h2>
     <div class="kernel-selection">
         <label class="kernel-toggle" id="rbf_subtitle">
             <input type="checkbox" id="rbf" name="kernel"
@@ -224,7 +258,7 @@
         <label class="kernel-toggle" id="matern_subtitle">
             <input type="checkbox" id="matern" name="kernel" 
                 on:change={() => toggle_kernel(1)} checked>
-            <span>Matern</span>
+            <span>Matérn</span>
         </label>
         <label class="kernel-toggle" id="periodic_subtitle">
             <input type="checkbox" id="periodic" name="kernel" 
@@ -240,36 +274,49 @@
     <!-- SVG para o gráfico -->
     <svg id="gp-svg"></svg>
 
-    <!-- <div class="resample">
-        <button on:click={updatePlot} class="resample-button">Resample</button>
-    </div> -->
     <Button label="Resample" onClick={updatePlot} />
-
 </div>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
 
     .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 0.5rem 0rem 2rem 0rem;
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Fredoka', sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: 'Fredoka', sans-serif;
+        overflow: hidden;
     }
+
     .kernel-selection {
         display: flex;
-        justify-content: space-around;
-        margin-bottom: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(0.5rem, 1.5vw, 1rem);
+        margin-bottom: 1.5rem;
         width: 100%;
     }
 
+    #gp-svg {
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: hidden;
+    }
+
+    /* Kernel toggle styles */
     .kernel-toggle {
         display: inline-flex;
         align-items: center;
-        font-size: 18px;
+        font-size: clamp(0.9rem, 1.1vw, 1.1rem);
         cursor: pointer;
-        margin: 0 10px;
-        transition: color 0.3s ease;
     }
 
     .kernel-toggle input {
@@ -277,67 +324,29 @@
     }
 
     .kernel-toggle span {
-        padding: 5px;
+        padding: 0.5rem 1rem;
         border: 2px solid transparent;
         border-radius: 5px;
-        transition: background-color 0.3s ease, border 0.3s ease;
+        transition: all 0.3s ease;
+        font-weight: 500;
     }
 
-    .kernel-toggle input:not(:checked) + span{
-        opacity: 0.5;
+    .kernel-toggle input:not(:checked) + span {
+        opacity: 0.7;
     }
 
     .kernel-toggle input:checked + span {
-        background-color: #52DBA4;
         color: white;
-        border: 1.5px solid #000000;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
-    .kernel-toggle input:not(:checked) + span:hover {
-        background-color: #f0f0f0;
+    h2 {
+        padding-bottom: 1rem;
     }
-    .kernel-toggle input:checked + span:hover {
-        background-color: #000000;
-        color: white;
-        border: 1.5px solid #000000;
-    }
-
-    #rbf_subtitle span{
-        background-color: #47A2A4;
-    }
-    #matern_subtitle span{
-        background-color: #FF5733;
-    }
-    #periodic_subtitle span{
-        background-color: #C70039;
-    }
-    #polynomial_subtitle span{
-        background-color: #FFC300;
-    }
-    .container {
-        display: flex;
-        width: 700px;
-        height: 600px;
-        margin: 10px auto;
-        position: relative;
-    }
-    
-
-    /* .resample-button {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 8px 16px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        z-index: 10;
-    }
-    .resample-button:hover {
-        background-color: #45a049;
-    } */
+    /* Kernel colors */
+    #rbf_subtitle span { background-color: #47A2A4; }
+    #matern_subtitle span { background-color: #FF5733; }
+    #periodic_subtitle span { background-color: #C70039; }
+    #polynomial_subtitle span { background-color: #FFC300; }
 </style>

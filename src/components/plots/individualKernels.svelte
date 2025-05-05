@@ -12,7 +12,7 @@
 <script>
     import * as d3 from 'd3';
     import { onMount } from 'svelte';
-    import { kernel_Matern12, kernel_Polynomial, kernel_Periodic, kernel_RBF, generateData } from '$components/plots/auxiliares.js';
+    import { kernel_Matern12, kernel_Polynomial, kernel_Periodic, kernel_RBF, generateData, drawAxes } from '$components/plots/auxiliares.js';
     import kernelDescriptions from '$components/data/kernels.json';
     import HelperText from '$components/layouts/HelperText.svelte';
     let svg;
@@ -27,7 +27,7 @@
         kernel_RBF,
         kernel_Matern12,
         kernel_Periodic,
-        kernel_Polynomial
+        (x) => kernel_Polynomial(x, x)
     ];
     var selectedKernelIndex = 0;
     var desc = kernelDescriptions[selectedKernelIndex].Description;
@@ -53,6 +53,11 @@
         svg = d3.select("#indivualKernels-svg")
             .attr("width", width)
             .attr("height", height)
+
+        // Center the image into the svg box
+        svg.attr("viewBox", `0 0 ${width} ${height}`)
+            .style("display", "block")
+            .style("margin", "0 auto");
         
         svg.append("path")
             .datum(data)
@@ -60,16 +65,8 @@
             .attr("stroke", "#52DBA4") 
             .attr("stroke-width", 2)
             .attr("d", line);
-
-        svg.append("line")
-            .attr("x1", margin.left)
-            .attr("y1", height - margin.bottom)
-            .attr("x2", width - margin.right)
-            .attr("y2", height - margin.bottom)
-            .attr("stroke", "black")
-            .attr("stroke-width", 1)
-            .attr("opacity", 0.5)
-            .attr("stroke-dasharray", "5,5");  
+        
+        drawAxes(svg, x, y, true, "x", "f(x)");
         
         y.domain([0, d3.max(data, d => d.y)])
             .range([height - margin.bottom, margin.top]);
@@ -79,7 +76,6 @@
     function drawNewKernel()
     {
         const data = generateData(kernels[selectedKernelIndex]);
-        // draw_kernel_func(svg, data);
         draw_kernel_func(data);
     }
     
@@ -97,22 +93,88 @@
           tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
         };
     });;
-    // var formula;
-    // $:formula = kernelDescriptions[selectedKernelIndex].Formula;
   </script>
-  
-<div class="container">
-    <!-- Título do gráfico -->
-    <h2 id="title">Kernel formats</h2>
+
+<style>
+    .main-container {
+        width: 90%;
+        max-width: 800px;
+        margin: 0.5rem 0rem 2rem 0rem;
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Fredoka', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    
+
+    .kernel-selection {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        justify-content: center;
+        margin: 0;
+        width: 100%;
+        padding-bottom: 1rem;
+    }
+
+    .kernel-toggle {
+        display: inline-flex;
+        align-items: center;
+        font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .kernel-toggle input {
+        display: none;
+    }
+
+    .kernel-toggle span {
+        padding: 0.5rem 1rem;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .kernel-toggle input:checked + span {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        background-color: #52DBA4; /* Cor de fundo quando selecionado */
+    }
+
+    .kernel-toggle input:not(:checked) + span {
+        opacity: 0.7;
+    }
+
+    #indivualKernels-svg {
+        width: min(90%, 800px);
+        height: auto;
+        min-height: 300px;
+        margin: 0;
+        display: block;
+    }
+
+    h2 {
+        padding-bottom: 1rem;
+    }
+
+</style>
+
+<div class="main-container">
+    <h2>Kernel Shapes</h2>
     <!-- Botões para seleção do Kernel -->
     <div class="kernel-selection">
         <label class="kernel-toggle">
-            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" on:input={()=>updateSelectedKernel(0)}/>
+            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" on:input={()=>updateSelectedKernel(0)} checked/>
             <span>RBF</span>
         </label>
         <label class="kernel-toggle">
             <input type="radio" id="matern" name="kernel" value="kernel_Matern12" on:input={()=>updateSelectedKernel(1)} />
-            <span>Matern</span>
+            <span>Matérn</span>
         </label>
         <label class="kernel-toggle">
             <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" on:input={()=>updateSelectedKernel(2)}  />
@@ -125,82 +187,7 @@
     </div>
     <svg id="indivualKernels-svg"></svg>
     <br>
-    <!-- <div class = "kernel-explanation" id="kernel-explanation">
-        <div class="kernel-description">
-            <p>{desc}</p>
-        </div>
-        <div class="kernel-formula" id="kernel-formula">
-            <p>${formula}$</p>
-        </div>
-    </div> -->
     <HelperText>
-        <div class="kernel-description">
-            <p>{desc}</p>
-        </div>
-        <!-- <div class="kernel-formula" id="kernel-formula">
-            <p>${formula}$</p>
-        </div> -->
+        <p>{desc}</p>
     </HelperText>
-
 </div>
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-family: 'Fredoka', sans-serif;
-        
-    }
-
-    .kernel-selection {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    .kernel-toggle {
-        display: inline-flex;
-        align-items: center;
-        font-size: 18px;
-        cursor: pointer;
-        margin: 0 10px;
-        transition: color 0.3s ease;
-    }
-
-    .kernel-toggle input {
-        display: none;
-    }
-
-    .kernel-toggle span {
-        padding: 5px;
-        border: 2px solid transparent;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, border 0.3s ease;
-    }
-
-    .kernel-toggle input:checked + span {
-        background-color: #52DBA4;
-        color: white;
-        border: 1.5px solid #000000;
-    }
-
-    .kernel-toggle input:not(:checked) + span:hover {
-        background-color: #f0f0f0;
-    }
-
-    .kernel-explanation {
-        background-color: #e5e7eb; 
-        border-radius: 12px;      
-        margin-top: 20px;         
-        width: 80%;                
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-        font-size: 16px;
-        color: #333;
-    }
-        
-</style>

@@ -5,27 +5,64 @@
     import { abs, secondRadiationDependencies } from 'mathjs';
     import * as auxiliares from '$components/plots/auxiliares.js';
     import { sharedData } from '$stores/graphData.js';
+    import { updateDimensions } from '$components/plots/auxiliares.js';
 
     import Button from '$components/interactives/Button.svelte';
     
     const auxLoaded = false;
+
+    // Reactive dimensions state
+    let dimensions = {
+        container: { width: 0, height: 0 },
+        panels: { left: { width: 0, height: 0 }, right: { width: 0, height: 0 } },
+        margin: 0
+    };
+
+    let containerElement;
     
-    const margin = 20;
-    const containerWidth = 800;
-    const containerHeight = 400;
-    const leftWidth = containerWidth / 2 - margin * 2;
-    const leftHeight = containerHeight - margin * 2;
-    const rightWidth = containerWidth / 2 - margin * 2;
-    const rightHeight = containerHeight - margin * 2;
+    function handleResize() {
+        if (!containerElement) return;
+        try {
+            dimensions = updateDimensions(containerElement);
+            // Check if dimensions are valid
+            const { left, right } = dimensions.panels;
+            if (left.width <= 0 || left.height <= 0 || right.width <= 0 || right.height <= 0) {
+                return;
+            }
+            if ($sharedData?.y) {
+                createViz(Xvalues, $sharedData.y);
+            }
+        } catch (error) {
+            console.error('Resize error:', error);
+        }
+    }
     
     let Xvalues = [1, 5, 9];
     
     function createViz(Xvalues, Yvalues) {
+        if (!containerElement) return;
+
+        // Clear existing SVGs properly
+        const leftSvg = d3.select('#left-plot')
+            .attr('width', dimensions.panels.left.width)
+            .attr('height', dimensions.panels.left.height);
+
+        const rightSvg = d3.select('#right-plot')
+            .attr('width', dimensions.panels.right.width)
+            .attr('height', dimensions.panels.right.height);
+
+        // Add viewBox for responsive scaling
+        leftSvg.attr('viewBox', `0 0 ${dimensions.panels.left.width} ${dimensions.panels.left.height}`);
+        rightSvg.attr('viewBox', `0 0 ${dimensions.panels.right.width} ${dimensions.panels.right.height}`);
+
+        // Use dimensions from state
+        const { margin } = dimensions;
+        const leftWidth = dimensions.panels.left.width;
+        const leftHeight = dimensions.panels.left.height;
+        const rightWidth = dimensions.panels.right.width;
+        const rightHeight = dimensions.panels.right.height;
+    
         const points2D = Xvalues.map((x, i) => ({ x, y: Yvalues[i] }));
-    
-        const leftSvg = d3.select('#left-plot');
-        const rightSvg = d3.select('#right-plot');
-    
         const xScale2D = d3.scaleLinear().domain([-2, 10]).range([margin, leftWidth - margin]);
         const yScale2D = d3.scaleLinear().domain([-3, 3]).range([leftHeight - margin, margin]);
         const realScale = d3.scaleLinear().domain([-3, 3]).range([-1, 1]);
@@ -47,9 +84,9 @@
             .attr('fill', 'black');
 
     
-        const firstColor = '#D99CA7';
-        const secondColor = '#CCD9D1';
-        const thirdColor = '#403231';
+        const firstColor = '#ACBEF2';
+        const secondColor = '#F2BC57';
+        const thirdColor = '#8C8303';
     
         const angle = Math.PI / 6;
         const cosAngle = Math.cos(angle);
@@ -83,10 +120,16 @@
             project3D(0, 0, -1),
             project3D(0, 0, 1)
         ];
+
         const xs = projections.map(p => p.x);
         const ys = projections.map(p => p.y);
-        const xScale3D = d3.scaleLinear().domain([Math.min(...xs), Math.max(...xs)]).range([margin, rightWidth - margin]);
-        const yScale3D = d3.scaleLinear().domain([Math.min(...ys), Math.max(...ys)]).range([rightHeight - margin, margin]);
+        const xScale3D = d3.scaleLinear()
+            .domain([Math.min(...xs), Math.max(...xs)])
+            .range([margin, rightWidth - margin]);
+            
+        const yScale3D = d3.scaleLinear()
+            .domain([Math.min(...ys), Math.max(...ys)])
+            .range([rightHeight - margin, margin]);
     
         // Draw Left plot
         leftSvg.selectAll('line.highlight')
@@ -129,7 +172,7 @@
             .attr('y1', yScale2D(0))
             .attr('y2', yScale2D(0))
             .attr('stroke', 'black')
-            .attr('opacity', 0.3)
+            .attr('opacity', 0.7)
             .attr('stroke-width', 1)
             .attr('marker-end', 'url(#arrow)');
     
@@ -139,7 +182,7 @@
             .attr('y1', yScale2D(-3))
             .attr('y2', yScale2D(3))
             .attr('stroke', 'black')
-            .attr('opacity', 0.3)
+            .attr('opacity', 0.7)
             .attr('stroke-width', 1)
             .attr('marker-end', 'url(#arrow)');
 
@@ -167,8 +210,7 @@
                 .attr('x2', xScale3D(line.end.x))
                 .attr('y2', yScale3D(line.end.y))
                 .attr('stroke', 'black')
-                .attr('opacity', 0.5)
-                .attr('stroke-width', 1)
+                .attr('stroke-width', 0.7)
                 .attr('marker-end', 'url(#arrow)');
 
         });
@@ -181,8 +223,8 @@
 
         axisLabels.forEach(label => {
             rightSvg.append('text')
-                .attr('x', xScale3D(label.pos.x) + 4)
-                .attr('y', yScale3D(label.pos.y) - 4)
+                .attr('x', xScale3D(label.pos.x) + 10)
+                .attr('y', yScale3D(label.pos.y) + 4)
                 .text(label.text)
                 .attr('font-size', '14px')
                 .attr('fill', 'black')
@@ -216,7 +258,7 @@
                 .attr('y2', yScale3D(line.start.y))
                 .attr('stroke', line.color)
                 .attr('stroke-width', 4)
-                .attr('opacity', 0.9)
+                .attr('opacity', 1)
                 .transition()
                 .delay(i * totalDuration)
                 .duration(totalDuration)
@@ -237,109 +279,94 @@
     }
     
     function resample() {
-        let Yvalues;
-
-        if (!auxLoaded) {
-            Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
-        } else {
-            try {
-                const mean = Array(Xvalues.length).fill(0);
-                const variance = Array(Xvalues.length).fill(0).map(() => Array(Xvalues.length).fill(0));
-                Yvalues = window.auxiliares.sampleNormal(mean, variance);
-            } catch (err) {
-                Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
-            }
-        }
+        let Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
 
         sharedData.set({ x: Xvalues, y: Yvalues });
         createViz(Xvalues, Yvalues);
     }
-    
+
     onMount(() => {
-        let Yvalues;
+        containerElement = document.querySelector('.main-container');
+        if (!containerElement) return;
 
-        if (!auxLoaded) {
-            //console.warn('Using fallback data - auxiliares not loaded');
-            Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
-        } else {
-            try {
-                const mean = Array(Xvalues.length).fill(0);
-                const variance = Array(Xvalues.length).fill(0).map(() => Array(Xvalues.length).fill(0));
-                Yvalues = window.auxiliares.sampleNormal(mean, variance);
-            } catch (err) {
-                //console.error('Error in sampleNormal:', err);
-                Yvalues = Xvalues.map(() => d3.randomNormal(0, 1)());
-            }
-        }
+        const resizeObserver = new ResizeObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+                    handleResize();
+                }
+            });
+        });
+        resizeObserver.observe(containerElement);
 
-        sharedData.set({ x: Xvalues, y: Yvalues });
-        createViz(Xvalues, Yvalues);
+        // Initial data setup
+        resample();
+
+        return () => {
+            resizeObserver.unobserve(containerElement);
+            window.removeEventListener('resize', handleResize);
+        };
     });
 
 </script>
-
 <style>
     .main-container {
         display: flex;
         flex-direction: column;
-        width: 800px;
-        margin: 10px auto;
+        width: min(95%, 800px);
+        height: auto;
+        min-height: 80vh; /* Ensure minimum viewport height */
+        margin: 0.5rem 0rem 2rem 0rem;
+        padding: 1.5rem;
+        gap: 1.5rem;
+        box-sizing: border-box;
+        overflow: visible; /* Allow overflow */
     }
 
     .graph-container {
         display: flex;
-        justify-content: space-between;
-        height: 400px;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        min-height: 60vh; /* Ensure it expands vertically */
     }
 
     .panel {
-        flex: 0 0 48%;
+        flex: 1;
+        position: relative;
+        min-width: 0; /* Fix flex item overflow */
         height: 100%;
+        aspect-ratio: 1; /* Maintain aspect ratio */
     }
 
     svg {
+        width: 100%;
+        height: 100%;
         display: block;
-        background: #f9f9f9;
     }
 
-    /* .button-wrapper {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .resample-button {
-        padding: 10px 20px;
-        background-color: #ff968a;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
-    }
-
-    .resample-button:hover {
-        background-color: #45a049;
-    } */
 </style>
 
-<div class="main-container">
+<div class="main-container" bind:this={containerElement}>
     <div class="graph-container">
         <!-- Left Panel - 2D Plot -->
         <div class="panel">
-            <svg id="left-plot" width={leftWidth} height={leftHeight}></svg>
+            <svg id="left-plot"
+                width={dimensions.panels.left.width} 
+                height={dimensions.panels.left.height}
+                preserveAspectRatio="xMidYMid meet"></svg>
         </div>
         
         <!-- Right Panel - 3D Representation -->
         <div class="panel">
-            <svg id="right-plot" width={rightWidth} height={rightHeight}></svg>
+            <svg id="right-plot"
+                width={dimensions.panels.right.width} 
+                height={dimensions.panels.right.height}
+                preserveAspectRatio="xMidYMid meet"></svg>
         </div>
     </div>
 
-    <!-- <div class="button-wrapper">
-        <button class="resample-button" on:click={resample}>
-            Resample
-        </button>
-    </div> -->
-    <Button label="Resample" onClick={resample} />
+    <div class="button-wrapper">
+        <Button label="Resample" onClick={resample} />
+    </div>
 </div>

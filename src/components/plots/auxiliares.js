@@ -120,3 +120,98 @@ export function draw_kernel_func(svgContainer, data) {
     .attr("stroke", "black")
     .attr("stroke-width", 1);  
 }
+
+export function updateDimensions(containerElement) {
+  if (!containerElement) return fallbackDimensions();
+  
+  try {
+      const rect = containerElement.getBoundingClientRect();
+      const containerWidth = rect.width;
+      const containerHeight = rect.height;
+      
+      return {
+          container: {
+              width: containerWidth,
+              height: containerHeight
+          },
+          panels: {
+              left: {
+                  width: containerWidth * 0.48,
+                  height: containerHeight * 0.7
+              },
+              right: {
+                  width: containerWidth * 0.48,
+                  height: containerHeight * 0.7
+              }
+          },
+          margin: containerWidth * 0.02
+      };
+  } catch (error) {
+      console.error('Dimension error:', error);
+      return fallbackDimensions();
+  }
+}
+
+function fallbackDimensions() {
+  return {
+      container: { width: 800, height: 600 },
+      panels: {
+          left: { width: 380, height: 500 },
+          right: { width: 380, height: 500 }
+      },
+      margin: 20
+  };
+}
+
+export default {
+  updateDimensions
+};
+
+export function drawAxes(svg, xScale, yScale, labels = true, xlabel = "x", ylabel = "f(x)")
+{
+  xScale.clamp(true);
+  yScale.clamp(true);
+  // Eixo x
+  svg.append('line')
+    .attr('x1', xScale(-Infinity))
+    .attr('x2', xScale(Infinity))
+    .attr('y1', yScale(0))
+    .attr('y2', yScale(0))
+    .attr('stroke', 'black')
+    .attr('stroke-width', 1)
+    .attr('opacity', 0.5)
+    .attr('marker-end', 'url(#arrow)');
+
+  // Eixo y
+  svg.append('line')
+    .attr('x1', xScale(0))
+    .attr('x2', xScale(0))
+    .attr('y1', yScale(-Infinity))
+    .attr('y2', yScale(Infinity))
+    .attr('stroke', 'black')
+    .attr('stroke-width', 1)
+    .attr('opacity', 0.5)
+    .attr('marker-end', 'url(#arrow)');
+
+  // Labels dos eixos
+  if(labels)
+  {
+    svg.append("text")
+      .attr("x", xScale(Infinity) + 5)
+      .attr("y", yScale(0) + 3)
+      .attr("fill", "#000")
+      .attr("font-size", "14px")
+      .text(xlabel)
+      .style("user-select", "none");
+
+    svg.append("text")
+      .attr("x", xScale(0) + 5)
+      .attr("y", yScale(Infinity) - 10)
+      .attr("fill", "#000")
+      .attr("font-size", "14px")
+      .text(ylabel)
+      .style("user-select", "none");
+  }
+  xScale.clamp(false);
+  yScale.clamp(false);
+}
