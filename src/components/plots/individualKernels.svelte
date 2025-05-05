@@ -53,6 +53,11 @@
         svg = d3.select("#indivualKernels-svg")
             .attr("width", width)
             .attr("height", height)
+
+        // Center the image into the svg box
+        svg.attr("viewBox", `0 0 ${width} ${height}`)
+            .style("display", "block")
+            .style("margin", "0 auto");
         
         svg.append("path")
             .datum(data)
@@ -60,16 +65,6 @@
             .attr("stroke", "#52DBA4") 
             .attr("stroke-width", 2)
             .attr("d", line);
-
-        svg.append("line")
-            .attr("x1", margin.left)
-            .attr("y1", height - margin.bottom)
-            .attr("x2", width - margin.right)
-            .attr("y2", height - margin.bottom)
-            .attr("stroke", "black")
-            .attr("stroke-width", 1)
-            .attr("opacity", 0.5)
-            .attr("stroke-dasharray", "5,5");  
         
         y.domain([0, d3.max(data, d => d.y)])
             .range([height - margin.bottom, margin.top]);
@@ -96,76 +91,29 @@
           tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
         };
     });;
-    // var formula;
-    // $:formula = kernelDescriptions[selectedKernelIndex].Formula;
   </script>
-  
-<div class="container">
-    <!-- Título do gráfico -->
-    <h2 id="title">Kernel formats</h2>
-    <!-- Botões para seleção do Kernel -->
-    <div class="kernel-selection">
-        <label class="kernel-toggle">
-            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" on:input={()=>updateSelectedKernel(0)}/>
-            <span>RBF</span>
-        </label>
-        <label class="kernel-toggle">
-            <input type="radio" id="matern" name="kernel" value="kernel_Matern12" on:input={()=>updateSelectedKernel(1)} />
-            <span>Matern</span>
-        </label>
-        <label class="kernel-toggle">
-            <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" on:input={()=>updateSelectedKernel(2)}  />
-            <span>Periodic</span>
-        </label>
-        <label class="kernel-toggle">
-            <input type="radio" id="polynomial" name="kernel" value="kernel_Polynomial" on:input={()=>updateSelectedKernel(3)} />
-            <span>Polynomial</span>
-        </label>
-    </div>
-    <svg id="indivualKernels-svg"></svg>
-    <br>
-    <!-- <div class = "kernel-explanation" id="kernel-explanation">
-        <div class="kernel-description">
-            <p>{desc}</p>
-        </div>
-        <div class="kernel-formula" id="kernel-formula">
-            <p>${formula}$</p>
-        </div>
-    </div> -->
-    <HelperText>
-        <div class="kernel-description">
-            <p>{desc}</p>
-        </div>
-        <!-- <div class="kernel-formula" id="kernel-formula">
-            <p>${formula}$</p>
-        </div> -->
-    </HelperText>
-
-</div>
-
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
-
-    .container {
+    .main-container {
+        width: 90%;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Fredoka', sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: 'Fredoka', sans-serif;
-        width: min(90%, 800px);
-        margin: 1rem auto;
-        padding: 1.5rem;
-        border-radius: 8px;
-        border: 2px solid black;
     }
 
     .kernel-selection {
         display: flex;
         flex-wrap: wrap;
+        gap: 0.8rem;
         justify-content: center;
-        gap: clamp(0.5rem, 1.5vw, 1rem);
-        margin-bottom: 1.5rem;
+        margin: 0;
         width: 100%;
+        padding-bottom: 1rem;
     }
 
     .kernel-toggle {
@@ -189,7 +137,6 @@
     }
 
     .kernel-toggle input:checked + span {
-        color: white;
         transform: translateY(-2px);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         background-color: #52DBA4; /* Cor de fundo quando selecionado */
@@ -198,5 +145,45 @@
     .kernel-toggle input:not(:checked) + span {
         opacity: 0.7;
     }
-        
+
+    #indivualKernels-svg {
+        width: min(90%, 800px);
+        height: auto;
+        min-height: 300px;
+        margin: 0;
+        display: block;
+    }
+
+    h2 {
+        padding-bottom: 1rem;
+    }
+
 </style>
+
+<div class="main-container">
+    <h2>Kernel shapes</h2>
+    <!-- Botões para seleção do Kernel -->
+    <div class="kernel-selection">
+        <label class="kernel-toggle">
+            <input type="radio" id="rbf" name="kernel" value="kernel_RBF" on:input={()=>updateSelectedKernel(0)} checked/>
+            <span>RBF</span>
+        </label>
+        <label class="kernel-toggle">
+            <input type="radio" id="matern" name="kernel" value="kernel_Matern12" on:input={()=>updateSelectedKernel(1)} />
+            <span>Matern</span>
+        </label>
+        <label class="kernel-toggle">
+            <input type="radio" id="periodic" name="kernel" value="kernel_Periodic" on:input={()=>updateSelectedKernel(2)}  />
+            <span>Periodic</span>
+        </label>
+        <label class="kernel-toggle">
+            <input type="radio" id="polynomial" name="kernel" value="kernel_Polynomial" on:input={()=>updateSelectedKernel(3)} />
+            <span>Polynomial</span>
+        </label>
+    </div>
+    <svg id="indivualKernels-svg"></svg>
+    <br>
+    <HelperText>
+        <p>{desc}</p>
+    </HelperText>
+</div>

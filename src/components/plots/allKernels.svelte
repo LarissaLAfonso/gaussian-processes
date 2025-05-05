@@ -127,6 +127,11 @@
             .attr('width', width)
             .attr('height', height);
 
+        // Center the image into the svg box
+        svg.attr("viewBox", `0 0 ${width} ${height}`)
+            .style("display", "block")
+            .style("margin", "0 auto");
+
         // Borda do gráfico
         svg.append('rect')
             .attr('x', margin.left)    
@@ -243,8 +248,7 @@
 </script>
 
 <div class="container">
-    <h2 class="title">Kernel Comparison</h2>
-    
+    <h2>Kernel Comparison</h2>
     <div class="kernel-selection">
         <label class="kernel-toggle" id="rbf_subtitle">
             <input type="checkbox" id="rbf" name="kernel"
@@ -270,9 +274,6 @@
     <!-- SVG para o gráfico -->
     <svg id="gp-svg"></svg>
 
-    <!-- <div class="resample">
-        <button on:click={updatePlot} class="resample-button">Resample</button>
-    </div> -->
     <Button label="Resample" onClick={updatePlot} />
 </div>
 
@@ -280,22 +281,16 @@
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
 
     .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Fredoka', sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: 'Fredoka', sans-serif;
-        width: min(90%, 800px);
-        margin: 1rem auto;
-        padding: 1.5rem;
-        border-radius: 8px;
-    }
-
-    .title {
-        font-size: clamp(1.5rem, 4vw, 2rem);
-        color: #2d3748;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        width: 100%;
+        overflow: hidden;
     }
 
     .kernel-selection {
@@ -307,24 +302,13 @@
         width: 100%;
     }
 
-    .graph-wrapper {
-        width: 100%;
-        overflow: hidden;
-        margin: 0 auto;
-        
-    }
-
-    .graph-inner {
-        width: clamp(115%, 120%, 135%); /* Extra width to allow left shift */
-        margin-left: clamp(-15%, -20%, -25%); /* Pulls content left */
-        position: relative;
-    }
-
     #gp-svg {
         width: 100%;
         height: auto;
-        min-height: min(400px, 60vh);
+        min-height: 300px;
         display: block;
+        margin-bottom: 1rem;
+        overflow: hidden;
     }
 
     /* Kernel toggle styles */
@@ -357,29 +341,12 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
+    h2 {
+        padding-bottom: 1rem;
+    }
     /* Kernel colors */
     #rbf_subtitle span { background-color: #47A2A4; }
     #matern_subtitle span { background-color: #FF5733; }
     #periodic_subtitle span { background-color: #C70039; }
     #polynomial_subtitle span { background-color: #FFC300; }
-
-    /* Resample button */
-    /* .resample-button {
-        padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
-        background-color:#e9a982;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: clamp(1rem, 1.2vw, 1.25rem);
-        transition: all 0.3s ease;
-        font-family: 'Fredoka', sans-serif;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .resample-button:hover {
-        background-color: #3de467;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
 </style>
