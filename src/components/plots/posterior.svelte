@@ -331,7 +331,7 @@
             <label for="rbf">RBF</label>
         </div>
         <div class="option">
-            <input type="checkbox" id="matern" bind:group={selectedKernels} value="Matérn" on:change={updatePlot}>
+            <input type="checkbox" id="matern" bind:group={selectedKernels} value="Matern" on:change={updatePlot}>
             <label for="matern">Matérn</label>
         </div>
         <div class="option">
